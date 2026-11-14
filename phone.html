@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0,
+                 maximum-scale=1.0, user-scalable=no">
+
+  <title>Voice TV - Telefon</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #101114;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #888;
+      margin-bottom: 30px;
+    }
+
+    .status {
+      padding: 14px;
+      background: #1c1e22;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      color: #aaa;
+      font-weight: bold;
+    }
+
+    .label {
+      margin-top: 20px;
+      margin-bottom: 8px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      height: 120px;
+
+      padding: 15px;
+
+      border-radius: 12px;
+      border: 1px solid #444;
+
+      background: #181a1f;
+      color: white;
+
+      font-size: 20px;
+
+      resize: none;
+    }
+
+    textarea:focus {
+      outline: 2px solid #2196f3;
+    }
+
+    button {
+      width: 100%;
+      min-height: 60px;
+
+      margin-top: 25px;
+
+      border: 0;
+      border-radius: 12px;
+
+      background: #1685f8;
+      color: white;
+
+      font-size: 20px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    button:active {
+      background: #0068d7;
+    }
+
+    #result {
+      margin-top: 20px;
+
+      min-height: 30px;
+
+      text-align: center;
+
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .room {
+      margin-top: 35px;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>VOICE TV</h1>
+
+  <div class="subtitle">
+    Test telefona → PC
+  </div>
+
+  <div
+    id="connectionStatus"
+    class="status"
+  >
+    ● PREVERJAM POVEZAVO...
+  </div>
+
+
+  <div class="label">
+    BESEDILO, KI GA ŽELIŠ PRIKAZATI
+  </div>
+
+  <textarea
+    id="text"
+    placeholder="Napiši nekaj..."
+  ></textarea>
+
+
+  <button
+    id="sendButton"
+    type="button"
+  >
+    POŠLJI NA ZASLON
+  </button>
+
+
+  <div id="result"></div>
+
+
+  <div class="room">
+    SOBA 123456
+  </div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+
+const ROOM_CODE =
+  "123456";
+
+
+const client =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+const connectionStatus =
+  document.getElementById(
+    "connectionStatus"
+  );
+
+const textInput =
+  document.getElementById(
+    "text"
+  );
+
+const result =
+  document.getElementById(
+    "result"
+  );
+
+const sendButton =
+  document.getElementById(
+    "sendButton"
+  );
+
+
+async function checkConnection() {
+
+  const { data, error } =
+    await client
+      .from("translation_rooms")
+      .select("room_code")
+      .eq("room_code", ROOM_CODE)
+      .single();
+
+
+  if (error) {
+
+    connectionStatus.innerText =
+      "● NI POVEZAVE";
+
+    connectionStatus.style.color =
+      "#ff5252";
+
+    console.error(error);
+
+    return;
+  }
+
+
+  connectionStatus.innerText =
+    "● POVEZANO S SOB0 123456";
+
+  connectionStatus.style.color =
+    "#00c853";
+}
+
+
+async function sendText() {
+
+  const text =
+    textInput.value.trim();
+
+
+  if (!text) {
+
+    result.innerText =
+      "Najprej napiši besedilo.";
+
+    result.style.color =
+      "#ffb300";
+
+    return;
+  }
+
+
+  sendButton.disabled = true;
+
+  sendButton.innerText =
+    "POŠILJAM...";
+
+  result.innerText = "";
+
+
+  const { error } =
+    await client
+      .from("translation_rooms")
+      .update({
+
+        original_text: text,
+
+        translated_text: text,
+
+        updated_at:
+          new Date().toISOString()
+
+      })
+      .eq(
+        "room_code",
+        ROOM_CODE
+      );
+
+
+  sendButton.disabled = false;
+
+  sendButton.innerText =
+    "POŠLJI NA ZASLON";
+
+
+  if (error) {
+
+    console.error(error);
+
+    result.innerText =
+      "NAPAKA PRI POŠILJANJU";
+
+    result.style.color =
+      "#ff5252";
+
+    return;
+  }
+
+
+  result.innerText =
+    "✓ POSLANO NA ZASLON";
+
+  result.style.color =
+    "#00c853";
+}
+
+
+sendButton.addEventListener(
+  "click",
+  sendText
+);
+
+
+checkConnection();
+
+</script>
+
+</body>
+</html>
