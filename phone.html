@@ -1,166 +1,171 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0,
-                 maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice TV - Mikrofon</title>
 
-  <title>Voice TV - Telefon</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+* { box-sizing: border-box; }
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+body {
+  margin: 0;
+  padding: 20px;
+  background: #101114;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #101114;
-      color: white;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-    }
+h1 {
+  margin-bottom: 5px;
+}
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 5px;
-    }
+.subtitle {
+  color: #888;
+  margin-bottom: 25px;
+}
 
-    .subtitle {
-      color: #888;
-      margin-bottom: 30px;
-    }
+.status {
+  background: #1c1e22;
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #00c853;
+  font-weight: bold;
+}
 
-    .status {
-      padding: 14px;
-      background: #1c1e22;
-      border-radius: 10px;
-      margin-bottom: 25px;
-      color: #aaa;
-      font-weight: bold;
-    }
+.languages {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
 
-    .label {
-      margin-top: 20px;
-      margin-bottom: 8px;
-      color: #aaa;
-      font-size: 14px;
-    }
+.lang {
+  flex: 1;
+  padding: 16px;
+  border-radius: 10px;
+  border: 2px solid #444;
+  background: #222;
+  color: white;
+  font-size: 18px;
+}
 
-    textarea {
-      display: block;
-      width: 100%;
-      height: 120px;
+.lang.active {
+  background: #1565c0;
+  border-color: #42a5f5;
+}
 
-      padding: 15px;
+#recognized {
+  min-height: 140px;
+  background: #181a1f;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 18px;
+  font-size: 22px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
 
-      border-radius: 12px;
-      border: 1px solid #444;
+#start {
+  width: 100%;
+  min-height: 70px;
+  border: 0;
+  border-radius: 12px;
+  background: #00a650;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-      background: #181a1f;
-      color: white;
+#stop {
+  width: 100%;
+  min-height: 60px;
+  border: 0;
+  border-radius: 12px;
+  background: #d32f2f;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 12px;
+}
 
-      font-size: 20px;
+#micStatus {
+  margin-top: 20px;
+  text-align: center;
+  color: #aaa;
+  min-height: 25px;
+}
 
-      resize: none;
-    }
-
-    textarea:focus {
-      outline: 2px solid #2196f3;
-    }
-
-    button {
-      width: 100%;
-      min-height: 60px;
-
-      margin-top: 25px;
-
-      border: 0;
-      border-radius: 12px;
-
-      background: #1685f8;
-      color: white;
-
-      font-size: 20px;
-      font-weight: bold;
-
-      cursor: pointer;
-    }
-
-    button:active {
-      background: #0068d7;
-    }
-
-    #result {
-      margin-top: 20px;
-
-      min-height: 30px;
-
-      text-align: center;
-
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .room {
-      margin-top: 35px;
-      text-align: center;
-      color: #666;
-      font-size: 14px;
-    }
-
-  </style>
+.room {
+  margin-top: 30px;
+  text-align: center;
+  color: #666;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <h1>VOICE TV</h1>
+<h1>VOICE TV</h1>
 
-  <div class="subtitle">
-    Test telefona → PC
-  </div>
+<div class="subtitle">
+  Govor → tekst → veliki zaslon
+</div>
 
-  <div
-    id="connectionStatus"
-    class="status"
-  >
-    ● PREVERJAM POVEZAVO...
-  </div>
+<div id="connection" class="status">
+  ● PREVERJAM POVEZAVO...
+</div>
 
 
-  <div class="label">
-    BESEDILO, KI GA ŽELIŠ PRIKAZATI
-  </div>
-
-  <textarea
-    id="text"
-    placeholder="Napiši nekaj..."
-  ></textarea>
-
+<div class="languages">
 
   <button
-    id="sendButton"
-    type="button"
-  >
-    POŠLJI NA ZASLON
+    id="slButton"
+    class="lang active"
+    type="button">
+    🇸🇮 SLOVENŠČINA
   </button>
 
+  <button
+    id="huButton"
+    class="lang"
+    type="button">
+    🇭🇺 MAGYAR
+  </button>
 
-  <div id="result"></div>
+</div>
 
 
-  <div class="room">
-    SOBA 123456
-  </div>
+<div id="recognized">
+  Tukaj se bo prikazal prepoznani govor...
+</div>
+
+
+<button id="start" type="button">
+  🎤 ZAČNI GOVORITI
+</button>
+
+<button id="stop" type="button">
+  ■ USTAVI
+</button>
+
+
+<div id="micStatus">
+</div>
+
+
+<div class="room">
+  SOBA 123456
+</div>
 
 </div>
 
@@ -173,9 +178,7 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
 
-const ROOM_CODE =
-  "123456";
-
+const ROOM_CODE = "123456";
 
 const client =
   supabase.createClient(
@@ -184,135 +187,306 @@ const client =
   );
 
 
-const connectionStatus =
-  document.getElementById(
-    "connectionStatus"
-  );
+const connection =
+  document.getElementById("connection");
 
-const textInput =
-  document.getElementById(
-    "text"
-  );
+const recognized =
+  document.getElementById("recognized");
 
-const result =
-  document.getElementById(
-    "result"
-  );
+const micStatus =
+  document.getElementById("micStatus");
 
-const sendButton =
-  document.getElementById(
-    "sendButton"
-  );
+const slButton =
+  document.getElementById("slButton");
 
+const huButton =
+  document.getElementById("huButton");
+
+const startButton =
+  document.getElementById("start");
+
+const stopButton =
+  document.getElementById("stop");
+
+
+let currentLanguage = "sl-SI";
+let recognition = null;
+let finalText = "";
+
+
+/* POVEZAVA */
 
 async function checkConnection() {
 
-  const { data, error } =
+  const { error } =
     await client
       .from("translation_rooms")
       .select("room_code")
       .eq("room_code", ROOM_CODE)
       .single();
 
-
   if (error) {
 
-    connectionStatus.innerText =
+    connection.innerText =
       "● NI POVEZAVE";
 
-    connectionStatus.style.color =
+    connection.style.color =
       "#ff5252";
-
-    console.error(error);
 
     return;
   }
 
+  connection.innerText =
+    "● POVEZANO";
 
-  connectionStatus.innerText =
-    "● POVEZANO S SOB0 123456";
-
-  connectionStatus.style.color =
+  connection.style.color =
     "#00c853";
 }
 
 
-async function sendText() {
+/* IZBIRA JEZIKA */
 
-  const text =
-    textInput.value.trim();
+slButton.addEventListener(
+  "click",
+  function() {
+
+    currentLanguage = "sl-SI";
+
+    slButton.classList.add("active");
+    huButton.classList.remove("active");
+
+    micStatus.innerText =
+      "Izbrana slovenščina";
+  }
+);
 
 
-  if (!text) {
+huButton.addEventListener(
+  "click",
+  function() {
 
-    result.innerText =
-      "Najprej napiši besedilo.";
+    currentLanguage = "hu-HU";
 
-    result.style.color =
-      "#ffb300";
+    huButton.classList.add("active");
+    slButton.classList.remove("active");
 
+    micStatus.innerText =
+      "Kiválasztott nyelv: magyar";
+  }
+);
+
+
+/* POŠILJANJE V SUPABASE */
+
+async function sendToScreen(text) {
+
+  if (!text.trim()) {
     return;
   }
 
+  await client
+    .from("translation_rooms")
+    .update({
 
-  sendButton.disabled = true;
+      original_text: text,
 
-  sendButton.innerText =
-    "POŠILJAM...";
+      translated_text: text,
 
-  result.innerText = "";
+      source_language:
+        currentLanguage === "sl-SI"
+        ? "sl"
+        : "hu",
+
+      updated_at:
+        new Date().toISOString()
+
+    })
+
+    .eq(
+      "room_code",
+      ROOM_CODE
+    );
+}
 
 
-  const { error } =
-    await client
-      .from("translation_rooms")
-      .update({
+/* SPEECH RECOGNITION */
 
-        original_text: text,
+function createRecognition() {
 
-        translated_text: text,
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
-        updated_at:
-          new Date().toISOString()
 
-      })
-      .eq(
-        "room_code",
-        ROOM_CODE
+  if (!SpeechRecognition) {
+
+    micStatus.innerText =
+      "Ta brskalnik ne podpira prepoznave govora.";
+
+    micStatus.style.color =
+      "#ff5252";
+
+    return null;
+  }
+
+
+  const r =
+    new SpeechRecognition();
+
+
+  r.lang =
+    currentLanguage;
+
+  r.continuous =
+    true;
+
+  r.interimResults =
+    true;
+
+
+  r.onstart =
+    function() {
+
+      micStatus.innerText =
+        "🎤 POSLUŠAM...";
+
+      micStatus.style.color =
+        "#00c853";
+    };
+
+
+  r.onresult =
+    function(event) {
+
+      let interimText = "";
+
+
+      for (
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ) {
+
+        const transcript =
+          event.results[i][0].transcript;
+
+
+        if (
+          event.results[i].isFinal
+        ) {
+
+          finalText +=
+            transcript + " ";
+
+        } else {
+
+          interimText +=
+            transcript;
+
+        }
+
+      }
+
+
+      const fullText =
+        finalText +
+        interimText;
+
+
+      recognized.innerText =
+        fullText;
+
+
+      sendToScreen(
+        fullText
+      );
+    };
+
+
+  r.onerror =
+    function(event) {
+
+      console.log(
+        "Speech error:",
+        event.error
       );
 
+      micStatus.innerText =
+        "Napaka mikrofona: " +
+        event.error;
 
-  sendButton.disabled = false;
-
-  sendButton.innerText =
-    "POŠLJI NA ZASLON";
-
-
-  if (error) {
-
-    console.error(error);
-
-    result.innerText =
-      "NAPAKA PRI POŠILJANJU";
-
-    result.style.color =
-      "#ff5252";
-
-    return;
-  }
+      micStatus.style.color =
+        "#ff5252";
+    };
 
 
-  result.innerText =
-    "✓ POSLANO NA ZASLON";
+  r.onend =
+    function() {
 
-  result.style.color =
-    "#00c853";
+      micStatus.innerText =
+        "Mikrofon ustavljen.";
+
+      micStatus.style.color =
+        "#aaa";
+    };
+
+
+  return r;
 }
 
 
-sendButton.addEventListener(
+/* ZAČNI */
+
+startButton.addEventListener(
   "click",
-  sendText
+  function() {
+
+    finalText = "";
+
+    recognized.innerText =
+      "Poslušam...";
+
+
+    recognition =
+      createRecognition();
+
+
+    if (!recognition) {
+      return;
+    }
+
+
+    recognition.lang =
+      currentLanguage;
+
+
+    try {
+
+      recognition.start();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  }
+);
+
+
+/* USTAVI */
+
+stopButton.addEventListener(
+  "click",
+  function() {
+
+    if (recognition) {
+
+      recognition.stop();
+
+    }
+
+  }
 );
 
 
