@@ -1,31 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="sl">
 <head>
-<title>TV TEST</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice TV</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#screen {
+  width: 94%;
+  text-align: center;
+}
+
+#status {
+  color: #888;
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+#text {
+  color: #fff;
+  font-size: 7vw;
+  line-height: 1.2;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+#original {
+  margin-top: 40px;
+  color: #777;
+  font-size: 2vw;
+}
+</style>
 </head>
 
-<body bgcolor="black">
+<body>
 
-<br><br><br>
+<div id="screen">
 
-<center>
+  <div id="status">POVEZUJEM...</div>
 
-<font face="Arial" color="white" size="7">
-<b>
-DOBER VECER.<br><br>
-TO JE TEST PRIKAZA<br>
-NA TELEVIZIJI.
-</b>
-</font>
+  <div id="text">
+    ČAKAM NA BESEDILO...
+  </div>
 
-<br><br><br>
+  <div id="original"></div>
 
-<font face="Arial" color="yellow" size="6">
-CE VIDIS TA TEKST,<br>
-TV LAHKO UPORABIVA.
-</font>
+</div>
 
-</center>
+<script>
+const SUPABASE_URL =
+  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+
+const client = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const ROOM = "123456";
+
+
+async function loadText() {
+
+  const { data, error } = await client
+    .from("translation_rooms")
+    .select("*")
+    .eq("room_code", ROOM)
+    .single();
+
+  if (error) {
+    document.getElementById("status").innerText =
+      "NAPAKA PRI POVEZAVI";
+
+    console.error(error);
+    return;
+  }
+
+  showText(data);
+
+  document.getElementById("status").innerText =
+    "● POVEZANO";
+}
+
+
+function showText(row) {
+
+  document.getElementById("text").innerText =
+    row.translated_text || "ČAKAM NA PREVOD...";
+
+  document.getElementById("original").innerText =
+    row.original_text || "";
+}
+
+
+client
+  .channel("room-123456")
+
+  .on(
+    "postgres_changes",
+    {
+      event: "UPDATE",
+      schema: "public",
+      table: "translation_rooms",
+      filter: "room_code=eq.123456"
+    },
+
+    payload => {
+
+      console.log("NOV TEKST:", payload.new);
+
+      showText(payload.new);
+    }
+  )
+
+  .subscribe(status => {
+
+    console.log("Realtime:", status);
+
+  });
+
+
+loadText();
+
+</script>
 
 </body>
 </html>
