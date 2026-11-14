@@ -16,39 +16,54 @@ html,body{
 }
 
 body{
-  display:flex;
-  align-items:center;
-  justify-content:center;
   overflow:hidden;
 }
 
 #status{
   position:fixed;
-  top:15px;
-  left:20px;
-  font-size:15px;
+  top:12px;
+  left:16px;
+  z-index:10;
+  font-size:14px;
   color:#777;
 }
 
 #screen{
-  width:96%;
+  position:absolute;
+  top:5%;
+  left:3%;
+  width:94%;
+  height:90%;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
   text-align:center;
+  overflow:hidden;
 }
 
 #text{
-  font-size:21vw;
-  line-height:0.95;
-  font-weight:900;
+  width:100%;
+  max-height:100%;
+
   color:#ffff00;
+
+  font-size:100px;
+  line-height:1.02;
+  font-weight:900;
+
   text-transform:uppercase;
-  overflow-wrap:anywhere;
+
+  overflow-wrap:normal;
   word-break:normal;
+
+  text-align:center;
 }
 
 #original{
-  margin-top:35px;
-  color:#aaa;
-  font-size:2vw;
+  display:none;
 }
 </style>
 </head>
@@ -67,7 +82,68 @@ const URL="https://kdixpdxmdfdbxpbuljfe.supabase.co";
 const KEY="sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
 const ROOM="123456";
 
+const screen=
+  document.getElementById("screen");
+
+const textElement=
+  document.getElementById("text");
+
+const statusElement=
+  document.getElementById("status");
+
+
+function fitText(){
+
+  let size=
+    Math.min(
+      window.innerWidth * 0.30,
+      window.innerHeight * 0.45
+    );
+
+  const minSize=
+    Math.max(
+      30,
+      window.innerWidth * 0.05
+    );
+
+  textElement.style.fontSize=
+    size+"px";
+
+
+  while(
+    (
+      textElement.scrollWidth >
+        screen.clientWidth
+      ||
+      textElement.scrollHeight >
+        screen.clientHeight
+    )
+    &&
+    size > minSize
+  ){
+
+    size-=2;
+
+    textElement.style.fontSize=
+      size+"px";
+  }
+}
+
+
+function showText(text){
+
+  textElement.innerText=
+    text||
+    "ČAKAM NA BESEDILO...";
+
+  requestAnimationFrame(
+    fitText
+  );
+}
+
+
 async function load(){
+
   try{
 
     const api=
@@ -76,71 +152,98 @@ async function load(){
       "?room_code=eq."+ROOM+
       "&select=original_text,translated_text,updated_at";
 
-    const response=await fetch(api,{
-      headers:{
-        "apikey":KEY,
-        "Authorization":"Bearer "+KEY
-      },
-      cache:"no-store"
-    });
+    const response=
+      await fetch(
+        api,
+        {
+          headers:{
+            "apikey":KEY,
+            "Authorization":
+              "Bearer "+KEY
+          },
+
+          cache:"no-store"
+        }
+      );
+
 
     if(!response.ok){
-      throw new Error("HTTP "+response.status);
+      throw new Error(
+        "HTTP "+response.status
+      );
     }
 
-    const rows=await response.json();
+
+    const rows=
+      await response.json();
+
 
     if(!rows.length){
-      throw new Error("SOBA NE OBSTAJA");
+      throw new Error(
+        "SOBA NE OBSTAJA"
+      );
     }
 
-    const row=rows[0];
+
+    const row=
+      rows[0];
+
 
     const original=
-      (row.original_text||"").trim();
+      (row.original_text||"")
+        .trim();
+
 
     const translated=
-      (row.translated_text||"").trim();
+      (row.translated_text||"")
+        .trim();
 
-    document.getElementById("status").innerText=
+
+    statusElement.innerText=
       "● POVEZANO";
 
-    document.getElementById("status").style.color=
+    statusElement.style.color=
       "#00c853";
 
-    document.getElementById("text").innerText=
+
+    showText(
       translated||
       original||
-      "ČAKAM NA BESEDILO...";
-
-    if(
-      original &&
-      translated &&
-      original!==translated
-    ){
-      document.getElementById("original").innerText=
-        original;
-    }
-    else{
-      document.getElementById("original").innerText="";
-    }
+      "ČAKAM NA BESEDILO..."
+    );
 
   }
+
   catch(error){
 
     console.error(error);
 
-    document.getElementById("status").innerText=
-      "● NAPAKA: "+error.message;
+    statusElement.innerText=
+      "● NAPAKA: "+
+      error.message;
 
-    document.getElementById("status").style.color=
+    statusElement.style.color=
       "#ff5252";
   }
 }
 
+
+window.addEventListener(
+  "resize",
+  function(){
+    requestAnimationFrame(
+      fitText
+    );
+  }
+);
+
+
 load();
 
-setInterval(load,500);
+setInterval(
+  load,
+  500
+);
 </script>
 
 </body>
