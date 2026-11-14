@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Voice TV Display</title>
+<title>Voice TV</title>
 
 <style>
 html,body{
@@ -14,152 +14,128 @@ html,body{
   color:#fff;
   font-family:Arial,sans-serif;
 }
-
 body{
   display:flex;
   align-items:center;
   justify-content:center;
   overflow:hidden;
 }
-
-#screen{
-  width:94%;
-  text-align:center;
-}
-
 #status{
   position:fixed;
   top:15px;
   left:20px;
+  font-size:15px;
   color:#777;
-  font-size:14px;
 }
-
+#screen{
+  width:94%;
+  text-align:center;
+}
 #text{
   font-size:7vw;
+  line-height:1.15;
   font-weight:800;
-  line-height:1.18;
   text-transform:uppercase;
   overflow-wrap:anywhere;
 }
-
 #original{
   margin-top:35px;
   color:#777;
   font-size:2vw;
-}
-
-#error{
-  color:#ff5252;
-  font-size:20px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="status">
-POVEZUJEM...
-</div>
+<div id="status">POVEZUJEM...</div>
 
 <div id="screen">
-
-  <div id="text">
-    ČAKAM NA BESEDILO...
-  </div>
-
+  <div id="text">ČAKAM NA BESEDILO...</div>
   <div id="original"></div>
-
-  <div id="error"></div>
-
 </div>
 
 <script>
-const URL =
-  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
+const URL="https://kdixpdxmdfdbxpbuljfe.supabase.co";
+const KEY="sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+const ROOM="123456";
 
-const KEY =
-  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
-
-const ROOM =
-  "123456";
-
-let lastUpdate = "";
-
-async function loadText(){
+async function load(){
 
   try{
 
-    const response =
-      await fetch(
-        URL +
-        "/rest/v1/translation_rooms" +
-        "?room_code=eq." +
-        ROOM +
-        "&select=original_text,translated_text,updated_at",
-        {
-          headers:{
-            "apikey":KEY,
-            "Authorization":"Bearer " + KEY
-          },
-          cache:"no-store"
-        }
-      );
+    const api=
+      URL+
+      "/rest/v1/translation_rooms"+
+      "?room_code=eq."+ROOM+
+      "&select=original_text,translated_text,updated_at";
+
+    const response=await fetch(api,{
+      headers:{
+        "apikey":KEY,
+        "Authorization":"Bearer "+KEY
+      },
+      cache:"no-store"
+    });
 
     if(!response.ok){
-      throw new Error(
-        "HTTP " + response.status
-      );
+      throw new Error("HTTP "+response.status);
     }
 
-    const data =
-      await response.json();
+    const rows=await response.json();
 
-    if(!data.length){
-      throw new Error(
-        "Soba 123456 ne obstaja."
-      );
+    if(!rows.length){
+      throw new Error("SOBA NE OBSTAJA");
     }
 
-    const row =
-      data[0];
+    const row=rows[0];
 
+    const original=
+      (row.original_text||"").trim();
 
-    document.getElementById("status")
-      .innerText =
+    const translated=
+      (row.translated_text||"").trim();
+
+    document.getElementById("status").innerText=
       "● POVEZANO";
 
-    document.getElementById("status")
-      .style.color =
+    document.getElementById("status").style.color=
       "#00c853";
 
-    document.getElementById("error")
-      .innerText = "";
+    document.getElementById("text").innerText=
+      translated||
+      original||
+      "ČAKAM NA BESEDILO...";
 
+    if(
+      original &&
+      translated &&
+      original!==translated
+    ){
+      document.getElementById("original").innerText=
+        original;
+    }
+    else{
+      document.getElementById("original").innerText="";
+    }
 
-    if(row.updated_at !== lastUpdate){
+  }
+  catch(error){
 
-      lastUpdate =
-        row.updated_at;
+    console.error(error);
 
-      const translated =
-        (row.translated_text || "").trim();
+    document.getElementById("status").innerText=
+      "● NAPAKA: "+error.message;
 
-      const original =
-        (row.original_text || "").trim();
+    document.getElementById("status").style.color=
+      "#ff5252";
+  }
+}
 
+load();
 
-      document.getElementById("text")
-        .innerText =
-        translated ||
-        original ||
-        "ČAKAM NA BESEDILO...";
+setInterval(load,500);
+</script>
 
-
-      if(
-        translated &&
-        original &&
-        translated !== original
-      ){
-        document.getElementById("original")
-       
+</body>
+</html>
