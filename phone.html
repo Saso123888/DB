@@ -1,139 +1,270 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voice TV</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0,
-             maximum-scale=1.0, user-scalable=no"
-  >
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#101217;color:white;font-family:Arial,sans-serif}
+.wrap{max-width:600px;margin:auto}
+h1{margin:0 0 5px}
+.sub{color:#999;margin-bottom:20px}
+.status,.box{background:#1b1e24;border:1px solid #333;border-radius:14px;padding:16px;margin-bottom:16px}
+.row{display:flex;gap:10px}
+button{border:0;border-radius:12px;padding:16px;color:white;background:#292d35;font-size:17px;font-weight:bold}
+.row button{flex:1}
+button.active{background:#1675d1}
+textarea{width:100%;height:130px;background:#101217;color:white;border:1px solid #555;border-radius:10px;padding:14px;font-size:19px}
+.big{width:100%;margin-top:12px;background:#1685f8}
+.green{background:#078c49}
+.red{background:#be2835}
+button:disabled{opacity:.45}
+#voicePanel{display:none}
+#recognized{min-height:90px;background:#101217;border:1px solid #444;border-radius:10px;padding:14px;margin-top:15px;font-size:19px}
+#message{text-align:center;min-height:25px;margin-top:15px}
+small{color:#777}
+</style>
+</head>
 
-  <title>Voice TV</title>
+<body>
+<div class="wrap">
 
-  <style>
-    * {
-      box-sizing: border-box;
+<h1>VOICE TV</h1>
+<div class="sub">Telefon → veliki zaslon</div>
+
+<div id="connection" class="status">● PREVERJAM POVEZAVO...</div>
+
+<div class="box">
+<b>JEZIK</b>
+<div class="row" style="margin-top:12px">
+<button id="sl" class="active">🇸🇮 SLOVENŠČINA</button>
+<button id="hu">🇭🇺 MAGYAR</button>
+</div>
+</div>
+
+<div class="row" style="margin-bottom:16px">
+<button id="typeBtn" class="active">⌨️ NAPIŠI</button>
+<button id="voiceBtn">🎤 GOVORI</button>
+</div>
+
+<div id="typePanel" class="box">
+<textarea id="manual" placeholder="Napiši besedilo..."></textarea>
+<button id="send" class="big">POŠLJI NA ZASLON</button>
+</div>
+
+<div id="voicePanel" class="box">
+<button id="start" class="big green">🎤 ZAČNI SNEMANJE</button>
+<button id="stop" class="big red" disabled>■ USTAVI IN PREPOZNAJ</button>
+
+<div id="voiceStatus" style="text-align:center;margin-top:15px">
+Pripravljen.
+</div>
+
+<div id="recognized">
+Tukaj se bo prikazal prepoznani govor.
+</div>
+</div>
+
+<div id="message"></div>
+
+<div style="text-align:center;margin-top:25px">
+<small>SOBA 123456</small>
+</div>
+
+</div>
+
+<script>
+const URL="https://kdixpdxmdfdbxpbuljfe.supabase.co";
+const KEY="sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+const ROOM="123456";
+
+let lang="sl";
+let recorder=null;
+let stream=null;
+let chunks=[];
+
+const $=id=>document.getElementById(id);
+
+const headers={
+  "apikey":KEY,
+  "Authorization":"Bearer "+KEY
+};
+
+async function check(){
+  try{
+    let r=await fetch(
+      URL+"/rest/v1/translation_rooms?room_code=eq."+ROOM+"&select=room_code",
+      {headers}
+    );
+
+    if(!r.ok) throw new Error();
+
+    $("connection").innerText="● POVEZANO S SOBO 123456";
+    $("connection").style.color="#00c853";
+  }catch(e){
+    $("connection").innerText="● NI POVEZAVE";
+    $("connection").style.color="#ff5252";
+  }
+}
+
+$("sl").onclick=()=>{
+  lang="sl";
+  $("sl").classList.add("active");
+  $("hu").classList.remove("active");
+};
+
+$("hu").onclick=()=>{
+  lang="hu";
+  $("hu").classList.add("active");
+  $("sl").classList.remove("active");
+};
+
+$("typeBtn").onclick=()=>{
+  $("typePanel").style.display="block";
+  $("voicePanel").style.display="none";
+  $("typeBtn").classList.add("active");
+  $("voiceBtn").classList.remove("active");
+};
+
+$("voiceBtn").onclick=()=>{
+  $("typePanel").style.display="none";
+  $("voicePanel").style.display="block";
+  $("voiceBtn").classList.add("active");
+  $("typeBtn").classList.remove("active");
+};
+
+async function toScreen(text){
+  text=text.trim();
+  if(!text)return;
+
+  let r=await fetch(
+    URL+"/rest/v1/translation_rooms?room_code=eq."+ROOM,
+    {
+      method:"PATCH",
+      headers:{
+        ...headers,
+        "Content-Type":"application/json",
+        "Prefer":"return=minimal"
+      },
+      body:JSON.stringify({
+        original_text:text,
+        translated_text:text,
+        source_language:lang,
+        updated_at:new Date().toISOString()
+      })
     }
+  );
 
-    html,
-    body {
-      margin: 0;
-      min-height: 100%;
-      background: #0f1115;
-      color: #ffffff;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+  if(!r.ok) throw new Error("Pošiljanje ni uspelo.");
 
-    body {
-      padding: 18px;
-    }
+  $("message").innerText="✓ POSLANO NA ZASLON";
+  $("message").style.color="#00c853";
+}
 
-    .container {
-      width: 100%;
-      max-width: 620px;
-      margin: 0 auto;
-    }
+$("send").onclick=async()=>{
+  try{
+    await toScreen($("manual").value);
+  }catch(e){
+    $("message").innerText=e.message;
+    $("message").style.color="#ff5252";
+  }
+};
 
-    h1 {
-      margin: 0;
-      font-size: 30px;
-      letter-spacing: 1px;
-    }
+$("start").onclick=async()=>{
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    chunks=[];
 
-    .subtitle {
-      margin-top: 6px;
-      margin-bottom: 22px;
-      color: #9aa0aa;
-      font-size: 16px;
-    }
+    let options={};
 
-    .card {
-      margin-bottom: 18px;
-      padding: 18px;
-      background: #191c22;
-      border: 1px solid #2d323b;
-      border-radius: 16px;
-    }
+    if(MediaRecorder.isTypeSupported("audio/mp4"))
+      options={mimeType:"audio/mp4"};
+    else if(MediaRecorder.isTypeSupported("audio/webm"))
+      options={mimeType:"audio/webm"};
 
-    .connection {
-      padding: 14px 16px;
-      margin-bottom: 18px;
-      background: #191c22;
-      border: 1px solid #2d323b;
-      border-radius: 12px;
-      color: #aab0ba;
-      font-weight: bold;
-    }
+    recorder=new MediaRecorder(stream,options);
 
-    .section-title {
-      margin-bottom: 13px;
-      color: #c7cbd2;
-      font-size: 14px;
-      font-weight: bold;
-      letter-spacing: 0.6px;
-    }
+    recorder.ondataavailable=e=>{
+      if(e.data.size)chunks.push(e.data);
+    };
 
-    .language-row {
-      display: flex;
-      gap: 10px;
-    }
+    recorder.onstop=transcribe;
 
-    .language-button {
-      flex: 1;
-      min-height: 58px;
-      padding: 10px;
-      border: 2px solid #3b414c;
-      border-radius: 12px;
-      background: #242830;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+    recorder.start();
 
-    .language-button.active {
-      border-color: #55a9ff;
-      background: #1269bd;
-    }
+    $("start").disabled=true;
+    $("stop").disabled=false;
 
-    .mode-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+    $("voiceStatus").innerText="🎤 SNEMAM...";
+    $("voiceStatus").style.color="#00c853";
 
-    .mode-button {
-      flex: 1;
-      min-height: 56px;
-      border: 1px solid #3b414c;
-      border-radius: 12px;
-      background: #242830;
-      color: #d5d9df;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+  }catch(e){
+    $("voiceStatus").innerText="NAPAKA MIKROFONA: "+e.message;
+    $("voiceStatus").style.color="#ff5252";
+  }
+};
 
-    .mode-button.active {
-      background: #ffffff;
-      color: #111111;
-      border-color: #ffffff;
-    }
+$("stop").onclick=()=>{
+  if(recorder && recorder.state!=="inactive"){
+    recorder.stop();
+    stream.getTracks().forEach(t=>t.stop());
 
-    .mode-panel {
-      display: none;
-    }
+    $("stop").disabled=true;
+    $("voiceStatus").innerText="⏳ PREPOZNAVAM GOVOR...";
+    $("voiceStatus").style.color="#ffb300";
+  }
+};
 
-    .mode-panel.active {
-      display: block;
-    }
+async function transcribe(){
+  try{
+    const mime=recorder.mimeType||"audio/webm";
+    const ext=mime.includes("mp4")?"m4a":"webm";
 
-    textarea {
-      display: block;
-      width: 100%;
-      min-height: 145px;
-      padding: 16px;
-      border: 1px solid #454b56;
-      border-radius: 12px;
-      
+    const blob=new Blob(chunks,{type:mime});
+    const file=new File([blob],"voice."+ext,{type:mime});
+
+    let form=new FormData();
+    form.append("audio",file);
+    form.append("language",lang);
+
+    let r=await fetch(
+      URL+"/functions/v1/voice-transcribe",
+      {
+        method:"POST",
+        headers,
+        body:form
+      }
+    );
+
+    let raw=await r.text();
+
+    if(!r.ok)
+      throw new Error("HTTP "+r.status+" "+raw);
+
+    let data=JSON.parse(raw);
+    let text=(data.text||"").trim();
+
+    if(!text)
+      throw new Error("Whisper ni vrnil besedila.");
+
+    $("recognized").innerText=text;
+    $("voiceStatus").innerText="✓ GOVOR PREPOZNAN";
+    $("voiceStatus").style.color="#00c853";
+
+    await toScreen(text);
+
+  }catch(e){
+    $("recognized").innerText="Prepoznava ni uspela.";
+    $("voiceStatus").innerText="NAPAKA: "+e.message;
+    $("voiceStatus").style.color="#ff5252";
+  }
+
+  $("start").disabled=false;
+}
+
+check();
+</script>
+</body>
+</html>
