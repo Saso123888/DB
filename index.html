@@ -1,88 +1,165 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voice TV Display</title>
 
-  <title>Voice TV</title>
+<style>
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
 
-  <!-- Supabase JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
 
-  <style>
+#screen{
+  width:94%;
+  text-align:center;
+}
 
-    * {
-      box-sizing: border-box;
+#status{
+  position:fixed;
+  top:15px;
+  left:20px;
+  color:#777;
+  font-size:14px;
+}
+
+#text{
+  font-size:7vw;
+  font-weight:800;
+  line-height:1.18;
+  text-transform:uppercase;
+  overflow-wrap:anywhere;
+}
+
+#original{
+  margin-top:35px;
+  color:#777;
+  font-size:2vw;
+}
+
+#error{
+  color:#ff5252;
+  font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="status">
+POVEZUJEM...
+</div>
+
+<div id="screen">
+
+  <div id="text">
+    ČAKAM NA BESEDILO...
+  </div>
+
+  <div id="original"></div>
+
+  <div id="error"></div>
+
+</div>
+
+<script>
+const URL =
+  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
+
+const KEY =
+  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+
+const ROOM =
+  "123456";
+
+let lastUpdate = "";
+
+async function loadText(){
+
+  try{
+
+    const response =
+      await fetch(
+        URL +
+        "/rest/v1/translation_rooms" +
+        "?room_code=eq." +
+        ROOM +
+        "&select=original_text,translated_text,updated_at",
+        {
+          headers:{
+            "apikey":KEY,
+            "Authorization":"Bearer " + KEY
+          },
+          cache:"no-store"
+        }
+      );
+
+    if(!response.ok){
+      throw new Error(
+        "HTTP " + response.status
+      );
     }
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
+    const data =
+      await response.json();
 
-      width: 100%;
-      height: 100%;
-
-      background: #000000;
-      color: #ffffff;
-
-      font-family: Arial, Helvetica, sans-serif;
+    if(!data.length){
+      throw new Error(
+        "Soba 123456 ne obstaja."
+      );
     }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    const row =
+      data[0];
 
-      overflow: hidden;
-    }
 
-    #screen {
-      width: 94%;
-      height: 94%;
+    document.getElementById("status")
+      .innerText =
+      "● POVEZANO";
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    document.getElementById("status")
+      .style.color =
+      "#00c853";
 
-      text-align: center;
-    }
+    document.getElementById("error")
+      .innerText = "";
 
-    #status {
-      position: absolute;
 
-      top: 20px;
-      left: 25px;
+    if(row.updated_at !== lastUpdate){
 
-      color: #777777;
+      lastUpdate =
+        row.updated_at;
 
-      font-size: 18px;
-      font-weight: bold;
-    }
+      const translated =
+        (row.translated_text || "").trim();
 
-    #room {
-      position: absolute;
+      const original =
+        (row.original_text || "").trim();
 
-      top: 20px;
-      right: 25px;
 
-      color: #555555;
+      document.getElementById("text")
+        .innerText =
+        translated ||
+        original ||
+        "ČAKAM NA BESEDILO...";
 
-      font-size: 16px;
-    }
 
-    #translatedText {
-      width: 100%;
-
-      color: #ffffff;
-
-      font-size: 7vw;
-      line-height: 1.15;
-
-      font-weight: 800;
-
-      text-transform: uppercase;
-
-      word-wrap: break
+      if(
+        translated &&
+        original &&
+        translated !== original
+      ){
+        document.getElementById("original")
+       
