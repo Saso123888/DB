@@ -14,12 +14,14 @@ html,body{
   color:#fff;
   font-family:Arial,sans-serif;
 }
+
 body{
   display:flex;
   align-items:center;
   justify-content:center;
   overflow:hidden;
 }
+
 #status{
   position:fixed;
   top:15px;
@@ -27,20 +29,25 @@ body{
   font-size:15px;
   color:#777;
 }
+
 #screen{
-  width:94%;
+  width:96%;
   text-align:center;
 }
+
 #text{
-  font-size:7vw;
-  line-height:1.15;
-  font-weight:800;
+  font-size:21vw;
+  line-height:0.95;
+  font-weight:900;
+  color:#ffff00;
   text-transform:uppercase;
   overflow-wrap:anywhere;
+  word-break:normal;
 }
+
 #original{
   margin-top:35px;
-  color:#777;
+  color:#aaa;
   font-size:2vw;
 }
 </style>
@@ -61,7 +68,6 @@ const KEY="sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
 const ROOM="123456";
 
 async function load(){
-
   try{
 
     const api=
