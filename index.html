@@ -1,147 +1,88 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Voice TV</title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>Voice TV</title>
 
-<style>
-html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
-}
+  <!-- Supabase JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  <style>
 
-#screen {
-  width: 94%;
-  text-align: center;
-}
-
-#status {
-  color: #888;
-  font-size: 18px;
-  margin-bottom: 40px;
-}
-
-#text {
-  color: #fff;
-  font-size: 7vw;
-  line-height: 1.2;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-#original {
-  margin-top: 40px;
-  color: #777;
-  font-size: 2vw;
-}
-</style>
-</head>
-
-<body>
-
-<div id="screen">
-
-  <div id="status">POVEZUJEM...</div>
-
-  <div id="text">
-    ČAKAM NA BESEDILO...
-  </div>
-
-  <div id="original"></div>
-
-</div>
-
-<script>
-const SUPABASE_URL =
-  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
-
-const client = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-const ROOM = "123456";
-
-
-async function loadText() {
-
-  const { data, error } = await client
-    .from("translation_rooms")
-    .select("*")
-    .eq("room_code", ROOM)
-    .single();
-
-  if (error) {
-    document.getElementById("status").innerText =
-      "NAPAKA PRI POVEZAVI";
-
-    console.error(error);
-    return;
-  }
-
-  showText(data);
-
-  document.getElementById("status").innerText =
-    "● POVEZANO";
-}
-
-
-function showText(row) {
-
-  document.getElementById("text").innerText =
-    row.translated_text || "ČAKAM NA PREVOD...";
-
-  document.getElementById("original").innerText =
-    row.original_text || "";
-}
-
-
-client
-  .channel("room-123456")
-
-  .on(
-    "postgres_changes",
-    {
-      event: "UPDATE",
-      schema: "public",
-      table: "translation_rooms",
-      filter: "room_code=eq.123456"
-    },
-
-    payload => {
-
-      console.log("NOV TEKST:", payload.new);
-
-      showText(payload.new);
+    * {
+      box-sizing: border-box;
     }
-  )
 
-  .subscribe(status => {
+    html,
+    body {
+      margin: 0;
+      padding: 0;
 
-    console.log("Realtime:", status);
+      width: 100%;
+      height: 100%;
 
-  });
+      background: #000000;
+      color: #ffffff;
 
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-loadText();
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-</script>
+      overflow: hidden;
+    }
 
-</body>
-</html>
+    #screen {
+      width: 94%;
+      height: 94%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+    }
+
+    #status {
+      position: absolute;
+
+      top: 20px;
+      left: 25px;
+
+      color: #777777;
+
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #room {
+      position: absolute;
+
+      top: 20px;
+      right: 25px;
+
+      color: #555555;
+
+      font-size: 16px;
+    }
+
+    #translatedText {
+      width: 100%;
+
+      color: #ffffff;
+
+      font-size: 7vw;
+      line-height: 1.15;
+
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      word-wrap: break
