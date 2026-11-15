@@ -3,21 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Phone 5 - Sašo & AI friends</title>
+
+<title>Sašo & AI friends</title>
+
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020916">
 
 <style>
+
 :root{
   --bg:#020916;
   --panel:#07162b;
-  --panel2:#0b203c;
-  --text:#ffffff;
+  --text:#fff;
   --muted:#8da4c5;
   --blue:#009dff;
-  --cyan:#27dcff;
+  --cyan:#25ddff;
   --purple:#a84cff;
   --red:#ff405b;
   --yellow:#ffd65a;
-  --green:#41e88b;
 }
 
 *{
@@ -29,8 +35,8 @@ html,body{
   margin:0;
   min-height:100%;
   background:
-    radial-gradient(circle at 50% 25%, #08274b 0%, #031226 32%, #020916 65%);
-  color:var(--text);
+    radial-gradient(circle at 50% 20%,#08284c 0%,#031226 35%,#020916 70%);
+  color:white;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
@@ -46,8 +52,6 @@ button{
   cursor:pointer;
 }
 
-/* APP */
-
 .app{
   width:100%;
   max-width:480px;
@@ -56,27 +60,13 @@ button{
   padding:
     max(22px,env(safe-area-inset-top))
     20px
-    max(24px,env(safe-area-inset-bottom));
-  position:relative;
-  overflow:hidden;
+    max(25px,env(safe-area-inset-bottom));
 }
 
-.app::before{
-  content:"";
-  position:absolute;
-  width:420px;
-  height:420px;
-  left:-170px;
-  bottom:-270px;
-  border:1px solid rgba(0,157,255,.55);
-  border-radius:50%;
-  box-shadow:
-    0 0 30px rgba(0,157,255,.25),
-    80px -30px 100px rgba(0,157,255,.08);
-  pointer-events:none;
-}
 
-/* HEADER */
+/* ==============================
+   GLAVA
+   ============================== */
 
 .header{
   display:flex;
@@ -88,83 +78,112 @@ button{
 .logo{
   font-size:21px;
   font-weight:700;
-  letter-spacing:-.4px;
 }
 
-.settings{
+.app-icon{
   width:42px;
   height:42px;
-  border:0;
-  background:transparent;
-  color:white;
-  font-size:25px;
+  border-radius:11px;
+  overflow:hidden;
+  box-shadow:
+    0 0 12px rgba(0,157,255,.45);
 }
 
-/* SCREENS */
+.app-icon img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
 
 .screen{
   display:none;
-  animation:show .28s ease;
 }
 
 .screen.active{
   display:block;
+  animation:appear .25s ease;
 }
 
-@keyframes show{
-  from{opacity:0;transform:translateY(5px)}
-  to{opacity:1;transform:none}
+@keyframes appear{
+  from{
+    opacity:0;
+    transform:translateY(5px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
 
-/* SETUP */
 
-.setup-title{
-  text-align:center;
-  color:#b9cae5;
-  font-size:19px;
-  margin:4px 0 20px;
-}
+/* ==============================
+   OSEBE
+   ============================== */
 
 .person-card{
   display:grid;
   grid-template-columns:110px 1fr;
   gap:15px;
   align-items:center;
-  margin-bottom:18px;
-  padding:18px;
+
+  margin-bottom:20px;
+  padding:20px 18px;
+
   border-radius:23px;
-  background:linear-gradient(145deg,rgba(9,39,75,.96),rgba(7,23,46,.92));
-  border:1px solid rgba(0,157,255,.7);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(9,39,75,.96),
+      rgba(7,23,46,.92)
+    );
+
+  border:1px solid rgba(0,157,255,.75);
+
   box-shadow:
     inset 0 0 25px rgba(0,157,255,.08),
-    0 0 22px rgba(0,157,255,.11);
+    0 0 22px rgba(0,157,255,.12);
 }
 
 .person-card.purple{
-  border-color:rgba(168,76,255,.78);
+  border-color:rgba(168,76,255,.8);
+
   box-shadow:
     inset 0 0 25px rgba(168,76,255,.08),
-    0 0 22px rgba(168,76,255,.13);
+    0 0 22px rgba(168,76,255,.15);
 }
 
-/* AVATARS */
 
 .avatar-wrap{
   display:flex;
   justify-content:center;
 }
 
+
 .avatar-button{
   width:105px;
   height:105px;
+
   border-radius:50%;
+
   position:relative;
-  border:1px solid rgba(41,201,255,.65);
+
+  border:1px solid rgba(41,201,255,.7);
+
   background:
-    radial-gradient(circle at 50% 45%,rgba(24,133,255,.75),rgba(0,71,168,.3) 55%,transparent 72%);
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(24,133,255,.8),
+      rgba(0,71,168,.3) 55%,
+      transparent 72%
+    );
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   box-shadow:
     0 0 11px #008cff,
     0 0 32px rgba(0,157,255,.48);
@@ -172,120 +191,141 @@ button{
 
 .purple .avatar-button{
   background:
-    radial-gradient(circle at 50% 45%,rgba(153,70,255,.8),rgba(77,24,147,.3) 55%,transparent 72%);
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(153,70,255,.8),
+      rgba(77,24,147,.3) 55%,
+      transparent 72%
+    );
+
   border-color:#a84cff;
+
   box-shadow:
     0 0 11px #a84cff,
     0 0 32px rgba(168,76,255,.42);
 }
 
+
 .person-icon{
   font-size:57px;
   line-height:1;
-  filter:drop-shadow(0 3px 8px rgba(0,0,0,.25));
 }
+
 
 .swap{
   position:absolute;
+
   right:-4px;
   bottom:2px;
+
   width:37px;
   height:37px;
+
   background:#083873;
+
   border:1px solid #35bfff;
   border-radius:50%;
+
   color:white;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:22px;
-  box-shadow:0 0 13px #008cff;
+
+  font-size:21px;
+
+  box-shadow:
+    0 0 13px #008cff;
 }
 
 .purple .swap{
   background:#3d176c;
   border-color:#ba71ff;
-  box-shadow:0 0 13px #a84cff;
+
+  box-shadow:
+    0 0 13px #a84cff;
 }
 
-/* OPTIONS */
+
+/* ==============================
+   JEZIKI
+   ============================== */
 
 .person-options{
   display:flex;
   flex-direction:column;
-  gap:12px;
+  justify-content:center;
 }
+
 
 .select-wrap{
   display:flex;
   align-items:center;
   gap:9px;
+
+  min-height:58px;
+
   padding:3px 12px;
-  min-height:55px;
+
   border-radius:14px;
+
   background:rgba(8,28,54,.82);
+
   border:1px solid rgba(101,154,218,.3);
 }
+
 
 .flag{
   font-size:25px;
 }
 
+
 select{
   min-width:0;
   flex:1;
+
   color:white;
   border:0;
   outline:0;
+
   background:transparent;
-  font-size:15px;
+
+  font-size:16px;
 }
 
 select option{
   color:#111;
 }
 
-.voice{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:#d3dff1;
-  padding-left:8px;
+
+/* ==============================
+   START
+   ============================== */
+
+.start-area{
+  margin-top:30px;
 }
 
-.voice-symbol{
-  width:38px;
-  height:38px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:rgba(30,107,210,.45);
-  font-size:20px;
-}
-
-.purple .voice-symbol{
-  background:rgba(133,63,213,.45);
-}
-
-.helper{
-  text-align:center;
-  color:#aabbd5;
-  margin:22px 0 24px;
-  font-size:15px;
-}
-
-/* START */
 
 .start-button{
   width:100%;
-  height:68px;
+  height:70px;
+
   border:1px solid #45e3ff;
-  border-radius:20px;
+  border-radius:21px;
+
   color:white;
+
+  font-size:26px;
   font-weight:700;
-  font-size:25px;
-  background:linear-gradient(135deg,#04b5ff,#0063ed);
+
+  background:
+    linear-gradient(
+      135deg,
+      #04b5ff,
+      #0063ed
+    );
+
   box-shadow:
     0 0 13px #009cff,
     0 0 32px rgba(0,157,255,.45),
@@ -296,60 +336,101 @@ select option{
   transform:scale(.985);
 }
 
-.start-icon{
-  margin-right:10px;
-}
 
-/* LIVE */
+/* ==============================
+   POGOVOR - GUMBA
+   ============================== */
 
 .live-actions{
   display:grid;
   grid-template-columns:1fr 1fr;
+
   gap:14px;
+
   margin-bottom:25px;
 }
 
-.confirm{
+
+.next-button{
   height:64px;
+
   border-radius:18px;
+
   border:1px solid #39dbff;
-  background:linear-gradient(135deg,#08b7ff,#0675ed);
+
+  background:
+    linear-gradient(
+      135deg,
+      #08b7ff,
+      #0675ed
+    );
+
   color:white;
-  font-size:33px;
-  box-shadow:0 0 17px rgba(0,157,255,.45);
+
+  font-size:35px;
+
+  box-shadow:
+    0 0 17px rgba(0,157,255,.45);
 }
 
-.stop{
+
+.stop-button{
   height:64px;
+
   border-radius:18px;
+
   border:1px solid #ff6076;
-  background:linear-gradient(135deg,#a71e36,#66152a);
+
+  background:
+    linear-gradient(
+      135deg,
+      #a71e36,
+      #66152a
+    );
+
   color:white;
+
   font-size:19px;
   font-weight:700;
-  box-shadow:0 0 15px rgba(255,64,91,.35);
+
+  box-shadow:
+    0 0 15px rgba(255,64,91,.35);
 }
+
 
 .stop-square{
   display:inline-block;
+
   width:17px;
   height:17px;
-  border-radius:3px;
+
   background:white;
+
+  border-radius:3px;
+
   margin-right:9px;
+
   vertical-align:-2px;
 }
 
-/* LANGUAGE ROUTE */
+
+/* ==============================
+   SMER PREVODA
+   ============================== */
 
 .language-route{
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   gap:13px;
+
   font-size:14px;
-  margin-bottom:20px;
+
+  margin-bottom:18px;
 }
+
 
 .route-item{
   display:flex;
@@ -357,197 +438,372 @@ select option{
   gap:7px;
 }
 
+
 .route-arrow{
   color:#aabfd9;
   font-size:22px;
 }
 
-/* ACTIVE SPEAKER */
+
+/* ==============================
+   AKTIVNA OSEBA
+   ============================== */
 
 .active-speaker{
   display:flex;
-  align-items:center;
+
   justify-content:center;
-  gap:12px;
-  margin-bottom:17px;
+  align-items:center;
+
+  gap:11px;
+
+  margin-bottom:6px;
 }
 
+
 .small-avatar{
-  width:48px;
-  height:48px;
+  width:46px;
+  height:46px;
+
   border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
+
+  font-size:27px;
+
   background:#0d376e;
+
   border:1px solid #168fff;
-  box-shadow:0 0 13px rgba(0,157,255,.3);
+
+  box-shadow:
+    0 0 13px rgba(0,157,255,.3);
 }
 
+
 .speaker-name{
-  font-size:25px;
+  font-size:24px;
   font-weight:700;
 }
 
-/* MAIN ORB */
+
+/* ==============================
+   MIKROFON
+   ============================== */
 
 .orb-area{
   display:flex;
   justify-content:center;
-  margin:10px 0 15px;
+
+  margin:10px 0 12px;
 }
+
 
 .orb-rings{
   width:260px;
   height:260px;
+
   border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  border:1px solid rgba(0,113,255,.65);
-  box-shadow:
-    0 0 0 20px rgba(0,126,255,.02),
-    0 0 0 39px rgba(0,126,255,.025);
+
   position:relative;
+
+  border:1px solid rgba(0,113,255,.65);
+
+  transition:.4s;
 }
+
 
 .orb-rings::before,
 .orb-rings::after{
   content:"";
+
   position:absolute;
+
   border-radius:50%;
+
   border:1px solid rgba(0,119,255,.54);
 }
+
 
 .orb-rings::before{
   inset:17px;
 }
 
+
 .orb-rings::after{
   inset:36px;
 }
 
+
 .main-orb{
   width:180px;
   height:180px;
+
   border:1px solid #60efff;
+
   border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:75px;
+
+  font-size:73px;
+
   position:relative;
   z-index:2;
+
   background:
-    radial-gradient(circle at center,#1acbff 0,#087cff 44%,#004fc0 69%,#06234c 100%);
+    radial-gradient(
+      circle at center,
+      #1acbff 0,
+      #087cff 44%,
+      #004fc0 69%,
+      #06234c 100%
+    );
+
   box-shadow:
     0 0 12px #20d8ff,
     0 0 40px rgba(0,145,255,.8),
     inset 0 0 30px rgba(255,255,255,.15);
-  transition:.25s;
+
+  transition:.35s;
 }
 
+
+/* POSLUŠANJE */
+
+.listening .main-orb{
+  animation:
+    micPulse 1.15s ease-in-out infinite;
+}
+
+.listening.orb-rings{
+  animation:
+    ringPulse 1.15s ease-in-out infinite;
+}
+
+
+@keyframes micPulse{
+
+  0%{
+    transform:scale(.96);
+
+    box-shadow:
+      0 0 10px #20d8ff,
+      0 0 28px rgba(0,145,255,.65),
+      inset 0 0 30px rgba(255,255,255,.14);
+  }
+
+  50%{
+    transform:scale(1.035);
+
+    box-shadow:
+      0 0 20px #5eefff,
+      0 0 65px rgba(0,157,255,.95),
+      inset 0 0 35px rgba(255,255,255,.22);
+  }
+
+  100%{
+    transform:scale(.96);
+
+    box-shadow:
+      0 0 10px #20d8ff,
+      0 0 28px rgba(0,145,255,.65),
+      inset 0 0 30px rgba(255,255,255,.14);
+  }
+}
+
+
+@keyframes ringPulse{
+
+  0%,100%{
+    transform:scale(.94);
+    opacity:.65;
+  }
+
+  50%{
+    transform:scale(1.04);
+    opacity:1;
+  }
+}
+
+
+/* PREVAJANJE */
+
 .main-orb.processing{
+
   background:
-    radial-gradient(circle at center,#ffe771,#efb717 46%,#976300 72%,#392600 100%);
+    radial-gradient(
+      circle at center,
+      #ffe771,
+      #efb717 46%,
+      #976300 72%,
+      #392600 100%
+    );
+
   box-shadow:
     0 0 13px #ffd84d,
     0 0 43px rgba(255,174,0,.7);
 }
 
+
+/* GOVOR */
+
 .main-orb.speaking{
+
   background:
-    radial-gradient(circle at center,#d975ff,#9838f5 46%,#5b1eb1 72%,#241148 100%);
+    radial-gradient(
+      circle at center,
+      #d975ff,
+      #9838f5 46%,
+      #5b1eb1 72%,
+      #241148 100%
+    );
+
   box-shadow:
     0 0 13px #c95cff,
     0 0 43px rgba(154,57,255,.65);
 }
 
-/* STAGES */
+
+/* ==============================
+   FAZE
+   ============================== */
 
 .stages{
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   gap:12px;
 }
+
 
 .stage{
   width:52px;
   height:52px;
+
   border:1px solid #4e759f;
+
   border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   font-size:23px;
+
   color:#7891b0;
+
   background:#06162c;
+
+  transition:.3s;
 }
+
 
 .stage.active.listen{
   color:white;
   border-color:#3ceaff;
-  box-shadow:0 0 15px #008cff;
+
+  box-shadow:
+    0 0 15px #008cff;
 }
+
 
 .stage.active.process{
   color:white;
   border-color:#ffd748;
-  box-shadow:0 0 15px #e8a600;
+
+  box-shadow:
+    0 0 15px #e8a600;
 }
+
 
 .stage.active.speak{
   color:white;
   border-color:#c967ff;
-  box-shadow:0 0 15px #a84cff;
+
+  box-shadow:
+    0 0 15px #a84cff;
 }
+
 
 .stage-arrow{
   color:#7193bd;
   font-size:23px;
 }
 
+
 .status{
   text-align:center;
+
   color:#28c5ff;
+
   font-size:20px;
   font-weight:700;
-  margin:13px 0 20px;
+
+  margin:13px 0 18px;
 }
 
-/* TRANSLATION */
+
+/* ==============================
+   PREVOD
+   ============================== */
 
 .translation{
-  border:1px solid rgba(96,138,187,.35);
-  background:rgba(8,29,56,.83);
+  border:
+    1px solid rgba(96,138,187,.35);
+
+  background:
+    rgba(8,29,56,.83);
+
   border-radius:18px;
+
   padding:17px;
-  box-shadow:inset 0 0 30px rgba(0,73,158,.07);
 }
+
 
 .translation-line{
   display:flex;
+
   gap:12px;
+
   align-items:flex-start;
-  font-size:18px;
+
+  font-size:17px;
+
   line-height:1.4;
 }
 
+
 .translation-line + .translation-line{
-  border-top:1px solid rgba(129,159,195,.35);
+  border-top:
+    1px solid rgba(129,159,195,.35);
+
   margin-top:14px;
+
   padding-top:14px;
 }
 
+
 .translation-target{
   color:var(--yellow);
+
   font-size:21px;
+
   font-weight:700;
 }
 
-/* RESPONSIVE */
+
+/* ==============================
+   MOBILE
+   ============================== */
 
 @media(max-width:370px){
 
@@ -558,7 +814,7 @@ select option{
 
   .person-card{
     grid-template-columns:90px 1fr;
-    padding:14px 11px;
+    padding:15px 11px;
   }
 
   .avatar-button{
@@ -579,7 +835,9 @@ select option{
     width:155px;
     height:155px;
   }
+
 }
+
 </style>
 </head>
 
@@ -587,727 +845,1250 @@ select option{
 
 <main class="app">
 
-  <header class="header">
-    <div class="logo">Sašo &amp; AI friends</div>
-    <button class="settings" type="button" aria-label="Nastavitve">⚙</button>
-  </header>
+<header class="header">
 
-  <!-- ===================================== -->
-  <!-- SCREEN 1 - PRIPRAVA                   -->
-  <!-- ===================================== -->
+  <div class="logo">
+    Sašo &amp; AI friends
+  </div>
 
-  <section id="setupScreen" class="screen active">
+  <div class="app-icon">
+    <img
+      src="apple-touch-icon.png"
+      alt="Sašo & AI friends"
+    >
+  </div>
 
-    <div class="setup-title">Izberi jezik in glas</div>
+</header>
 
-    <!-- GOVOREC 1 -->
 
-    <div class="person-card">
+<!-- ===================================
+     PRVI EKRAN
+=================================== -->
 
-      <div class="avatar-wrap">
-        <button
-          id="person1Button"
-          class="avatar-button"
-          type="button"
-          aria-label="Zamenjaj glas prve osebe"
-        >
-          <span id="person1Icon" class="person-icon">👨</span>
-          <span class="swap">↔</span>
-        </button>
-      </div>
+<section
+  id="setupScreen"
+  class="screen active"
+>
 
-      <div class="person-options">
 
-        <div class="select-wrap">
-          <span id="flag1" class="flag">🇸🇮</span>
+<!-- OSEBA 1 -->
 
-          <select id="language1" aria-label="Jezik prve osebe">
-            <option value="sl-SI" selected>Slovenščina</option>
-            <option value="hu-HU">Magyar</option>
-          </select>
-        </div>
+<div class="person-card">
 
-        <div class="voice">
-          <span class="voice-symbol">🔊</span>
-          <span id="voice1Label">Moški glas</span>
-        </div>
+  <div class="avatar-wrap">
 
-      </div>
-    </div>
+    <button
+      id="person1Button"
+      class="avatar-button"
+      type="button"
+    >
 
-    <!-- GOVOREC 2 -->
+      <span
+        id="person1Icon"
+        class="person-icon"
+      >
+        👨
+      </span>
 
-    <div class="person-card purple">
+      <span class="swap">
+        ↔
+      </span>
 
-      <div class="avatar-wrap">
-        <button
-          id="person2Button"
-          class="avatar-button"
-          type="button"
-          aria-label="Zamenjaj glas druge osebe"
-        >
-          <span id="person2Icon" class="person-icon">👩</span>
-          <span class="swap">↔</span>
-        </button>
-      </div>
-
-      <div class="person-options">
-
-        <div class="select-wrap">
-          <span id="flag2" class="flag">🇭🇺</span>
-
-          <select id="language2" aria-label="Jezik druge osebe">
-            <option value="sl-SI">Slovenščina</option>
-            <option value="hu-HU" selected>Magyar</option>
-          </select>
-        </div>
-
-        <div class="voice">
-          <span class="voice-symbol">🔊</span>
-          <span id="voice2Label">Ženski glas</span>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="helper">
-      Dotik ikone zamenja glas
-    </div>
-
-    <button id="startButton" class="start-button" type="button">
-      <span class="start-icon">▶</span>
-      Start
     </button>
 
-  </section>
+  </div>
 
 
-  <!-- ===================================== -->
-  <!-- SCREEN 2 - POGOVOR                    -->
-  <!-- ===================================== -->
+  <div class="person-options">
 
-  <section id="conversationScreen" class="screen">
+    <div class="select-wrap">
 
-    <div class="live-actions">
+      <span
+        id="flag1"
+        class="flag"
+      >
+        🇸🇮
+      </span>
 
-      <button id="confirmButton" class="confirm" type="button">
-        ✓
-      </button>
+      <select id="language1">
 
-      <button id="stopButton" class="stop" type="button">
-        <span class="stop-square"></span>
-        Stop
-      </button>
-
-    </div>
-
-
-    <div class="language-route">
-
-      <div class="route-item">
-        <span id="conversationFlag1" class="flag">🇸🇮</span>
-        <span id="conversationLanguage1">Slovenščina</span>
-      </div>
-
-      <span class="route-arrow">→</span>
-
-      <div class="route-item">
-        <span id="conversationFlag2" class="flag">🇭🇺</span>
-        <span id="conversationLanguage2">Magyar</span>
-      </div>
-
-    </div>
-
-
-    <div class="active-speaker">
-      <div id="activeAvatar" class="small-avatar">👨</div>
-      <div class="speaker-name">Sašo</div>
-    </div>
-
-
-    <div class="orb-area">
-
-      <div class="orb-rings">
-
-        <button
-          id="mainOrb"
-          class="main-orb"
-          type="button"
-          aria-label="Mikrofon"
+        <option
+          value="sl-SI"
+          selected
         >
-          🎙️
-        </button>
+          Slovenščina
+        </option>
 
-      </div>
+        <option value="hu-HU">
+          Magyar
+        </option>
 
-    </div>
-
-
-    <div class="stages">
-
-      <div id="stageListen" class="stage listen active">🎙</div>
-
-      <div class="stage-arrow">→</div>
-
-      <div id="stageProcess" class="stage process">🤫</div>
-
-      <div class="stage-arrow">→</div>
-
-      <div id="stageSpeak" class="stage speak">🔊</div>
+      </select>
 
     </div>
 
+  </div>
 
-    <div id="status" class="status">
-      Poslušam ...
+</div>
+
+
+
+<!-- OSEBA 2 -->
+
+<div class="person-card purple">
+
+  <div class="avatar-wrap">
+
+    <button
+      id="person2Button"
+      class="avatar-button"
+      type="button"
+    >
+
+      <span
+        id="person2Icon"
+        class="person-icon"
+      >
+        👩
+      </span>
+
+      <span class="swap">
+        ↔
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <div class="person-options">
+
+    <div class="select-wrap">
+
+      <span
+        id="flag2"
+        class="flag"
+      >
+        🇭🇺
+      </span>
+
+      <select id="language2">
+
+        <option value="sl-SI">
+          Slovenščina
+        </option>
+
+        <option
+          value="hu-HU"
+          selected
+        >
+          Magyar
+        </option>
+
+      </select>
+
     </div>
 
+  </div>
 
-    <div class="translation">
+</div>
 
-      <div class="translation-line">
-        <span id="resultFlag1" class="flag">🇸🇮</span>
-        <span id="sourceText">
-          Jutri pridem ob osmih.
-        </span>
-      </div>
 
-      <div class="translation-line">
-        <span id="resultFlag2" class="flag">🇭🇺</span>
-        <span id="translatedText" class="translation-target">
-          Holnap nyolckor jövök.
-        </span>
-      </div>
 
+<div class="start-area">
+
+  <button
+    id="startButton"
+    class="start-button"
+    type="button"
+  >
+    ▶ &nbsp;Start
+  </button>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================================
+     DRUGI EKRAN
+=================================== -->
+
+<section
+  id="conversationScreen"
+  class="screen"
+>
+
+
+<div class="live-actions">
+
+  <button
+    id="nextButton"
+    class="next-button"
+    type="button"
+    aria-label="Naprej"
+  >
+    ✓
+  </button>
+
+
+  <button
+    id="stopButton"
+    class="stop-button"
+    type="button"
+  >
+
+    <span class="stop-square"></span>
+
+    Ustavi
+
+  </button>
+
+</div>
+
+
+
+<!-- JEZIKA -->
+
+<div class="language-route">
+
+  <div class="route-item">
+
+    <span
+      id="conversationFlag1"
+      class="flag"
+    >
+      🇸🇮
+    </span>
+
+    <span
+      id="conversationLanguage1"
+    >
+      Slovenščina
+    </span>
+
+  </div>
+
+
+  <span class="route-arrow">
+    →
+  </span>
+
+
+  <div class="route-item">
+
+    <span
+      id="conversationFlag2"
+      class="flag"
+    >
+      🇭🇺
+    </span>
+
+    <span
+      id="conversationLanguage2"
+    >
+      Magyar
+    </span>
+
+  </div>
+
+</div>
+
+
+
+<!-- AKTIVNA OSEBA -->
+
+<div class="active-speaker">
+
+  <div
+    id="activeAvatar"
+    class="small-avatar"
+  >
+    👨
+  </div>
+
+  <div
+    id="speakerName"
+    class="speaker-name"
+  >
+    Sašo
+  </div>
+
+</div>
+
+
+
+<!-- VELIK MIKROFON -->
+
+<div class="orb-area">
+
+  <div
+    id="orbRings"
+    class="orb-rings listening"
+  >
+
+    <!-- namenoma NI button -->
+
+    <div
+      id="mainOrb"
+      class="main-orb"
+    >
+      🎙️
     </div>
 
-  </section>
+  </div>
+
+</div>
+
+
+
+<!-- FAZE -->
+
+<div class="stages">
+
+  <div
+    id="stageListen"
+    class="stage listen active"
+  >
+    🎙
+  </div>
+
+
+  <div class="stage-arrow">
+    →
+  </div>
+
+
+  <div
+    id="stageProcess"
+    class="stage process"
+  >
+    🤫
+  </div>
+
+
+  <div class="stage-arrow">
+    →
+  </div>
+
+
+  <div
+    id="stageSpeak"
+    class="stage speak"
+  >
+    🔊
+  </div>
+
+</div>
+
+
+<div
+  id="status"
+  class="status"
+>
+  Poslušam ...
+</div>
+
+
+
+<!-- PREVOD -->
+
+<div class="translation">
+
+  <div class="translation-line">
+
+    <span
+      id="resultFlag1"
+      class="flag"
+    >
+      🇸🇮
+    </span>
+
+    <span id="sourceText">
+      ...
+    </span>
+
+  </div>
+
+
+  <div class="translation-line">
+
+    <span
+      id="resultFlag2"
+      class="flag"
+    >
+      🇭🇺
+    </span>
+
+    <span
+      id="translatedText"
+      class="translation-target"
+    >
+      ...
+    </span>
+
+  </div>
+
+</div>
+
+</section>
 
 </main>
 
 
+
 <script>
+
 (() => {
 
-  /* ========================================
-     STANJE
-  ======================================== */
 
-  const state = {
-    person1: {
-      gender: "male",
-      language: "sl-SI"
-    },
+/* ==============================
+   STANJE
+============================== */
 
-    person2: {
-      gender: "female",
-      language: "hu-HU"
-    },
+const state = {
 
-    activePerson: 1
+  person1:{
+    gender:"male",
+    language:"sl-SI"
+  },
+
+  person2:{
+    gender:"female",
+    language:"hu-HU"
+  },
+
+  activePerson:1,
+
+  running:false,
+
+  phase:"listen"
+
+};
+
+
+
+/* ==============================
+   ELEMENTI
+============================== */
+
+const setupScreen =
+  document.getElementById("setupScreen");
+
+const conversationScreen =
+  document.getElementById("conversationScreen");
+
+const person1Button =
+  document.getElementById("person1Button");
+
+const person2Button =
+  document.getElementById("person2Button");
+
+const person1Icon =
+  document.getElementById("person1Icon");
+
+const person2Icon =
+  document.getElementById("person2Icon");
+
+const language1 =
+  document.getElementById("language1");
+
+const language2 =
+  document.getElementById("language2");
+
+const flag1 =
+  document.getElementById("flag1");
+
+const flag2 =
+  document.getElementById("flag2");
+
+const startButton =
+  document.getElementById("startButton");
+
+const nextButton =
+  document.getElementById("nextButton");
+
+const stopButton =
+  document.getElementById("stopButton");
+
+const activeAvatar =
+  document.getElementById("activeAvatar");
+
+const speakerName =
+  document.getElementById("speakerName");
+
+const mainOrb =
+  document.getElementById("mainOrb");
+
+const orbRings =
+  document.getElementById("orbRings");
+
+const stageListen =
+  document.getElementById("stageListen");
+
+const stageProcess =
+  document.getElementById("stageProcess");
+
+const stageSpeak =
+  document.getElementById("stageSpeak");
+
+const status =
+  document.getElementById("status");
+
+const sourceText =
+  document.getElementById("sourceText");
+
+const translatedText =
+  document.getElementById("translatedText");
+
+
+
+/* ==============================
+   JEZIKI
+============================== */
+
+function languageInfo(code){
+
+  if(code === "hu-HU"){
+
+    return{
+      name:"Magyar",
+      flag:"🇭🇺"
+    };
+
+  }
+
+  return{
+    name:"Slovenščina",
+    flag:"🇸🇮"
   };
 
-
-  /* ========================================
-     ELEMENTI
-  ======================================== */
-
-  const setupScreen =
-    document.getElementById("setupScreen");
-
-  const conversationScreen =
-    document.getElementById("conversationScreen");
-
-  const person1Button =
-    document.getElementById("person1Button");
-
-  const person2Button =
-    document.getElementById("person2Button");
-
-  const person1Icon =
-    document.getElementById("person1Icon");
-
-  const person2Icon =
-    document.getElementById("person2Icon");
-
-  const language1 =
-    document.getElementById("language1");
-
-  const language2 =
-    document.getElementById("language2");
-
-  const voice1Label =
-    document.getElementById("voice1Label");
-
-  const voice2Label =
-    document.getElementById("voice2Label");
-
-  const flag1 =
-    document.getElementById("flag1");
-
-  const flag2 =
-    document.getElementById("flag2");
-
-  const startButton =
-    document.getElementById("startButton");
-
-  const stopButton =
-    document.getElementById("stopButton");
-
-  const mainOrb =
-    document.getElementById("mainOrb");
-
-  const status =
-    document.getElementById("status");
-
-  const activeAvatar =
-    document.getElementById("activeAvatar");
-
-  const stageListen =
-    document.getElementById("stageListen");
-
-  const stageProcess =
-    document.getElementById("stageProcess");
-
-  const stageSpeak =
-    document.getElementById("stageSpeak");
+}
 
 
-  /* ========================================
-     JEZIKI
-  ======================================== */
 
-  function getLanguageInfo(code){
+/* ==============================
+   MENJAVA OSEBE
+============================== */
 
-    if(code === "hu-HU"){
-      return {
-        name:"Magyar",
-        flag:"🇭🇺"
-      };
-    }
+function toggleGender(person){
 
-    return {
-      name:"Slovenščina",
-      flag:"🇸🇮"
-    };
-  }
+  state[person].gender =
+    state[person].gender === "male"
+    ? "female"
+    : "male";
+
+  renderSetup();
+
+}
 
 
-  /* ========================================
-     MOŠKI / ŽENSKI
-  ======================================== */
 
-  function changeGender(person){
+function renderSetup(){
 
-    const current = state[person].gender;
-
-    state[person].gender =
-      current === "male"
-        ? "female"
-        : "male";
-
-    updateSetup();
-  }
+  person1Icon.textContent =
+    state.person1.gender === "male"
+    ? "👨"
+    : "👩";
 
 
-  function updateSetup(){
-
-    person1Icon.textContent =
-      state.person1.gender === "male"
-        ? "👨"
-        : "👩";
-
-    person2Icon.textContent =
-      state.person2.gender === "male"
-        ? "👨"
-        : "👩";
-
-    voice1Label.textContent =
-      state.person1.gender === "male"
-        ? "Moški glas"
-        : "Ženski glas";
-
-    voice2Label.textContent =
-      state.person2.gender === "male"
-        ? "Moški glas"
-        : "Ženski glas";
-
-    const l1 =
-      getLanguageInfo(state.person1.language);
-
-    const l2 =
-      getLanguageInfo(state.person2.language);
-
-    flag1.textContent = l1.flag;
-    flag2.textContent = l2.flag;
-  }
+  person2Icon.textContent =
+    state.person2.gender === "male"
+    ? "👨"
+    : "👩";
 
 
-  person1Button.addEventListener(
-    "click",
-    () => changeGender("person1")
-  );
-
-  person2Button.addEventListener(
-    "click",
-    () => changeGender("person2")
-  );
+  flag1.textContent =
+    languageInfo(
+      state.person1.language
+    ).flag;
 
 
-  /* ========================================
-     SPREMEMBA JEZIKA
-  ======================================== */
+  flag2.textContent =
+    languageInfo(
+      state.person2.language
+    ).flag;
 
-  language1.addEventListener("change", () => {
+}
+
+
+
+person1Button.addEventListener(
+  "click",
+  () => toggleGender("person1")
+);
+
+
+person2Button.addEventListener(
+  "click",
+  () => toggleGender("person2")
+);
+
+
+
+/* ==============================
+   JEZIK
+============================== */
+
+language1.addEventListener(
+  "change",
+  () => {
 
     state.person1.language =
       language1.value;
 
-    updateSetup();
+    renderSetup();
 
-  });
+  }
+);
 
 
-  language2.addEventListener("change", () => {
+language2.addEventListener(
+  "change",
+  () => {
 
     state.person2.language =
       language2.value;
 
-    updateSetup();
+    renderSetup();
 
-  });
-
-
-  /* ========================================
-     START
-  ======================================== */
-
-  startButton.addEventListener("click", () => {
-
-    setupScreen.classList.remove("active");
-
-    conversationScreen.classList.add("active");
-
-    prepareConversation();
-
-    setStage("listen");
-
-  });
+  }
+);
 
 
-  /* ========================================
-     STOP
-  ======================================== */
 
-  stopButton.addEventListener("click", () => {
+/* ==============================
+   START
+============================== */
+
+startButton.addEventListener(
+  "click",
+  startConversation
+);
+
+
+function startConversation(){
+
+  state.running = true;
+
+  state.activePerson = 1;
+
+  sourceText.textContent = "...";
+  translatedText.textContent = "...";
+
+  setupScreen.classList.remove(
+    "active"
+  );
+
+  conversationScreen.classList.add(
+    "active"
+  );
+
+  renderConversation();
+
+  beginListening();
+
+}
+
+
+
+/* ==============================
+   RENDER POGOVORA
+============================== */
+
+function renderConversation(){
+
+  const active =
+    state.activePerson === 1
+    ? state.person1
+    : state.person2;
+
+
+  const target =
+    state.activePerson === 1
+    ? state.person2
+    : state.person1;
+
+
+  const activeLanguage =
+    languageInfo(active.language);
+
+
+  const targetLanguage =
+    languageInfo(target.language);
+
+
+  document.getElementById(
+    "conversationFlag1"
+  ).textContent =
+    activeLanguage.flag;
+
+
+  document.getElementById(
+    "conversationLanguage1"
+  ).textContent =
+    activeLanguage.name;
+
+
+  document.getElementById(
+    "conversationFlag2"
+  ).textContent =
+    targetLanguage.flag;
+
+
+  document.getElementById(
+    "conversationLanguage2"
+  ).textContent =
+    targetLanguage.name;
+
+
+  document.getElementById(
+    "resultFlag1"
+  ).textContent =
+    activeLanguage.flag;
+
+
+  document.getElementById(
+    "resultFlag2"
+  ).textContent =
+    targetLanguage.flag;
+
+
+  activeAvatar.textContent =
+    active.gender === "male"
+    ? "👨"
+    : "👩";
+
+}
+
+
+
+/* ==============================
+   FAZE
+============================== */
+
+function clearStages(){
+
+  stageListen.classList.remove(
+    "active"
+  );
+
+  stageProcess.classList.remove(
+    "active"
+  );
+
+  stageSpeak.classList.remove(
+    "active"
+  );
+
+  mainOrb.classList.remove(
+    "processing",
+    "speaking"
+  );
+
+  orbRings.classList.remove(
+    "listening"
+  );
+
+}
+
+
+
+function beginListening(){
+
+  if(!state.running){
+    return;
+  }
+
+
+  state.phase = "listen";
+
+
+  clearStages();
+
+
+  stageListen.classList.add(
+    "active"
+  );
+
+
+  orbRings.classList.add(
+    "listening"
+  );
+
+
+  mainOrb.textContent =
+    "🎙️";
+
+
+  status.textContent =
+    "Poslušam ...";
+
+
+  /*
+     TU SE ZAŽENE DEJANSKI
+     SPEECH RECOGNITION.
+
+     Ne preklapljamo faz
+     s klikom na mikrofon.
+  */
+
+}
+
+
+
+/* ==============================
+   KO JE GOVOR PREPOZNAN
+============================== */
+
+function speechRecognized(text){
+
+  if(
+    !state.running ||
+    !text
+  ){
+    return;
+  }
+
+
+  sourceText.textContent =
+    text;
+
+
+  beginProcessing(text);
+
+}
+
+
+
+/* ==============================
+   PREVAJANJE
+============================== */
+
+function beginProcessing(text){
+
+  if(!state.running){
+    return;
+  }
+
+
+  state.phase =
+    "process";
+
+
+  clearStages();
+
+
+  stageProcess.classList.add(
+    "active"
+  );
+
+
+  mainOrb.classList.add(
+    "processing"
+  );
+
+
+  mainOrb.textContent =
+    "🤫";
+
+
+  status.textContent =
+    "Prevajam ...";
+
+
+  /*
+     TU PRIKLOPIŠ API
+     ZA DEJANSKI PREVOD.
+
+     Ko API vrne prevod:
+
+     translationReady(prevod);
+  */
+
+
+  /*
+     Za demonstracijo trenutno
+     ne preklapljamo samodejno
+     z lažnim prevodom.
+
+     Dejanski prevajalnik mora
+     poklicati translationReady().
+  */
+
+}
+
+
+
+/* ==============================
+   PREVOD JE PRIPRAVLJEN
+============================== */
+
+function translationReady(text){
+
+  if(
+    !state.running ||
+    !text
+  ){
+    return;
+  }
+
+
+  translatedText.textContent =
+    text;
+
+
+  speakTranslation(text);
+
+}
+
+
+
+/* ==============================
+   GOVOR
+============================== */
+
+function speakTranslation(text){
+
+  const target =
+    state.activePerson === 1
+    ? state.person2
+    : state.person1;
+
+
+  clearStages();
+
+
+  state.phase =
+    "speak";
+
+
+  stageSpeak.classList.add(
+    "active"
+  );
+
+
+  mainOrb.classList.add(
+    "speaking"
+  );
+
+
+  mainOrb.textContent =
+    "🔊";
+
+
+  status.textContent =
+    "Govorim ...";
+
+
+  if(
+    !("speechSynthesis" in window)
+  ){
+
+    speechFinished();
+
+    return;
+
+  }
+
+
+  window.speechSynthesis.cancel();
+
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+
+  utterance.lang =
+    target.language;
+
+
+  const voice =
+    findVoice(
+      target.language,
+      target.gender
+    );
+
+
+  if(voice){
+
+    utterance.voice =
+      voice;
+
+  }
+
+
+  utterance.onend =
+    speechFinished;
+
+
+  utterance.onerror =
+    speechFinished;
+
+
+  window.speechSynthesis.speak(
+    utterance
+  );
+
+}
+
+
+
+/* ==============================
+   GOVOR KONČAN
+============================== */
+
+function speechFinished(){
+
+  if(!state.running){
+    return;
+  }
+
+
+  /*
+     Sistem se avtomatsko
+     ponovno pripravi na govor.
+  */
+
+  beginListening();
+
+}
+
+
+
+/* ==============================
+   NAPREJ
+============================== */
+
+nextButton.addEventListener(
+  "click",
+  () => {
+
+    if(!state.running){
+      return;
+    }
+
+
+    /*
+       Edina ročna sprememba
+       med pogovorom.
+
+       Zamenja govorca in
+       smer prevoda.
+    */
+
+    state.activePerson =
+      state.activePerson === 1
+      ? 2
+      : 1;
+
 
     if(
       "speechSynthesis" in window
     ){
+
       window.speechSynthesis.cancel();
-    }
 
-    conversationScreen.classList.remove("active");
-
-    setupScreen.classList.add("active");
-
-  });
-
-
-  /* ========================================
-     PRIPRAVA POGOVORA
-  ======================================== */
-
-  function prepareConversation(){
-
-    const p1 =
-      getLanguageInfo(
-        state.person1.language
-      );
-
-    const p2 =
-      getLanguageInfo(
-        state.person2.language
-      );
-
-    document.getElementById(
-      "conversationFlag1"
-    ).textContent = p1.flag;
-
-    document.getElementById(
-      "conversationFlag2"
-    ).textContent = p2.flag;
-
-    document.getElementById(
-      "conversationLanguage1"
-    ).textContent = p1.name;
-
-    document.getElementById(
-      "conversationLanguage2"
-    ).textContent = p2.name;
-
-    document.getElementById(
-      "resultFlag1"
-    ).textContent = p1.flag;
-
-    document.getElementById(
-      "resultFlag2"
-    ).textContent = p2.flag;
-
-    activeAvatar.textContent =
-      state.person1.gender === "male"
-        ? "👨"
-        : "👩";
-  }
-
-
-  /* ========================================
-     FAZE POGOVORA
-  ======================================== */
-
-  function setStage(stage){
-
-    stageListen.classList.remove("active");
-    stageProcess.classList.remove("active");
-    stageSpeak.classList.remove("active");
-
-    mainOrb.classList.remove(
-      "processing",
-      "speaking"
-    );
-
-
-    if(stage === "listen"){
-
-      stageListen.classList.add("active");
-
-      mainOrb.textContent = "🎙️";
-
-      status.textContent =
-        "Poslušam ...";
     }
 
 
-    if(stage === "process"){
+    sourceText.textContent = "...";
 
-      stageProcess.classList.add("active");
-
-      mainOrb.classList.add("processing");
-
-      mainOrb.textContent = "🤫";
-
-      status.textContent =
-        "Prevajam ...";
-    }
+    translatedText.textContent = "...";
 
 
-    if(stage === "speak"){
+    renderConversation();
 
-      stageSpeak.classList.add("active");
-
-      mainOrb.classList.add("speaking");
-
-      mainOrb.textContent = "🔊";
-
-      status.textContent =
-        "Govorim ...";
-    }
+    beginListening();
 
   }
+);
 
 
-  /* ========================================
-     TEST FAZ Z DOTIKOM VELIKEGA KROGA
-  ======================================== */
 
-  let demoStage = 0;
+/* ==============================
+   USTAVI
+============================== */
 
-  mainOrb.addEventListener("click", () => {
-
-    demoStage++;
-
-    if(demoStage > 2){
-      demoStage = 0;
-    }
-
-    if(demoStage === 0){
-      setStage("listen");
-    }
-
-    if(demoStage === 1){
-      setStage("process");
-    }
-
-    if(demoStage === 2){
-      setStage("speak");
-    }
-
-  });
+stopButton.addEventListener(
+  "click",
+  stopConversation
+);
 
 
-  /* ========================================
-     TTS GLASOVI
-  ======================================== */
+function stopConversation(){
 
-  function findVoice(language, gender){
+  state.running = false;
 
-    if(
-      !("speechSynthesis" in window)
-    ){
-      return null;
-    }
-
-    const voices =
-      window.speechSynthesis.getVoices();
-
-    const languagePrefix =
-      language.substring(0,2)
-              .toLowerCase();
-
-    const languageVoices =
-      voices.filter(v =>
-        v.lang
-         .toLowerCase()
-         .startsWith(languagePrefix)
-      );
-
-    /*
-      Brskalniki nimajo standardnega
-      gender atributa.
-
-      Zato poskusimo prepoznati nekaj
-      pogostih imen glasov.
-    */
-
-    const maleNames = [
-      "male",
-      "david",
-      "mark",
-      "daniel",
-      "alex"
-    ];
-
-    const femaleNames = [
-      "female",
-      "zira",
-      "samantha",
-      "anna",
-      "helena"
-    ];
-
-    const names =
-      gender === "male"
-        ? maleNames
-        : femaleNames;
-
-    const preferred =
-      languageVoices.find(voice => {
-
-        const name =
-          voice.name.toLowerCase();
-
-        return names.some(
-          n => name.includes(n)
-        );
-
-      });
-
-    return (
-      preferred ||
-      languageVoices[0] ||
-      null
-    );
-  }
-
-
-  function speakText(
-    text,
-    language,
-    gender
-  ){
-
-    if(
-      !("speechSynthesis" in window)
-    ){
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    const utterance =
-      new SpeechSynthesisUtterance(text);
-
-    utterance.lang = language;
-
-    const voice =
-      findVoice(language, gender);
-
-    if(voice){
-      utterance.voice = voice;
-    }
-
-    utterance.onstart = () => {
-      setStage("speak");
-    };
-
-    utterance.onend = () => {
-      setStage("listen");
-    };
-
-    window.speechSynthesis.speak(
-      utterance
-    );
-  }
-
-
-  /* ========================================
-     TEST GOVORA
-
-     Dolg pritisk / dvoklik na prevod
-     ga prebere z izbranim glasom.
-  ======================================== */
-
-  const translatedText =
-    document.getElementById(
-      "translatedText"
-    );
-
-  translatedText.addEventListener(
-    "dblclick",
-    () => {
-
-      speakText(
-        translatedText.textContent.trim(),
-        state.person2.language,
-        state.person2.gender
-      );
-
-    }
-  );
-
-
-  /* ========================================
-     NALOŽI GLASOVE
-  ======================================== */
 
   if(
     "speechSynthesis" in window
   ){
 
-    window.speechSynthesis.getVoices();
+    window.speechSynthesis.cancel();
 
-    window.speechSynthesis.addEventListener(
-      "voiceschanged",
-      () => {
-        window.speechSynthesis.getVoices();
-      }
-    );
   }
 
 
-  updateSetup();
+  clearStages();
+
+
+  conversationScreen.classList.remove(
+    "active"
+  );
+
+
+  setupScreen.classList.add(
+    "active"
+  );
+
+}
+
+
+
+/* ==============================
+   IZBIRA TTS GLASU
+============================== */
+
+function findVoice(
+  language,
+  gender
+){
+
+  if(
+    !("speechSynthesis" in window)
+  ){
+
+    return null;
+
+  }
+
+
+  const voices =
+    window.speechSynthesis.getVoices();
+
+
+  const prefix =
+    language
+      .substring(0,2)
+      .toLowerCase();
+
+
+  const languageVoices =
+    voices.filter(
+      voice =>
+        voice.lang
+          .toLowerCase()
+          .startsWith(prefix)
+    );
+
+
+  const maleNames = [
+    "male",
+    "david",
+    "mark",
+    "daniel",
+    "alex"
+  ];
+
+
+  const femaleNames = [
+    "female",
+    "zira",
+    "samantha",
+    "anna",
+    "helena"
+  ];
+
+
+  const names =
+    gender === "male"
+    ? maleNames
+    : femaleNames;
+
+
+  const preferred =
+    languageVoices.find(
+      voice => {
+
+        const n =
+          voice.name.toLowerCase();
+
+        return names.some(
+          item =>
+            n.includes(item)
+        );
+
+      }
+    );
+
+
+  return (
+    preferred ||
+    languageVoices[0] ||
+    null
+  );
+
+}
+
+
+
+/* ==============================
+   GLASOVI
+============================== */
+
+if(
+  "speechSynthesis" in window
+){
+
+  window.speechSynthesis.getVoices();
+
+}
+
+
+
+/* ==============================
+   FUNKCIJI ZA PRIKLOP
+   SPEECH + PREVAJALNIKA
+============================== */
+
+/*
+   Ko speech recognition prepozna stavek:
+
+   window.phone5SpeechRecognized(
+      "Jutri pridem ob osmih."
+   );
+
+
+   Ko prevajalnik vrne rezultat:
+
+   window.phone5TranslationReady(
+      "Holnap nyolckor jövök."
+   );
+*/
+
+
+window.phone5SpeechRecognized =
+  speechRecognized;
+
+
+window.phone5TranslationReady =
+  translationReady;
+
+
+
+/* ==============================
+   ZAČETNI PRIKAZ
+============================== */
+
+renderSetup();
+
 
 })();
+
 </script>
 
 </body>
