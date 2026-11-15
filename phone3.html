@@ -2,12 +2,34 @@
 <html lang="sl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
+>
+
+<title>Voice Pogovor</title>
+
 <meta name="theme-color" content="#071120">
-<title>Voice Conversation</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Voice Pogovor">
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="apple-touch-icon.png"
+>
+
+<link
+  rel="icon"
+  type="image/png"
+  href="apple-touch-icon.png"
+>
 
 <style>
 *{box-sizing:border-box}
+
 :root{
   --bg:#071120;
   --card:#111e32;
@@ -19,8 +41,10 @@
   --green:#22c875;
   --red:#ff5368;
   --yellow:#ffd84d;
-  --cyan:#29d7c5
+  --cyan:#29d7c5;
+  --orange:#ff9f43
 }
+
 html,body{
   margin:0;
   min-height:100%;
@@ -28,32 +52,66 @@ html,body{
   color:var(--text);
   font-family:Arial,sans-serif
 }
-body{padding:16px}
-.app{max-width:620px;margin:auto}
-.hidden{display:none!important}
+
+body{
+  padding:
+    max(16px,env(safe-area-inset-top))
+    16px
+    max(16px,env(safe-area-inset-bottom))
+}
+
+.app{
+  max-width:620px;
+  margin:auto
+}
+
+.hidden{
+  display:none!important
+}
 
 .header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:12px;
-  margin:7px 2px 20px
+  gap:10px;
+  margin:6px 2px 20px
 }
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0
+}
+
+.brandIcon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  border-radius:12px;
+  object-fit:cover
+}
+
 .logo{
-  font-size:23px;
+  font-size:21px;
   font-weight:900;
   letter-spacing:-1px
 }
-.logo span{color:var(--blue)}
+
+.logo span{
+  color:var(--blue)
+}
+
 .connection{
   flex-shrink:0;
-  padding:8px 11px;
+  padding:8px 10px;
   border-radius:18px;
   background:#16243a;
   color:var(--muted);
-  font-size:11px;
+  font-size:10px;
   font-weight:bold
 }
+
 .card{
   margin-bottom:15px;
   padding:17px;
@@ -62,6 +120,7 @@ body{padding:16px}
   background:linear-gradient(145deg,var(--card2),var(--card));
   box-shadow:0 12px 30px #0004
 }
+
 .title{
   margin-bottom:10px;
   color:var(--muted);
@@ -69,6 +128,7 @@ body{padding:16px}
   font-weight:bold;
   letter-spacing:1px
 }
+
 input,select{
   width:100%;
   min-height:54px;
@@ -80,9 +140,20 @@ input,select{
   color:white;
   font-size:17px
 }
-input:focus,select:focus{border-color:var(--blue)}
-button{touch-action:manipulation;cursor:pointer}
-button:disabled{opacity:.38;cursor:default}
+
+input:focus,select:focus{
+  border-color:var(--blue)
+}
+
+button{
+  touch-action:manipulation;
+  cursor:pointer
+}
+
+button:disabled{
+  opacity:.38;
+  cursor:default
+}
 
 .primary,.secondary{
   width:100%;
@@ -93,11 +164,17 @@ button:disabled{opacity:.38;cursor:default}
   font-size:16px;
   font-weight:900
 }
-.primary{border:0;background:var(--blue)}
+
+.primary{
+  border:0;
+  background:var(--blue)
+}
+
 .secondary{
   border:1px solid var(--line);
   background:#1b2e49
 }
+
 .code{
   margin:8px 0;
   text-align:center;
@@ -106,13 +183,18 @@ button:disabled{opacity:.38;cursor:default}
   font-weight:900;
   letter-spacing:8px
 }
+
 .hint,.notice{
   color:var(--muted);
   font-size:13px;
   line-height:1.5;
   text-align:center
 }
-.notice{min-height:23px;margin:13px 0}
+
+.notice{
+  min-height:23px;
+  margin:13px 0
+}
 
 .pair{
   display:grid;
@@ -120,6 +202,7 @@ button:disabled{opacity:.38;cursor:default}
   align-items:center;
   gap:9px
 }
+
 .person{
   min-width:0;
   padding:12px 8px;
@@ -128,11 +211,13 @@ button:disabled{opacity:.38;cursor:default}
   background:#0a1626;
   text-align:center
 }
+
 .personCaption{
   color:var(--muted);
   font-size:10px;
   font-weight:bold
 }
+
 .personName{
   margin-top:5px;
   font-size:15px;
@@ -141,6 +226,7 @@ button:disabled{opacity:.38;cursor:default}
   text-overflow:ellipsis;
   white-space:nowrap
 }
+
 .personLanguage{
   margin-top:5px;
   color:#b9c8dc;
@@ -150,7 +236,12 @@ button:disabled{opacity:.38;cursor:default}
   text-overflow:ellipsis;
   white-space:nowrap
 }
-.swap{color:var(--cyan);font-size:24px}
+
+.swap{
+  color:var(--cyan);
+  font-size:24px
+}
+
 .direction{
   margin-top:13px;
   padding:11px;
@@ -170,27 +261,30 @@ button:disabled{opacity:.38;cursor:default}
   gap:10px;
   align-items:center
 }
-.voiceInfo .main{
+
+.voiceMain{
   font-size:15px;
   font-weight:900
 }
-.voiceInfo .sub{
+
+.voiceSub{
   margin-top:5px;
   color:var(--muted);
   font-size:12px;
   line-height:1.35
 }
+
 .switch{
   position:relative;
   width:60px;
   height:34px
 }
+
 .switch input{
   position:absolute;
-  opacity:0;
-  width:1px;
-  height:1px
+  opacity:0
 }
+
 .slider{
   position:absolute;
   inset:0;
@@ -198,6 +292,7 @@ button:disabled{opacity:.38;cursor:default}
   background:#3b4657;
   transition:.2s
 }
+
 .slider:before{
   content:"";
   position:absolute;
@@ -209,21 +304,39 @@ button:disabled{opacity:.38;cursor:default}
   background:white;
   transition:.2s
 }
+
 .switch input:checked + .slider{
   background:var(--green)
 }
+
 .switch input:checked + .slider:before{
   transform:translateX(26px)
 }
-.testVoice{
+
+.unlockVoice{
   width:100%;
-  min-height:47px;
-  margin-top:12px;
-  border:1px solid #725b12;
-  border-radius:13px;
-  background:#4c3b08;
+  min-height:54px;
+  margin-top:14px;
+  border:1px solid #976f18;
+  border-radius:14px;
+  background:linear-gradient(135deg,#76520c,#4b360a);
   color:#ffe58c;
-  font-weight:bold
+  font-size:16px;
+  font-weight:900
+}
+
+.unlockVoice.unlocked{
+  border-color:#287a53;
+  background:linear-gradient(135deg,#145a3b,#0f3f2d);
+  color:#86f2ba
+}
+
+.voiceState{
+  margin-top:10px;
+  color:var(--orange);
+  font-size:12px;
+  font-weight:bold;
+  text-align:center
 }
 
 .turn{
@@ -234,16 +347,19 @@ button:disabled{opacity:.38;cursor:default}
   font-weight:900;
   text-align:center
 }
+
 .turnMine{
   border:1px solid #246348;
   background:#123d30;
   color:#60e9a5
 }
+
 .turnOther{
   border:1px solid #284b75;
   background:#172a45;
   color:#8abaff
 }
+
 .turnBusy{
   border:1px solid #716028;
   background:#453b16;
@@ -260,14 +376,28 @@ button:disabled{opacity:.38;cursor:default}
   background:linear-gradient(145deg,#3590ff,#1462d2);
   color:white;
   font-size:62px;
-  box-shadow:0 0 0 13px #1e70e52b,0 18px 45px #0007
+  box-shadow:
+    0 0 0 13px #1e70e52b,
+    0 18px 45px #0007
 }
+
 .mic.recording{
   background:linear-gradient(145deg,#ff6374,#c9273d);
-  box-shadow:0 0 0 13px #ff536829,0 18px 45px #0007
+  box-shadow:
+    0 0 0 13px #ff536829,
+    0 18px 45px #0007
 }
-.mic:disabled{box-shadow:none}
-.micLabel{text-align:center;font-size:19px;font-weight:900}
+
+.mic:disabled{
+  box-shadow:none
+}
+
+.micLabel{
+  text-align:center;
+  font-size:19px;
+  font-weight:900
+}
+
 .micHelp{
   min-height:21px;
   margin-top:7px;
@@ -283,18 +413,21 @@ button:disabled{opacity:.38;cursor:default}
   border-radius:15px;
   background:#091524
 }
+
 .lastTitle{
   color:var(--muted);
   font-size:10px;
   font-weight:bold;
   letter-spacing:1px
 }
+
 .original{
   margin-top:9px;
   color:#cbd5e4;
   font-size:16px;
   line-height:1.4
 }
+
 .translation{
   margin-top:8px;
   color:var(--yellow);
@@ -302,7 +435,8 @@ button:disabled{opacity:.38;cursor:default}
   line-height:1.4;
   font-weight:bold
 }
-.speak{
+
+.speak,.manualSpeak{
   width:100%;
   min-height:49px;
   margin-top:12px;
@@ -313,18 +447,26 @@ button:disabled{opacity:.38;cursor:default}
   font-weight:bold
 }
 
+.manualSpeak{
+  min-height:62px;
+  background:linear-gradient(135deg,#916815,#684907);
+  font-size:17px;
+  box-shadow:0 8px 24px #0005
+}
+
 .historyHeader{
   display:flex;
   align-items:center;
   justify-content:space-between;
   margin-bottom:11px
 }
+
 .historyHeader span{
   color:var(--muted);
   font-size:12px;
-  font-weight:bold;
-  letter-spacing:1px
+  font-weight:bold
 }
+
 .clearSmall{
   border:0;
   background:transparent;
@@ -332,6 +474,7 @@ button:disabled{opacity:.38;cursor:default}
   font-size:13px;
   font-weight:bold
 }
+
 .message{
   margin-bottom:10px;
   padding:13px;
@@ -339,8 +482,15 @@ button:disabled{opacity:.38;cursor:default}
   border-radius:14px;
   background:#091524
 }
-.message.mine{border-left:4px solid var(--blue)}
-.message.other{border-left:4px solid var(--cyan)}
+
+.message.mine{
+  border-left:4px solid var(--blue)
+}
+
+.message.other{
+  border-left:4px solid var(--cyan)
+}
+
 .messageMeta{
   display:flex;
   justify-content:space-between;
@@ -349,12 +499,14 @@ button:disabled{opacity:.38;cursor:default}
   font-size:10px;
   font-weight:bold
 }
+
 .messageOriginal{
   margin-top:7px;
   color:#c4cede;
   font-size:14px;
   line-height:1.4
 }
+
 .messageTranslation{
   margin-top:5px;
   color:var(--yellow);
@@ -362,17 +514,20 @@ button:disabled{opacity:.38;cursor:default}
   line-height:1.4;
   font-weight:bold
 }
+
 .empty{
   padding:24px 10px;
   color:#657791;
   font-size:14px;
   text-align:center
 }
+
 .actions{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:9px
 }
+
 .action{
   min-height:53px;
   border:1px solid var(--line);
@@ -381,11 +536,13 @@ button:disabled{opacity:.38;cursor:default}
   color:white;
   font-weight:bold
 }
+
 .leave{
   border-color:#6a5730;
   background:#342a17;
   color:#ffd77d
 }
+
 .end{
   grid-column:1/-1;
   min-height:58px;
@@ -396,9 +553,27 @@ button:disabled{opacity:.38;cursor:default}
   font-size:16px;
   font-weight:900
 }
-.largeIcon{text-align:center;font-size:65px;margin:8px 0 15px}
-.largeTitle{text-align:center;color:#ff9aa6;font-size:22px;font-weight:900}
-.largeText{text-align:center;color:var(--muted);line-height:1.5;margin-top:10px}
+
+.largeIcon{
+  text-align:center;
+  font-size:65px;
+  margin:8px 0 15px
+}
+
+.largeTitle{
+  text-align:center;
+  color:#ff9aa6;
+  font-size:22px;
+  font-weight:900
+}
+
+.largeText{
+  text-align:center;
+  color:var(--muted);
+  line-height:1.5;
+  margin-top:10px
+}
+
 .footer{
   padding:16px 0 8px;
   color:#53657e;
@@ -409,20 +584,48 @@ button:disabled{opacity:.38;cursor:default}
 </head>
 
 <body>
+
 <div class="app">
 
 <div class="header">
-  <div class="logo">VOICE<span>CONVERSATION</span></div>
-  <div id="connection" class="connection">● NI POVEZANO</div>
+
+  <div class="brand">
+    <img
+      src="apple-touch-icon.png"
+      class="brandIcon"
+      alt=""
+    >
+
+    <div class="logo">
+      VOICE<span>POGOVOR</span>
+    </div>
+  </div>
+
+  <div id="connection" class="connection">
+    ● NI POVEZANO
+  </div>
+
 </div>
+
 
 <div id="setupScreen">
 
   <div class="card">
-    <div class="title">MOJE IME</div>
-    <input id="deviceName" maxlength="30" placeholder="Na primer Sašo">
 
-    <div class="title" style="margin-top:16px">MOJ JEZIK</div>
+    <div class="title">
+      MOJE IME
+    </div>
+
+    <input
+      id="deviceName"
+      maxlength="30"
+      placeholder="Na primer Sašo"
+    >
+
+    <div class="title" style="margin-top:16px">
+      MOJ JEZIK
+    </div>
+
     <select id="language">
       <option value="sl">🇸🇮 Slovenščina</option>
       <option value="hu">🇭🇺 Magyar</option>
@@ -431,60 +634,112 @@ button:disabled{opacity:.38;cursor:default}
       <option value="it">🇮🇹 Italiano</option>
       <option value="hr">🇭🇷 Hrvatski</option>
     </select>
+
   </div>
 
-  <div class="card">
-    <div class="title">POGOVORNA SOBA</div>
-    <div class="code">1234</div>
 
-    <div class="hint">
-      Vsak telefon izbere svoj jezik. Prevod je avtomatsko pripravljen v jeziku drugega telefona.
+  <div class="card">
+
+    <div class="title">
+      POGOVORNA SOBA
     </div>
 
-    <button id="createRoom" class="primary">USTVARI NOV POGOVOR</button>
-    <button id="joinRoom" class="secondary">PRIDRUŽI SE SOBI 1234</button>
+    <div class="code">
+      1234
+    </div>
+
+    <div class="hint">
+      Vsak telefon izbere svoj jezik.
+      Prevod se naredi v jeziku drugega telefona.
+    </div>
+
+    <button id="createRoom" class="primary">
+      USTVARI NOV POGOVOR
+    </button>
+
+    <button id="joinRoom" class="secondary">
+      PRIDRUŽI SE SOBI 1234
+    </button>
+
   </div>
 
   <div id="setupNotice" class="notice"></div>
+
 </div>
 
 
 <div id="waitingScreen" class="hidden">
 
   <div class="card">
+
     <div class="title">SOBA</div>
+
     <div class="code">1234</div>
 
     <div class="hint">
-      Čakam na drugo osebo. Drugi telefon naj izbere svoj jezik in se pridruži sobi 1234.
+      Čakam na drugo osebo.
     </div>
 
-    <button id="leaveWaiting" class="secondary">🚪 ZAPUSTI ČAKANJE</button>
-    <button id="endWaiting" class="end" style="width:100%;margin-top:10px">
+    <button id="leaveWaiting" class="secondary">
+      🚪 ZAPUSTI ČAKANJE
+    </button>
+
+    <button
+      id="endWaiting"
+      class="end"
+      style="width:100%;margin-top:10px"
+    >
       📞 PREKINI IN ZAPRI SOBO
     </button>
+
   </div>
 
 </div>
 
 
 <div id="fullScreen" class="hidden">
+
   <div class="card">
+
     <div class="largeIcon">🔒</div>
-    <div class="largeTitle">POGOVOR JE POLN</div>
-    <div class="largeText">V sobi 1234 sta že povezani dve različni napravi.</div>
-    <button id="backFromFull" class="secondary">NAZAJ</button>
+
+    <div class="largeTitle">
+      POGOVOR JE POLN
+    </div>
+
+    <div class="largeText">
+      V sobi 1234 sta že dve napravi.
+    </div>
+
+    <button id="backFromFull" class="secondary">
+      NAZAJ
+    </button>
+
   </div>
+
 </div>
 
 
 <div id="closedScreen" class="hidden">
+
   <div class="card">
+
     <div class="largeIcon">📞</div>
-    <div class="largeTitle">POGOVOR JE BIL PREKINJEN</div>
-    <div id="closedText" class="largeText">Pogovor je zaključen za oba telefona.</div>
-    <button id="backFromClosed" class="primary">NA ZAČETEK</button>
+
+    <div class="largeTitle">
+      POGOVOR JE BIL PREKINJEN
+    </div>
+
+    <div id="closedText" class="largeText">
+      Pogovor je zaključen.
+    </div>
+
+    <button id="backFromClosed" class="primary">
+      NA ZAČETEK
+    </button>
+
   </div>
+
 </div>
 
 
@@ -521,26 +776,36 @@ button:disabled{opacity:.38;cursor:default}
 
     <div class="voiceOptions">
 
-      <div class="voiceInfo">
-        <div class="main" id="voiceOptionTitle">🔊 GLASOVNI PREVOD</div>
-        <div class="sub">
-          Prejeti prevod samodejno predvajaj v mojem jeziku.
+      <div>
+        <div id="voiceOptionTitle" class="voiceMain">
+          🔊 GLASOVNI PREVOD VKLOPLJEN
+        </div>
+
+        <div class="voiceSub">
+          Po odklepanju bo telefon poskusil
+          samodejno predvajati prejete prevode.
         </div>
       </div>
 
       <label class="switch">
-        <input id="autoSpeakToggle" type="checkbox" checked>
+        <input
+          id="autoSpeakToggle"
+          type="checkbox"
+          checked
+        >
         <span class="slider"></span>
       </label>
 
     </div>
 
-    <button id="testVoice" class="testVoice">
-      ▶ TEST GLASU
+
+    <button id="unlockVoice" class="unlockVoice">
+      🔓 ODKLENI GLAS
     </button>
 
-    <div id="voiceAvailability" class="hint" style="margin-top:10px">
-      Za zanesljivo delovanje najprej pritisni TEST GLASU.
+
+    <div id="voiceState" class="voiceState">
+      🔒 GLAS ŠE NI ODKLENJEN
     </div>
 
   </div>
@@ -553,18 +818,31 @@ button:disabled{opacity:.38;cursor:default}
 
   <div class="card">
 
-    <button id="microphone" class="mic" disabled>🎤</button>
+    <button id="microphone" class="mic" disabled>
+      🎤
+    </button>
 
-    <div id="micLabel" class="micLabel">POČAKAJ</div>
+    <div id="micLabel" class="micLabel">
+      POČAKAJ
+    </div>
 
-    <div id="micHelp" class="micHelp">Povezujem telefona ...</div>
+    <div id="micHelp" class="micHelp">
+      Povezujem telefona ...
+    </div>
+
 
     <div id="lastResult" class="last hidden">
 
-      <div class="lastTitle">ZADNJI PREVOD</div>
+      <div class="lastTitle">
+        ZADNJI PREVOD
+      </div>
 
       <div id="lastOriginal" class="original"></div>
       <div id="lastTranslation" class="translation"></div>
+
+      <button id="manualPlay" class="manualSpeak hidden">
+        🔊 PREDVAJAJ PREVOD
+      </button>
 
       <button id="repeatTranslation" class="speak">
         🔊 PONOVI PREVOD
@@ -579,25 +857,42 @@ button:disabled{opacity:.38;cursor:default}
 
     <div class="historyHeader">
       <span>ZGODOVINA POGOVORA</span>
-      <button id="clearConversation" class="clearSmall">POČISTI</button>
+
+      <button id="clearConversation" class="clearSmall">
+        POČISTI
+      </button>
     </div>
 
     <div id="history">
-      <div class="empty">Pogovor se še ni začel.</div>
+      <div class="empty">
+        Pogovor se še ni začel.
+      </div>
     </div>
 
   </div>
 
 
   <div class="actions">
-    <button id="forceTurn" class="action">⇄ PREDAJ BESEDO</button>
-    <button id="leaveRoom" class="action leave">🚪 ZAPUSTI</button>
-    <button id="endCall" class="end">📞 PREKINI POGOVOR</button>
+
+    <button id="forceTurn" class="action">
+      ⇄ PREDAJ BESEDO
+    </button>
+
+    <button id="leaveRoom" class="action leave">
+      🚪 ZAPUSTI
+    </button>
+
+    <button id="endCall" class="end">
+      📞 PREKINI POGOVOR
+    </button>
+
   </div>
 
   <div id="conversationNotice" class="notice"></div>
 
-  <div class="footer">SOBA 1234 • NAJVEČ 2 TELEFONA</div>
+  <div class="footer">
+    SOBA 1234 • NAJVEČ 2 TELEFONA
+  </div>
 
 </div>
 
@@ -620,12 +915,36 @@ const JSON_HEADERS={
 };
 
 const LANGUAGES={
-  sl:{name:"🇸🇮 Slovenščina",tts:"sl-SI",test:"Glasovni prevod je vključen."},
-  hu:{name:"🇭🇺 Magyar",tts:"hu-HU",test:"A hangfordítás be van kapcsolva."},
-  en:{name:"🇬🇧 English",tts:"en-US",test:"Voice translation is enabled."},
-  tl:{name:"🇵🇭 Filipino",tts:"fil-PH",test:"Naka-on ang pagsasalin ng boses."},
-  it:{name:"🇮🇹 Italiano",tts:"it-IT",test:"La traduzione vocale è attivata."},
-  hr:{name:"🇭🇷 Hrvatski",tts:"hr-HR",test:"Glasovni prijevod je uključen."}
+  sl:{
+    name:"🇸🇮 Slovenščina",
+    tts:"sl-SI",
+    test:"Glasovni prevod je odklenjen."
+  },
+  hu:{
+    name:"🇭🇺 Magyar",
+    tts:"hu-HU",
+    test:"A hangfordítás fel van oldva."
+  },
+  en:{
+    name:"🇬🇧 English",
+    tts:"en-US",
+    test:"Voice translation is unlocked."
+  },
+  tl:{
+    name:"🇵🇭 Filipino",
+    tts:"fil-PH",
+    test:"Naka-unlock ang pagsasalin ng boses."
+  },
+  it:{
+    name:"🇮🇹 Italiano",
+    tts:"it-IT",
+    test:"La traduzione vocale è sbloccata."
+  },
+  hr:{
+    name:"🇭🇷 Hrvatski",
+    tts:"hr-HR",
+    test:"Glasovni prijevod je otključan."
+  }
 };
 
 const $=id=>document.getElementById(id);
@@ -651,21 +970,33 @@ let lastSpokenId=0;
 let currentTranslation="";
 
 let autoSpeak=
-  localStorage.getItem("voiceConversationAutoSpeak")!=="false";
+  localStorage.getItem(
+    "voiceConversationAutoSpeak"
+  )!=="false";
 
+/*
+  Odklep velja samo za trenutno odprto sejo.
+  Po novem zagonu aplikacije ga uporabnik ponovi.
+*/
 let ttsUnlocked=false;
-let speakingMessageId=0;
-let speechFallbackTimer=null;
 
 
 function getDeviceId(){
 
   let id=
-    localStorage.getItem("voiceConversationDevice");
+    localStorage.getItem(
+      "voiceConversationDevice"
+    );
 
   if(!id){
 
-    id="dev_"+crypto.randomUUID();
+    id=
+      "dev_"+
+      (
+        crypto.randomUUID
+          ?crypto.randomUUID()
+          :Date.now()+"_"+Math.random()
+      );
 
     localStorage.setItem(
       "voiceConversationDevice",
@@ -720,7 +1051,6 @@ async function api(path,options={}){
   const raw=await response.text();
 
   if(!response.ok){
-
     throw new Error(
       "HTTP "+response.status+" "+raw
     );
@@ -739,10 +1069,14 @@ async function api(path,options={}){
 function restoreSettings(){
 
   const name=
-    localStorage.getItem("voiceConversationName");
+    localStorage.getItem(
+      "voiceConversationName"
+    );
 
   const language=
-    localStorage.getItem("voiceConversationLanguage");
+    localStorage.getItem(
+      "voiceConversationLanguage"
+    );
 
   if(name){
     $("deviceName").value=name;
@@ -753,7 +1087,7 @@ function restoreSettings(){
   }
 
   $("autoSpeakToggle").checked=autoSpeak;
-  updateVoiceOptionText();
+  updateVoiceState();
 }
 
 
@@ -776,11 +1110,11 @@ function readSettings(){
     myLanguage
   );
 
-  updateVoiceOptionText();
+  updateVoiceState();
 }
 
 
-function updateVoiceOptionText(){
+function updateVoiceState(){
 
   if(!$("voiceOptionTitle"))return;
 
@@ -788,18 +1122,60 @@ function updateVoiceOptionText(){
     autoSpeak
       ?"🔊 GLASOVNI PREVOD VKLOPLJEN"
       :"🔇 GLASOVNI PREVOD IZKLOPLJEN";
+
+  if(!autoSpeak){
+
+    $("voiceState").innerText=
+      "🔇 SAMODEJNI GLAS JE IZKLOPLJEN";
+
+    $("voiceState").style.color=
+      "#91a0b8";
+
+    return;
+  }
+
+  if(ttsUnlocked){
+
+    $("voiceState").innerText=
+      "🔊 GLAS JE ODKLENJEN";
+
+    $("voiceState").style.color=
+      "#22c875";
+
+    $("unlockVoice").innerText=
+      "✓ GLAS ODKLENJEN";
+
+    $("unlockVoice")
+      .classList
+      .add("unlocked");
+
+  }else{
+
+    $("voiceState").innerText=
+      "🔒 GLAS ŠE NI ODKLENJEN";
+
+    $("voiceState").style.color=
+      "#ff9f43";
+
+    $("unlockVoice").innerText=
+      "🔓 ODKLENI GLAS";
+
+    $("unlockVoice")
+      .classList
+      .remove("unlocked");
+  }
 }
 
 
 async function getRoom(){
 
-  const data=await api(
+  const rows=await api(
     "conversation_rooms"+
     "?room_code=eq."+ROOM+
     "&select=*"
   );
 
-  return data?.[0]||null;
+  return rows?.[0]||null;
 }
 
 
@@ -839,7 +1215,8 @@ async function updateRoom(values){
       },
       body:JSON.stringify({
         ...values,
-        updated_at:new Date().toISOString()
+        updated_at:
+          new Date().toISOString()
       })
     }
   );
@@ -855,14 +1232,16 @@ async function saveDevice(){
       method:"POST",
       headers:{
         ...JSON_HEADERS,
-        "Prefer":"resolution=merge-duplicates,return=minimal"
+        "Prefer":
+          "resolution=merge-duplicates,return=minimal"
       },
       body:JSON.stringify({
         room_code:ROOM,
         device_id:deviceId,
         device_name:deviceName,
         language:myLanguage,
-        joined_at:new Date().toISOString()
+        joined_at:
+          new Date().toISOString()
       })
     }
   );
@@ -886,11 +1265,12 @@ async function removeMyDevice(){
 async function createRoom(){
 
   readSettings();
+
   $("createRoom").disabled=true;
 
   setNotice(
     "setupNotice",
-    "Pripravljam sobo 1234 ...",
+    "Pripravljam sobo ...",
     "#ffd84d"
   );
 
@@ -909,7 +1289,6 @@ async function createRoom(){
       room.status!=="closed"&&
       others.length>0
     ){
-
       throw new Error(
         "Soba 1234 je že v uporabi."
       );
@@ -948,7 +1327,8 @@ async function createRoom(){
             room_code:ROOM,
             status:"waiting",
             active_device:deviceId,
-            updated_at:new Date().toISOString()
+            updated_at:
+              new Date().toISOString()
           })
         }
       );
@@ -984,7 +1364,7 @@ async function joinRoom(){
 
   setNotice(
     "setupNotice",
-    "Povezujem s sobo 1234 ...",
+    "Povezujem ...",
     "#ffd84d"
   );
 
@@ -993,28 +1373,27 @@ async function joinRoom(){
     const room=await getRoom();
 
     if(!room||room.status==="closed"){
-
       throw new Error(
-        "Soba 1234 trenutno ni odprta."
+        "Soba 1234 ni odprta."
       );
     }
 
     const devices=await getDevices();
 
-    const alreadyJoined=
+    const joined=
       devices.some(
         d=>d.device_id===deviceId
       );
 
-    if(
-      !alreadyJoined&&
-      devices.length>=2
-    ){
+    if(!joined&&devices.length>=2){
 
       showOnly("fullScreen");
 
-      $("connection").innerText="● SOBA POLNA";
-      $("connection").style.color="#ff5368";
+      $("connection").innerText=
+        "● SOBA POLNA";
+
+      $("connection").style.color=
+        "#ff5368";
 
       return;
     }
@@ -1078,18 +1457,23 @@ function openConversation(){
 
   showOnly("conversationScreen");
 
-  $("connection").innerText="● POVEZANO";
-  $("connection").style.color="#22c875";
+  $("connection").innerText=
+    "● POVEZANO";
 
-  $("myNameDisplay").innerText=deviceName;
+  $("connection").style.color=
+    "#22c875";
+
+  $("myNameDisplay").innerText=
+    deviceName;
 
   $("myLanguageDisplay").innerText=
     LANGUAGES[myLanguage]?.name||
     myLanguage;
 
-  $("autoSpeakToggle").checked=autoSpeak;
+  $("autoSpeakToggle").checked=
+    autoSpeak;
 
-  updateVoiceOptionText();
+  updateVoiceState();
 }
 
 
@@ -1132,7 +1516,7 @@ async function poll(){
     if(room.status==="closed"){
 
       showClosed(
-        "Druga oseba je prekinila pogovor."
+        "Pogovor je bil prekinjen."
       );
 
       return;
@@ -1146,9 +1530,8 @@ async function poll(){
     if(!me){
 
       if(roomWasConnected){
-
         showClosed(
-          "Naprava ni več vključena v pogovor."
+          "Telefon ni več v pogovoru."
         );
       }
 
@@ -1190,7 +1573,8 @@ async function poll(){
 
     otherDevice=other.device_id;
     otherLanguage=other.language;
-    otherName=other.device_name||"Druga oseba";
+    otherName=other.device_name||
+      "Druga oseba";
 
     roomWasConnected=true;
 
@@ -1263,20 +1647,33 @@ async function poll(){
 
       lastSpokenId=incoming.id;
 
-      if(autoSpeak){
+      if(
+        autoSpeak&&
+        ttsUnlocked
+      ){
 
-        speakIncoming(incoming);
+        const success=
+          await speakText(
+            incoming.translated_text,
+            myLanguage
+          );
+
+        if(!success){
+
+          showManualPlay();
+        }
 
       }else{
 
-        setNotice(
-          "conversationNotice",
-          "🔇 PREVOD JE PRIKAZAN. GLAS JE IZKLOPLJEN.",
-          "#ffd84d"
-        );
-
-        await setRoomReady(deviceId);
+        showManualPlay();
       }
+
+      /*
+        Besedo sprostimo ne glede na TTS.
+        Aplikacija tako nikoli ne obstane.
+      */
+
+      await setRoomReady(deviceId);
     }
 
   }catch(error){
@@ -1292,12 +1689,28 @@ async function poll(){
 }
 
 
+function showManualPlay(){
+
+  $("manualPlay")
+    .classList
+    .remove("hidden");
+
+  setNotice(
+    "conversationNotice",
+    ttsUnlocked
+      ?"Pritisni PREDVAJAJ PREVOD."
+      :"Najprej odkleni glas ali ročno predvajaj prevod.",
+    "#ffd84d"
+  );
+}
+
+
 function updateTurn(room,other){
 
   const mine=
     room.active_device===deviceId;
 
-  const iAmRecording=
+  const recording=
     mine&&
     room.status==="recording"&&
     mediaRecorder&&
@@ -1307,7 +1720,7 @@ function updateTurn(room,other){
     !other||
     busy||
     (
-      !iAmRecording&&
+      !recording&&
       (
         !mine||
         room.status!=="ready"
@@ -1334,7 +1747,7 @@ function updateTurn(room,other){
         "turn turnBusy",
         "SNEMAŠ",
         "GOVORI",
-        "Ponovno pritisni rdeči gumb za konec."
+        "Ponovno pritisni za konec."
       );
 
     }else{
@@ -1354,7 +1767,7 @@ function updateTurn(room,other){
 
     setTurn(
       "turn turnBusy",
-      "PREPOZNAVAM IN PREVAJAM",
+      "PREVAJAM",
       "POČAKAJ",
       "AI pripravlja prevod."
     );
@@ -1367,7 +1780,7 @@ function updateTurn(room,other){
     setTurn(
       "turn turnBusy",
       mine
-        ?"PREDVAJAM PREVOD"
+        ?"PREJEMAM PREVOD"
         :"DRUGA OSEBA PREJEMA PREVOD",
       "POČAKAJ",
       "Mikrofona sta začasno zaklenjena."
@@ -1382,7 +1795,7 @@ function updateTurn(room,other){
       "turn turnMine",
       "NA VRSTI SI TI",
       "ZAČNI GOVORITI",
-      "Pritisni mikrofon, govori, nato ga ponovno pritisni."
+      "Pritisni mikrofon, govori in ponovno pritisni."
     );
 
   }else{
@@ -1391,7 +1804,7 @@ function updateTurn(room,other){
       "turn turnOther",
       "NA VRSTI JE DRUGA OSEBA",
       "POČAKAJ",
-      "Mikrofon je trenutno zaklenjen."
+      "Mikrofon je zaklenjen."
     );
   }
 }
@@ -1404,12 +1817,21 @@ function setTurn(
   help
 ){
 
-  $("turnStatus").className=className;
-  $("turnStatus").innerText=status;
-  $("micLabel").innerText=label;
-  $("micHelp").innerText=help;
+  $("turnStatus").className=
+    className;
+
+  $("turnStatus").innerText=
+    status;
+
+  $("micLabel").innerText=
+    label;
+
+  $("micHelp").innerText=
+    help;
 }
 
+
+/* SNEMANJE */
 
 async function microphoneClick(){
 
@@ -1419,11 +1841,8 @@ async function microphoneClick(){
     mediaRecorder&&
     mediaRecorder.state==="recording"
   ){
-
     stopRecording();
-
   }else{
-
     await startRecording();
   }
 }
@@ -1431,7 +1850,9 @@ async function microphoneClick(){
 
 async function startRecording(){
 
-  if(!otherDevice||!otherLanguage)return;
+  if(!otherDevice||!otherLanguage){
+    return;
+  }
 
   busy=true;
 
@@ -1444,7 +1865,6 @@ async function startRecording(){
       room.status!=="ready"||
       room.active_device!==deviceId
     ){
-
       throw new Error(
         "Trenutno nisi na vrsti."
       );
@@ -1464,19 +1884,13 @@ async function startRecording(){
       MediaRecorder
         .isTypeSupported("audio/mp4")
     ){
-
-      options={
-        mimeType:"audio/mp4"
-      };
+      options={mimeType:"audio/mp4"};
 
     }else if(
       MediaRecorder
         .isTypeSupported("audio/webm")
     ){
-
-      options={
-        mimeType:"audio/webm"
-      };
+      options={mimeType:"audio/webm"};
     }
 
     mediaRecorder=
@@ -1489,7 +1903,6 @@ async function startRecording(){
       event=>{
 
         if(event.data.size){
-
           audioChunks.push(
             event.data
           );
@@ -1570,7 +1983,8 @@ function stopRecording(){
 
   $("microphone").innerText="🎤";
   $("micLabel").innerText="PREVAJAM";
-  $("micHelp").innerText="Počakaj trenutek.";
+  $("micHelp").innerText=
+    "Počakaj trenutek.";
 }
 
 
@@ -1673,43 +2087,38 @@ async function translateRecording(){
       );
     }
 
-    const inserted=
-      await api(
-        "conversation_messages",
-        {
-          method:"POST",
-          headers:{
-            ...JSON_HEADERS,
-            "Prefer":"return=representation"
-          },
-          body:JSON.stringify({
-            room_code:ROOM,
-            sender_device:deviceId,
-            source_language:myLanguage,
-            target_language:otherLanguage,
-            original_text:original,
-            translated_text:translated
-          })
-        }
-      );
+    await api(
+      "conversation_messages",
+      {
+        method:"POST",
+        headers:{
+          ...JSON_HEADERS,
+          "Prefer":
+            "return=representation"
+        },
+        body:JSON.stringify({
+          room_code:ROOM,
+          sender_device:deviceId,
+          source_language:myLanguage,
+          target_language:otherLanguage,
+          original_text:original,
+          translated_text:translated
+        })
+      }
+    );
 
-    if(inserted?.[0]){
+    $("lastOriginal").innerText=
+      original;
 
-      lastMessageId=
-        Math.max(
-          lastMessageId,
-          inserted[0].id
-        );
-    }
-
-    $("lastOriginal").innerText=original;
-    $("lastTranslation").innerText=translated;
+    $("lastTranslation").innerText=
+      translated;
 
     $("lastResult")
       .classList
       .remove("hidden");
 
-    currentTranslation=translated;
+    currentTranslation=
+      translated;
 
     await updateRoom({
       status:"speaking",
@@ -1718,7 +2127,7 @@ async function translateRecording(){
 
     setNotice(
       "conversationNotice",
-      "✓ PREVOD POSLAN DRUGI OSEBI",
+      "✓ PREVOD POSLAN",
       "#22c875"
     );
 
@@ -1743,7 +2152,9 @@ async function translateRecording(){
 }
 
 
-function getVoiceForLanguage(languageCode){
+/* TTS */
+
+function getVoice(languageCode){
 
   const voices=
     speechSynthesis.getVoices();
@@ -1764,7 +2175,8 @@ function getVoiceForLanguage(languageCode){
     )||
     voices.find(
       voice=>
-        voice.lang.toLowerCase()
+        voice.lang
+          .toLowerCase()
           .startsWith(base)
     )||
     null
@@ -1774,8 +2186,7 @@ function getVoiceForLanguage(languageCode){
 
 function speakText(
   text,
-  languageCode,
-  options={}
+  languageCode
 ){
 
   return new Promise(resolve=>{
@@ -1796,17 +2207,45 @@ function speakText(
       "en-US";
 
     const voice=
-      getVoiceForLanguage(languageCode);
+      getVoice(languageCode);
 
     if(voice){
       utterance.voice=voice;
     }
 
-    utterance.rate=0.92;
+    utterance.rate=.92;
     utterance.pitch=1;
     utterance.volume=1;
 
+    let started=false;
     let finished=false;
+
+    const startTimer=
+      setTimeout(
+        ()=>{
+
+          if(!started){
+            speechSynthesis.cancel();
+            finish(false);
+          }
+
+        },
+        1200
+      );
+
+    const endTimer=
+      setTimeout(
+        ()=>{
+
+          speechSynthesis.cancel();
+          finish(false);
+
+        },
+        Math.max(
+          7000,
+          text.length*170
+        )
+      );
 
     function finish(success){
 
@@ -1814,172 +2253,56 @@ function speakText(
 
       finished=true;
 
-      clearTimeout(speechFallbackTimer);
+      clearTimeout(startTimer);
+      clearTimeout(endTimer);
 
       resolve(success);
     }
 
     utterance.onstart=()=>{
 
-      ttsUnlocked=true;
-
-      if(options.onstart){
-        options.onstart();
-      }
+      started=true;
+      clearTimeout(startTimer);
     };
 
     utterance.onend=()=>{
 
-      if(options.onend){
-        options.onend();
-      }
-
       finish(true);
     };
 
-    utterance.onerror=event=>{
-
-      console.error(
-        "TTS error:",
-        event.error
-      );
-
-      if(options.onerror){
-        options.onerror(event);
-      }
+    utterance.onerror=()=>{
 
       finish(false);
     };
 
-    speechFallbackTimer=
-      setTimeout(
-        ()=>{
-
-          speechSynthesis.cancel();
-
-          if(options.ontimeout){
-            options.ontimeout();
-          }
-
-          finish(false);
-
-        },
-        Math.max(
-          7000,
-          text.length*160
-        )
-      );
-
-    speechSynthesis.speak(utterance);
-
-    /*
-      Safari včasih ustavi queue.
-      Resume pomaga pri nekaterih različicah iOS.
-    */
+    speechSynthesis.speak(
+      utterance
+    );
 
     setTimeout(
       ()=>speechSynthesis.resume(),
-      100
+      120
     );
   });
 }
 
 
-async function speakIncoming(message){
+async function unlockVoice(){
+
+  $("unlockVoice").disabled=true;
+
+  /*
+    To je neposredno sproženo z uporabnikovim tapom.
+    Zato lahko iOS dovoli prvi speak().
+  */
 
   const text=
-    String(
-      message.translated_text||""
-    ).trim();
-
-  if(!text){
-
-    await setRoomReady(deviceId);
-    return;
-  }
-
-  speakingMessageId=
-    message.id;
-
-  setNotice(
-    "conversationNotice",
-    "🔊 PRIPRAVLJAM GLASOVNI PREVOD ...",
-    "#ffd84d"
-  );
+    LANGUAGES[myLanguage]?.test||
+    "Voice translation is unlocked.";
 
   const success=
     await speakText(
       text,
-      myLanguage,
-      {
-        onstart:()=>{
-
-          setNotice(
-            "conversationNotice",
-            "🔊 PREDVAJAM PREVOD ...",
-            "#ffd84d"
-          );
-        },
-
-        onend:()=>{
-
-          setNotice(
-            "conversationNotice",
-            "✓ ZDAJ SI NA VRSTI TI",
-            "#22c875"
-          );
-        },
-
-        onerror:()=>{
-
-          setNotice(
-            "conversationNotice",
-            "Glas se ni zagnal. Prevod je prikazan in beseda je predana tebi.",
-            "#ffd84d"
-          );
-        },
-
-        ontimeout:()=>{
-
-          setNotice(
-            "conversationNotice",
-            "Predvajanje je poteklo. Prevod je prikazan in beseda je predana tebi.",
-            "#ffd84d"
-          );
-        }
-      }
-    );
-
-  /*
-    Ne glede na rezultat TTS sprostimo sobo.
-    Tako pogovor nikoli ne ostane v speaking.
-  */
-
-  await setRoomReady(deviceId);
-
-  speakingMessageId=0;
-
-  return success;
-}
-
-
-async function testVoice(){
-
-  const testText=
-    LANGUAGES[myLanguage]?.test||
-    "Voice translation is enabled.";
-
-  $("testVoice").disabled=true;
-
-  $("voiceAvailability").innerText=
-    "Preizkušam glas ...";
-
-  $("voiceAvailability").style.color=
-    "#ffd84d";
-
-  const success=
-    await speakText(
-      testText,
       myLanguage
     );
 
@@ -1987,26 +2310,71 @@ async function testVoice(){
 
     ttsUnlocked=true;
 
-    $("voiceAvailability").innerText=
-      "✓ GLAS DELUJE. SAMODEJNO PREDVAJANJE JE PRIPRAVLJENO.";
-
-    $("voiceAvailability").style.color=
-      "#22c875";
+    setNotice(
+      "conversationNotice",
+      "✓ GLAS JE ODKLENJEN",
+      "#22c875"
+    );
 
   }else{
 
-    $("voiceAvailability").innerText=
-      "Glas se ni zagnal. Preveri nameščene glasove ali uporabi PONOVI PREVOD.";
+    ttsUnlocked=false;
 
-    $("voiceAvailability").style.color=
-      "#ff5368";
+    setNotice(
+      "conversationNotice",
+      "Glasu ni bilo mogoče odkleniti.",
+      "#ff5368"
+    );
   }
 
-  $("testVoice").disabled=false;
+  $("unlockVoice").disabled=false;
+
+  updateVoiceState();
 }
 
 
-async function setRoomReady(activeDevice){
+async function manualPlay(){
+
+  if(!currentTranslation){
+    return;
+  }
+
+  const success=
+    await speakText(
+      currentTranslation,
+      myLanguage
+    );
+
+  if(success){
+
+    ttsUnlocked=true;
+
+    $("manualPlay")
+      .classList
+      .add("hidden");
+
+    setNotice(
+      "conversationNotice",
+      "✓ PREVOD PREDVAJAN",
+      "#22c875"
+    );
+
+  }else{
+
+    setNotice(
+      "conversationNotice",
+      "Predvajanje ni uspelo.",
+      "#ff5368"
+    );
+  }
+
+  updateVoiceState();
+}
+
+
+async function setRoomReady(
+  activeDevice
+){
 
   try{
 
@@ -2021,6 +2389,8 @@ async function setRoomReady(activeDevice){
   }
 }
 
+
+/* ZGODOVINA */
 
 function renderHistory(messages){
 
@@ -2041,7 +2411,8 @@ function renderHistory(messages){
       .map(message=>{
 
         const mine=
-          message.sender_device===deviceId;
+          message.sender_device===
+          deviceId;
 
         const source=
           LANGUAGES[
@@ -2055,17 +2426,6 @@ function renderHistory(messages){
           ]?.name||
           message.target_language;
 
-        const time=
-          new Date(
-            message.created_at
-          ).toLocaleTimeString(
-            [],
-            {
-              hour:"2-digit",
-              minute:"2-digit"
-            }
-          );
-
         return `
           <div class="message ${mine?"mine":"other"}">
 
@@ -2074,7 +2434,6 @@ function renderHistory(messages){
                 ${mine?"JAZ":"DRUGA OSEBA"}
                 • ${source} → ${target}
               </span>
-              <span>${time}</span>
             </div>
 
             <div class="messageOriginal">
@@ -2107,96 +2466,63 @@ function escapeHtml(value){
 }
 
 
+/* AKCIJE */
+
 async function forceTurn(){
 
   if(!otherDevice)return;
 
-  try{
+  const room=await getRoom();
 
-    const room=await getRoom();
-
-    if(
-      !room||
-      room.status!=="ready"
-    ){
-
-      setNotice(
-        "conversationNotice",
-        "Besede med snemanjem, prevajanjem ali predvajanjem ni mogoče predati.",
-        "#ffd84d"
-      );
-
-      return;
-    }
-
-    const next=
-      room.active_device===deviceId
-        ?otherDevice
-        :deviceId;
-
-    await setRoomReady(next);
-
-  }catch(error){
+  if(!room||room.status!=="ready"){
 
     setNotice(
       "conversationNotice",
-      "NAPAKA: "+error.message,
-      "#ff5368"
+      "Besede trenutno ni mogoče predati.",
+      "#ffd84d"
     );
+
+    return;
   }
+
+  const next=
+    room.active_device===deviceId
+      ?otherDevice
+      :deviceId;
+
+  await setRoomReady(next);
 }
 
 
 async function clearConversation(){
 
-  if(
-    !confirm(
-      "Izbrišem zgodovino pogovora za oba telefona?"
-    )
-  )return;
-
-  try{
-
-    await api(
-      "conversation_messages"+
-      "?room_code=eq."+ROOM,
-      {method:"DELETE"}
-    );
-
-    $("history").innerHTML=
-      '<div class="empty">'+
-      'Pogovor se še ni začel.'+
-      '</div>';
-
-    $("lastResult")
-      .classList
-      .add("hidden");
-
-    currentTranslation="";
-    lastMessageId=0;
-    lastSpokenId=0;
-
-  }catch(error){
-
-    setNotice(
-      "conversationNotice",
-      "Brisanje ni uspelo: "+
-      error.message,
-      "#ff5368"
-    );
+  if(!confirm("Počistim zgodovino?")){
+    return;
   }
+
+  await api(
+    "conversation_messages"+
+    "?room_code=eq."+ROOM,
+    {method:"DELETE"}
+  );
+
+  lastMessageId=0;
+  lastSpokenId=0;
+  currentTranslation="";
+
+  $("lastResult")
+    .classList
+    .add("hidden");
 }
 
 
 async function leaveRoom(){
 
-  if(
-    !confirm(
-      "Želiš zapustiti pogovor? Druga oseba bo ostala v sobi."
-    )
-  )return;
+  if(!confirm("Želiš zapustiti pogovor?")){
+    return;
+  }
 
-  stopLocalAudio();
+  stopLocal();
 
   try{
 
@@ -2222,7 +2548,6 @@ async function leaveRoom(){
     }
 
   }catch(error){
-
     console.error(error);
   }
 
@@ -2232,38 +2557,22 @@ async function leaveRoom(){
 
 async function endConversation(){
 
-  if(
-    !confirm(
-      "Končam pogovor za oba telefona?"
-    )
-  )return;
-
-  stopLocalAudio();
-
-  try{
-
-    await updateRoom({
-      status:"closed",
-      active_device:null
-    });
-
-    await api(
-      "conversation_devices"+
-      "?room_code=eq."+ROOM,
-      {method:"DELETE"}
-    );
-
-  }catch(error){
-
-    setNotice(
-      "conversationNotice",
-      "NAPAKA PRI PREKINITVI: "+
-      error.message,
-      "#ff5368"
-    );
-
+  if(!confirm("Končam pogovor za oba?")){
     return;
   }
+
+  stopLocal();
+
+  await updateRoom({
+    status:"closed",
+    active_device:null
+  });
+
+  await api(
+    "conversation_devices"+
+    "?room_code=eq."+ROOM,
+    {method:"DELETE"}
+  );
 
   showClosed(
     "Pogovor je bil prekinjen za oba telefona."
@@ -2271,9 +2580,7 @@ async function endConversation(){
 }
 
 
-function stopLocalAudio(){
-
-  clearTimeout(speechFallbackTimer);
+function stopLocal(){
 
   speechSynthesis.cancel();
 
@@ -2303,7 +2610,7 @@ function stopLocalAudio(){
 
 function showClosed(text){
 
-  stopLocalAudio();
+  stopLocal();
 
   if(pollingTimer){
     clearInterval(pollingTimer);
@@ -2312,14 +2619,13 @@ function showClosed(text){
   pollingTimer=null;
 
   $("connection").innerText=
-    "● POGOVOR KONČAN";
+    "● KONČANO";
 
   $("connection").style.color=
     "#ff5368";
 
   $("closedText").innerText=
-    text||
-    "Pogovor je zaključen.";
+    text;
 
   showOnly("closedScreen");
 }
@@ -2327,7 +2633,7 @@ function showClosed(text){
 
 function resetLocal(){
 
-  stopLocalAudio();
+  stopLocal();
 
   if(pollingTimer){
     clearInterval(pollingTimer);
@@ -2342,7 +2648,9 @@ function resetLocal(){
   lastMessageId=0;
   lastSpokenId=0;
   currentTranslation="";
+
   roomWasConnected=false;
+  ttsUnlocked=false;
 
   $("connection").innerText=
     "● NI POVEZANO";
@@ -2350,33 +2658,11 @@ function resetLocal(){
   $("connection").style.color=
     "#91a0b8";
 
-  setNotice(
-    "setupNotice",
-    "",
-    ""
-  );
-
   showOnly("setupScreen");
 }
 
 
-async function repeatLastTranslation(){
-
-  if(!currentTranslation)return;
-
-  if(autoSpeak){
-
-    await testVoice();
-
-  }else{
-
-    await speakText(
-      currentTranslation,
-      myLanguage
-    );
-  }
-}
-
+/* DOGODKI */
 
 $("autoSpeakToggle").onchange=()=>{
 
@@ -2388,29 +2674,19 @@ $("autoSpeakToggle").onchange=()=>{
     String(autoSpeak)
   );
 
-  updateVoiceOptionText();
-
-  $("voiceAvailability").innerText=
-    autoSpeak
-      ?"Samodejno predvajanje je vključeno. Pritisni TEST GLASU."
-      :"Prevodi bodo samo prikazani. Mikrofon se bo sprostil brez predvajanja.";
-
-  $("voiceAvailability").style.color=
-    autoSpeak
-      ?"#ffd84d"
-      :"#91a0b8";
-
   if(!autoSpeak){
-
     speechSynthesis.cancel();
   }
+
+  updateVoiceState();
 };
 
 
 $("createRoom").onclick=createRoom;
 $("joinRoom").onclick=joinRoom;
 $("microphone").onclick=microphoneClick;
-$("testVoice").onclick=testVoice;
+$("unlockVoice").onclick=unlockVoice;
+$("manualPlay").onclick=manualPlay;
 $("forceTurn").onclick=forceTurn;
 $("clearConversation").onclick=clearConversation;
 $("leaveRoom").onclick=leaveRoom;
@@ -2419,7 +2695,9 @@ $("leaveWaiting").onclick=leaveRoom;
 $("endWaiting").onclick=endConversation;
 $("backFromFull").onclick=resetLocal;
 $("backFromClosed").onclick=resetLocal;
-$("repeatTranslation").onclick=repeatLastTranslation;
+
+$("repeatTranslation").onclick=
+  manualPlay;
 
 
 window.addEventListener(
@@ -2428,26 +2706,6 @@ window.addEventListener(
     speechSynthesis.cancel();
   }
 );
-
-
-speechSynthesis.onvoiceschanged=()=>{
-  if(ttsUnlocked)return;
-
-  const voice=
-    getVoiceForLanguage(myLanguage);
-
-  if(
-    $("voiceAvailability")&&
-    voice
-  ){
-
-    $("voiceAvailability").innerText=
-      "Glas je na voljo. Pritisni TEST GLASU.";
-
-    $("voiceAvailability").style.color=
-      "#91a0b8";
-  }
-};
 
 
 restoreSettings();
