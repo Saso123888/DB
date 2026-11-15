@@ -1,2098 +1,2724 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
-  <title>Sašo & AI friends</title>
-
-  <!-- Uporabi isto ikono kot iPhone Home Screen -->
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Sašo & AI">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#020916">
-
-  <style>
-    :root {
-      --bg: #020916;
-      --panel: #07162b;
-      --panel-light: #0a203e;
-      --text: #ffffff;
-      --muted: #8da4c5;
-      --blue: #009dff;
-      --cyan: #25ddff;
-      --purple: #a84cff;
-      --red: #ff405b;
-      --yellow: #ffd65a;
-      --green: #42e38b;
-    }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html,
-    body {
-      margin: 0;
-      min-height: 100%;
-      background:
-        radial-gradient(circle at 50% 15%, #08284c 0%, #031226 36%, #020916 72%);
-      color: var(--text);
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-    }
-
-    body {
-      min-height: 100dvh;
-    }
-
-    button,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 480px;
-      min-height: 100dvh;
-      margin: 0 auto;
-      padding:
-        max(22px, env(safe-area-inset-top))
-        20px
-        max(24px, env(safe-area-inset-bottom));
-      position: relative;
-      overflow: hidden;
-    }
-
-    .app::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      width: 520px;
-      height: 240px;
-      left: 50%;
-      bottom: -185px;
-      transform: translateX(-50%);
-      border: 1px solid rgba(0, 157, 255, 0.55);
-      border-radius: 50%;
-      box-shadow:
-        0 0 35px rgba(0, 157, 255, 0.25),
-        0 -25px 70px rgba(0, 157, 255, 0.1);
-    }
-
-    /* GLAVA */
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 46px;
-      margin-bottom: 25px;
-    }
-
-    .logo {
-      font-size: 21px;
-      font-weight: 700;
-      letter-spacing: -0.35px;
-    }
-
-    .app-icon {
-      width: 43px;
-      height: 43px;
-      border-radius: 12px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 30% 30%, #35e7ff, #087cff 55%, #0046ad);
-      border: 1px solid rgba(82, 226, 255, 0.85);
-      box-shadow:
-        0 0 12px rgba(0, 157, 255, 0.55),
-        inset 0 0 12px rgba(255, 255, 255, 0.12);
-    }
-
-    .app-icon img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* EKRANI */
-
-    .screen {
-      display: none;
-    }
-
-    .screen.active {
-      display: block;
-      animation: screenIn 0.28s ease;
-    }
-
-    @keyframes screenIn {
-      from {
-        opacity: 0;
-        transform: translateY(5px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* PRVA STRAN */
-
-    .person-card {
-      display: grid;
-      grid-template-columns: 112px minmax(0, 1fr);
-      gap: 16px;
-      align-items: center;
-      margin-bottom: 20px;
-      padding: 21px 18px;
-      border: 1px solid rgba(0, 157, 255, 0.75);
-      border-radius: 23px;
-      background:
-        linear-gradient(
-          145deg,
-          rgba(9, 39, 75, 0.97),
-          rgba(7, 23, 46, 0.93)
-        );
-      box-shadow:
-        inset 0 0 25px rgba(0, 157, 255, 0.08),
-        0 0 22px rgba(0, 157, 255, 0.12);
-    }
-
-    .person-card.purple {
-      border-color: rgba(168, 76, 255, 0.82);
-      box-shadow:
-        inset 0 0 25px rgba(168, 76, 255, 0.08),
-        0 0 22px rgba(168, 76, 255, 0.15);
-    }
-
-    .avatar-wrap {
-      display: flex;
-      justify-content: center;
-    }
-
-    .avatar-button {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 105px;
-      height: 105px;
-      padding: 0;
-      border: 1px solid rgba(41, 201, 255, 0.75);
-      border-radius: 50%;
-      background:
-        radial-gradient(
-          circle at 50% 45%,
-          rgba(24, 133, 255, 0.82),
-          rgba(0, 71, 168, 0.3) 55%,
-          transparent 72%
-        );
-      box-shadow:
-        0 0 11px #008cff,
-        0 0 32px rgba(0, 157, 255, 0.48);
-    }
-
-    .purple .avatar-button {
-      border-color: #a84cff;
-      background:
-        radial-gradient(
-          circle at 50% 45%,
-          rgba(153, 70, 255, 0.82),
-          rgba(77, 24, 147, 0.3) 55%,
-          transparent 72%
-        );
-      box-shadow:
-        0 0 11px #a84cff,
-        0 0 32px rgba(168, 76, 255, 0.42);
-    }
-
-    .person-icon {
-      font-size: 57px;
-      line-height: 1;
-      filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.22));
-    }
-
-    .swap {
-      position: absolute;
-      right: -4px;
-      bottom: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border: 1px solid #35bfff;
-      border-radius: 50%;
-      background: #083873;
-      color: #ffffff;
-      font-size: 21px;
-      box-shadow: 0 0 13px #008cff;
-    }
-
-    .purple .swap {
-      border-color: #ba71ff;
-      background: #3d176c;
-      box-shadow: 0 0 13px #a84cff;
-    }
-
-    .person-options {
-      min-width: 0;
-    }
-
-    .select-wrap {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      min-height: 59px;
-      padding: 4px 12px;
-      border: 1px solid rgba(101, 154, 218, 0.36);
-      border-radius: 14px;
-      background: rgba(8, 28, 54, 0.84);
-    }
-
-    .flag {
-      flex: 0 0 auto;
-      font-size: 25px;
-    }
-
-    select {
-      flex: 1;
-      min-width: 0;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      color: #ffffff;
-      font-size: 16px;
-    }
-
-    select option {
-      color: #111111;
-    }
-
-    .start-area {
-      margin-top: 31px;
-    }
-
-    .start-button {
-      width: 100%;
-      height: 70px;
-      border: 1px solid #45e3ff;
-      border-radius: 21px;
-      background: linear-gradient(135deg, #04b5ff, #0063ed);
-      color: #ffffff;
-      font-size: 26px;
-      font-weight: 750;
-      box-shadow:
-        0 0 13px #009cff,
-        0 0 32px rgba(0, 157, 255, 0.45),
-        inset 0 0 18px rgba(255, 255, 255, 0.14);
-    }
-
-    .start-button:active {
-      transform: scale(0.985);
-    }
-
-    /* DRUGA STRAN */
-
-    .live-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-
-    .next-button,
-    .stop-button {
-      height: 64px;
-      border-radius: 18px;
-      color: #ffffff;
-    }
-
-    .next-button {
-      border: 1px solid #39dbff;
-      background: linear-gradient(135deg, #08b7ff, #0675ed);
-      font-size: 35px;
-      box-shadow: 0 0 17px rgba(0, 157, 255, 0.45);
-    }
-
-    .stop-button {
-      border: 1px solid #ff6076;
-      background: linear-gradient(135deg, #a71e36, #66152a);
-      font-size: 19px;
-      font-weight: 700;
-      box-shadow: 0 0 15px rgba(255, 64, 91, 0.35);
-    }
-
-    .stop-square {
-      display: inline-block;
-      width: 17px;
-      height: 17px;
-      margin-right: 9px;
-      border-radius: 3px;
-      background: #ffffff;
-      vertical-align: -2px;
-    }
-
-    .language-route {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 17px;
-      font-size: 14px;
-    }
-
-    .route-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .route-arrow {
-      color: #aac0da;
-      font-size: 22px;
-    }
-
-    .active-speaker {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 11px;
-      min-height: 48px;
-      margin-bottom: 4px;
-    }
-
-    .small-avatar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 46px;
-      height: 46px;
-      border: 1px solid #168fff;
-      border-radius: 50%;
-      background: #0d376e;
-      font-size: 27px;
-      box-shadow: 0 0 13px rgba(0, 157, 255, 0.3);
-    }
-
-    .small-avatar.purple-active {
-      border-color: #b661ff;
-      background: #421b72;
-      box-shadow: 0 0 13px rgba(168, 76, 255, 0.42);
-    }
-
-    .speaker-name {
-      font-size: 23px;
-      font-weight: 700;
-    }
-
-    /* GLAVNI KROG */
-
-    .orb-area {
-      display: flex;
-      justify-content: center;
-      margin: 8px 0 10px;
-    }
-
-    .orb-rings {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 255px;
-      height: 255px;
-      border: 1px solid rgba(0, 113, 255, 0.66);
-      border-radius: 50%;
-    }
-
-    .orb-rings::before,
-    .orb-rings::after {
-      content: "";
-      position: absolute;
-      border: 1px solid rgba(0, 119, 255, 0.52);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .orb-rings::before {
-      inset: 17px;
-    }
-
-    .orb-rings::after {
-      inset: 36px;
-    }
-
-    .main-orb {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 180px;
-      height: 180px;
-      border: 1px solid #60efff;
-      border-radius: 50%;
-      background:
-        radial-gradient(
-          circle at center,
-          #1acbff 0,
-          #087cff 44%,
-          #004fc0 69%,
-          #06234c 100%
-        );
-      font-size: 72px;
-      box-shadow:
-        0 0 12px #20d8ff,
-        0 0 40px rgba(0, 145, 255, 0.8),
-        inset 0 0 30px rgba(255, 255, 255, 0.15);
-      transition:
-        background 0.3s ease,
-        box-shadow 0.3s ease,
-        transform 0.3s ease;
-      user-select: none;
-      pointer-events: none;
-    }
-
-    /* POSLUŠANJE UTRIPA */
-
-    .orb-rings.listening {
-      animation: ringPulse 1.12s ease-in-out infinite;
-    }
-
-    .orb-rings.listening::before {
-      animation: ringInnerPulse 1.12s ease-in-out infinite;
-    }
-
-    .orb-rings.listening::after {
-      animation: ringInnerPulse 1.12s ease-in-out 0.17s infinite;
-    }
-
-    .orb-rings.listening .main-orb {
-      animation: microphonePulse 1.12s ease-in-out infinite;
-    }
-
-    @keyframes microphonePulse {
-      0%,
-      100% {
-        transform: scale(0.95);
-        box-shadow:
-          0 0 10px #20d8ff,
-          0 0 28px rgba(0, 145, 255, 0.64),
-          inset 0 0 30px rgba(255, 255, 255, 0.14);
-      }
-
-      50% {
-        transform: scale(1.04);
-        box-shadow:
-          0 0 21px #5eefff,
-          0 0 67px rgba(0, 157, 255, 0.96),
-          inset 0 0 35px rgba(255, 255, 255, 0.22);
-      }
-    }
-
-    @keyframes ringPulse {
-      0%,
-      100% {
-        transform: scale(0.94);
-        opacity: 0.66;
-      }
-
-      50% {
-        transform: scale(1.04);
-        opacity: 1;
-      }
-    }
-
-    @keyframes ringInnerPulse {
-      0%,
-      100% {
-        opacity: 0.35;
-      }
-
-      50% {
-        opacity: 1;
-      }
-    }
-
-    /* PREVAJANJE */
-
-    .main-orb.processing {
-      background:
-        radial-gradient(
-          circle at center,
-          #ffe771,
-          #efb717 46%,
-          #976300 72%,
-          #392600 100%
-        );
-      box-shadow:
-        0 0 13px #ffd84d,
-        0 0 43px rgba(255, 174, 0, 0.7);
-      animation: processingPulse 0.78s ease-in-out infinite;
-    }
-
-    @keyframes processingPulse {
-      0%,
-      100% {
-        transform: scale(0.96) rotate(-2deg);
-      }
-
-      50% {
-        transform: scale(1.03) rotate(2deg);
-      }
-    }
-
-    /* GOVOR */
-
-    .main-orb.speaking {
-      background:
-        radial-gradient(
-          circle at center,
-          #d975ff,
-          #9838f5 46%,
-          #5b1eb1 72%,
-          #241148 100%
-        );
-      box-shadow:
-        0 0 13px #c95cff,
-        0 0 43px rgba(154, 57, 255, 0.65);
-      animation: speakerPulse 0.72s ease-in-out infinite;
-    }
-
-    @keyframes speakerPulse {
-      0%,
-      100% {
-        transform: scale(0.96);
-      }
-
-      50% {
-        transform: scale(1.035);
-      }
-    }
-
-    /* FAZE */
-
-    .stages {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .stage {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px;
-      height: 52px;
-      border: 1px solid #4e759f;
-      border-radius: 50%;
-      background: #06162c;
-      color: #7891b0;
-      font-size: 23px;
-      transition: all 0.25s ease;
-    }
-
-    .stage.active.listen {
-      border-color: #3ceaff;
-      color: #ffffff;
-      box-shadow: 0 0 15px #008cff;
-    }
-
-    .stage.active.process {
-      border-color: #ffd748;
-      color: #ffffff;
-      box-shadow: 0 0 15px #e8a600;
-    }
-
-    .stage.active.speak {
-      border-color: #c967ff;
-      color: #ffffff;
-      box-shadow: 0 0 15px #a84cff;
-    }
-
-    .stage-arrow {
-      color: #7193bd;
-      font-size: 23px;
-    }
-
-    .status {
-      min-height: 27px;
-      margin: 12px 0 17px;
-      color: #28c5ff;
-      font-size: 20px;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    .status.processing-status {
-      color: #ffd65a;
-    }
-
-    .status.speaking-status {
-      color: #ce76ff;
-    }
-
-    .status.error-status {
-      color: #ff7184;
-    }
-
-    /* PREVOD */
-
-    .translation {
-      min-height: 128px;
-      padding: 17px;
-      border: 1px solid rgba(96, 138, 187, 0.36);
-      border-radius: 18px;
-      background: rgba(8, 29, 56, 0.85);
-      box-shadow: inset 0 0 30px rgba(0, 73, 158, 0.07);
-    }
-
-    .translation-line {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      min-height: 34px;
-      font-size: 17px;
-      line-height: 1.42;
-    }
-
-    .translation-line + .translation-line {
-      margin-top: 13px;
-      padding-top: 13px;
-      border-top: 1px solid rgba(129, 159, 195, 0.35);
-    }
-
-    .translation-text {
-      flex: 1;
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .translation-placeholder {
-      color: #7186a4;
-    }
-
-    .translation-target {
-      color: var(--yellow);
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .browser-warning {
-      display: none;
-      margin-top: 14px;
-      padding: 12px 14px;
-      border: 1px solid rgba(255, 113, 132, 0.62);
-      border-radius: 13px;
-      background: rgba(112, 18, 38, 0.32);
-      color: #ffc0c9;
-      font-size: 13px;
-      line-height: 1.42;
-    }
-
-    .browser-warning.visible {
-      display: block;
-    }
-
-    @media (max-width: 370px) {
-      .app {
-        padding-left: 14px;
-        padding-right: 14px;
-      }
-
-      .person-card {
-        grid-template-columns: 90px minmax(0, 1fr);
-        padding: 15px 11px;
-      }
-
-      .avatar-button {
-        width: 84px;
-        height: 84px;
-      }
-
-      .person-icon {
-        font-size: 46px;
-      }
-
-      .orb-rings {
-        width: 220px;
-        height: 220px;
-      }
-
-      .main-orb {
-        width: 154px;
-        height: 154px;
-        font-size: 63px;
-      }
-
-      .language-route {
-        gap: 7px;
-        font-size: 12px;
-      }
-
-      .flag {
-        font-size: 22px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>Voice Translator</title>
+
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020916">
+
+<style>
+
+:root{
+  --bg:#020916;
+  --panel:#07162b;
+  --blue:#009dff;
+  --cyan:#28dcff;
+  --purple:#a84cff;
+  --red:#ff405b;
+  --yellow:#ffd65a;
+  --text:#ffffff;
+  --muted:#8da4c5;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 50% 20%,
+      #08284c 0%,
+      #031226 36%,
+      #020916 72%);
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+body{
+  min-height:100dvh;
+}
+
+button,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  max-width:480px;
+  min-height:100dvh;
+  margin:auto;
+
+  padding:
+    max(22px,env(safe-area-inset-top))
+    20px
+    max(24px,env(safe-area-inset-bottom));
+}
+
+
+/* ============================= */
+/* HEADER                        */
+/* ============================= */
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  min-height:48px;
+  margin-bottom:22px;
+}
+
+.app-icon{
+  width:44px;
+  height:44px;
+
+  border-radius:12px;
+  overflow:hidden;
+
+  box-shadow:
+    0 0 14px rgba(0,157,255,.55);
+}
+
+.app-icon img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+
+/* ============================= */
+/* SCREENS                       */
+/* ============================= */
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+}
+
+
+/* ============================= */
+/* PERSON CARD                   */
+/* ============================= */
+
+.person-card{
+
+  display:grid;
+  grid-template-columns:110px 1fr;
+
+  gap:16px;
+  align-items:center;
+
+  padding:20px 18px;
+
+  margin-bottom:20px;
+
+  border-radius:23px;
+
+  border:1px solid rgba(0,157,255,.75);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(9,39,75,.96),
+      rgba(7,23,46,.92)
+    );
+
+  box-shadow:
+    0 0 23px rgba(0,157,255,.13);
+}
+
+
+.person-card.purple{
+
+  border-color:rgba(168,76,255,.82);
+
+  box-shadow:
+    0 0 23px rgba(168,76,255,.16);
+}
+
+
+/* ============================= */
+/* AVATAR                        */
+/* ============================= */
+
+.avatar-wrap{
+  display:flex;
+  justify-content:center;
+}
+
+
+.avatar-button{
+
+  position:relative;
+
+  width:105px;
+  height:105px;
+
+  border-radius:50%;
+
+  border:1px solid #28caff;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(24,133,255,.8),
+      rgba(0,71,168,.3) 60%,
+      transparent 73%
+    );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  box-shadow:
+    0 0 12px #008cff,
+    0 0 32px rgba(0,157,255,.45);
+}
+
+
+.purple .avatar-button{
+
+  border-color:#a84cff;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(153,70,255,.82),
+      rgba(77,24,147,.3) 60%,
+      transparent 73%
+    );
+
+  box-shadow:
+    0 0 12px #a84cff,
+    0 0 32px rgba(168,76,255,.42);
+}
+
+
+.person-icon{
+  font-size:57px;
+}
+
+
+.swap{
+
+  position:absolute;
+
+  right:-3px;
+  bottom:2px;
+
+  width:38px;
+  height:38px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#083873;
+
+  border:1px solid #35bfff;
+
+  box-shadow:
+    0 0 12px #008cff;
+}
+
+
+.purple .swap{
+
+  background:#3d176c;
+
+  border-color:#ba71ff;
+
+  box-shadow:
+    0 0 12px #a84cff;
+}
+
+
+/* ============================= */
+/* LANGUAGE                      */
+/* ============================= */
+
+.select-wrap{
+
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+
+  min-height:60px;
+
+  padding:4px 13px;
+
+  border-radius:14px;
+
+  border:1px solid rgba(101,154,218,.35);
+
+  background:rgba(8,28,54,.85);
+}
+
+
+.flag{
+  font-size:25px;
+}
+
+
+select{
+
+  width:100%;
+
+  border:0;
+  outline:0;
+
+  background:transparent;
+
+  color:white;
+
+  font-size:16px;
+}
+
+
+select option{
+  color:#111;
+}
+
+
+/* ============================= */
+/* START                         */
+/* ============================= */
+
+.start-button{
+
+  width:100%;
+  height:70px;
+
+  margin-top:30px;
+
+  border-radius:21px;
+
+  border:1px solid #45e3ff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #04b5ff,
+      #0063ed
+    );
+
+  color:white;
+
+  font-size:26px;
+  font-weight:700;
+
+  box-shadow:
+    0 0 14px #009cff,
+    0 0 33px rgba(0,157,255,.43);
+}
+
+
+/* ============================= */
+/* LIVE BUTTONS                  */
+/* ============================= */
+
+.live-actions{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:14px;
+
+  margin-bottom:23px;
+}
+
+
+.next-button{
+
+  height:64px;
+
+  border-radius:18px;
+
+  border:1px solid #39dbff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #08b7ff,
+      #0675ed
+    );
+
+  color:white;
+
+  font-size:35px;
+
+  box-shadow:
+    0 0 16px rgba(0,157,255,.45);
+}
+
+
+.stop-button{
+
+  height:64px;
+
+  border-radius:18px;
+
+  border:1px solid #ff6076;
+
+  background:
+    linear-gradient(
+      135deg,
+      #a71e36,
+      #66152a
+    );
+
+  color:white;
+
+  font-size:19px;
+  font-weight:700;
+}
+
+
+.stop-square{
+
+  display:inline-block;
+
+  width:17px;
+  height:17px;
+
+  margin-right:8px;
+
+  border-radius:3px;
+
+  background:white;
+
+  vertical-align:-2px;
+}
+
+
+/* ============================= */
+/* ROUTE                         */
+/* ============================= */
+
+.language-route{
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  gap:11px;
+
+  margin-bottom:15px;
+
+  font-size:14px;
+}
+
+
+.route-item{
+
+  display:flex;
+  align-items:center;
+
+  gap:7px;
+}
+
+
+.route-arrow{
+
+  font-size:22px;
+
+  color:#9db8d9;
+}
+
+
+/* ============================= */
+/* ACTIVE PERSON                 */
+/* ============================= */
+
+.active-person{
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  margin-bottom:3px;
+}
+
+
+.active-avatar{
+
+  width:48px;
+  height:48px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  border-radius:50%;
+
+  border:1px solid #168fff;
+
+  background:#0d376e;
+
+  font-size:28px;
+
+  box-shadow:
+    0 0 14px rgba(0,157,255,.35);
+}
+
+
+/* ============================= */
+/* MICROPHONE                    */
+/* ============================= */
+
+.orb-area{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin:8px 0 12px;
+}
+
+
+.orb-rings{
+
+  position:relative;
+
+  width:260px;
+  height:260px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border:
+    1px solid rgba(0,113,255,.58);
+}
+
+
+.orb-rings:before,
+.orb-rings:after{
+
+  content:"";
+
+  position:absolute;
+
+  border-radius:50%;
+
+  border:
+    1px solid rgba(0,119,255,.48);
+}
+
+
+.orb-rings:before{
+  inset:18px;
+}
+
+
+.orb-rings:after{
+  inset:36px;
+}
+
+
+.main-orb{
+
+  position:relative;
+
+  z-index:2;
+
+  width:180px;
+  height:180px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  font-size:72px;
+
+  border:1px solid #60efff;
+
+  background:
+    radial-gradient(
+      circle,
+      #1acbff,
+      #087cff 45%,
+      #004fc0 70%,
+      #06234c
+    );
+
+  box-shadow:
+    0 0 13px #20d8ff,
+    0 0 42px rgba(0,145,255,.8);
+}
+
+
+/* ============================= */
+/* RECORDING ANIMATION           */
+/* ============================= */
+
+.recording{
+
+  animation:
+    ringPulse 1s ease-in-out infinite;
+}
+
+
+.recording .main-orb{
+
+  animation:
+    micPulse 1s ease-in-out infinite;
+}
+
+
+@keyframes micPulse{
+
+  0%,100%{
+
+    transform:scale(.94);
+
+    box-shadow:
+      0 0 10px #20d8ff,
+      0 0 27px rgba(0,145,255,.65);
+  }
+
+  50%{
+
+    transform:scale(1.05);
+
+    box-shadow:
+      0 0 23px #63efff,
+      0 0 68px rgba(0,157,255,.96);
+  }
+}
+
+
+@keyframes ringPulse{
+
+  0%,100%{
+    transform:scale(.94);
+  }
+
+  50%{
+    transform:scale(1.04);
+  }
+}
+
+
+/* ============================= */
+/* PROCESS                       */
+/* ============================= */
+
+.processing .main-orb{
+
+  background:
+    radial-gradient(
+      circle,
+      #ffe771,
+      #edae13 48%,
+      #825900
+    );
+
+  box-shadow:
+    0 0 45px rgba(255,180,0,.7);
+}
+
+
+/* ============================= */
+/* SPEAKING                      */
+/* ============================= */
+
+.speaking .main-orb{
+
+  background:
+    radial-gradient(
+      circle,
+      #d975ff,
+      #9838f5 48%,
+      #51169e
+    );
+
+  box-shadow:
+    0 0 45px rgba(168,76,255,.75);
+}
+
+
+/* ============================= */
+/* PHASES                        */
+/* ============================= */
+
+.stages{
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  gap:12px;
+}
+
+
+.stage{
+
+  width:52px;
+  height:52px;
+
+  border-radius:50%;
+
+  border:1px solid #4e759f;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  background:#06162c;
+
+  font-size:23px;
+
+  opacity:.42;
+}
+
+
+.stage.active{
+
+  opacity:1;
+}
+
+
+.stage.listen.active{
+
+  border-color:#35dfff;
+
+  box-shadow:
+    0 0 15px #009cff;
+}
+
+
+.stage.process.active{
+
+  border-color:#ffd748;
+
+  box-shadow:
+    0 0 15px #e5aa00;
+}
+
+
+.stage.speak.active{
+
+  border-color:#ca6cff;
+
+  box-shadow:
+    0 0 15px #a84cff;
+}
+
+
+.stage-arrow{
+
+  color:#7293ba;
+
+  font-size:22px;
+}
+
+
+.status{
+
+  margin:13px 0 17px;
+
+  text-align:center;
+
+  font-size:19px;
+  font-weight:700;
+
+  color:#2dccff;
+}
+
+
+/* ============================= */
+/* TRANSLATION                   */
+/* ============================= */
+
+.translation{
+
+  padding:17px;
+
+  border-radius:18px;
+
+  border:
+    1px solid rgba(96,138,187,.35);
+
+  background:
+    rgba(8,29,56,.84);
+}
+
+
+.translation-line{
+
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:12px;
+
+  min-height:34px;
+
+  font-size:17px;
+
+  line-height:1.4;
+}
+
+
+.translation-line +
+.translation-line{
+
+  margin-top:13px;
+
+  padding-top:13px;
+
+  border-top:
+    1px solid rgba(129,159,195,.35);
+}
+
+
+.text{
+
+  flex:1;
+
+  overflow-wrap:anywhere;
+}
+
+
+.translated{
+
+  color:#ffd65a;
+
+  font-size:20px;
+
+  font-weight:700;
+}
+
+
+.error{
+
+  margin-top:12px;
+
+  text-align:center;
+
+  color:#ff7184;
+
+  font-size:14px;
+}
+
+
+@media(max-width:370px){
+
+  .person-card{
+
+    grid-template-columns:90px 1fr;
+
+    padding:15px 11px;
+  }
+
+  .avatar-button{
+
+    width:85px;
+    height:85px;
+  }
+
+  .person-icon{
+
+    font-size:47px;
+  }
+
+  .orb-rings{
+
+    width:220px;
+    height:220px;
+  }
+
+  .main-orb{
+
+    width:155px;
+    height:155px;
+
+    font-size:62px;
+  }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-  <main class="app">
+<main class="app">
 
-    <header class="header">
-      <div class="logo">Sašo &amp; AI friends</div>
 
-      <div class="app-icon">
-        <img
-          src="apple-touch-icon.png"
-          alt="Ikona aplikacije"
-          onerror="this.style.display='none'"
-        >
-      </div>
-    </header>
+<header class="header">
 
-    <!-- =====================================
-         1. PRIPRAVA
-    ====================================== -->
+  <div class="app-icon">
 
-    <section id="setupScreen" class="screen active">
+    <img
+      src="apple-touch-icon.png"
+      alt=""
+      onerror="this.style.display='none'"
+    >
 
-      <div class="person-card">
+  </div>
 
-        <div class="avatar-wrap">
-          <button
-            id="person1Button"
-            class="avatar-button"
-            type="button"
-            aria-label="Zamenjaj prvo osebo"
-          >
-            <span id="person1Icon" class="person-icon">👨</span>
-            <span class="swap" aria-hidden="true">↔</span>
-          </button>
-        </div>
+</header>
 
-        <div class="person-options">
-          <div class="select-wrap">
-            <span id="flag1" class="flag">🇸🇮</span>
 
-            <select id="language1" aria-label="Prvi jezik">
-              <option value="sl-SI" selected>Slovenščina</option>
-              <option value="hu-HU">Magyar</option>
-            </select>
-          </div>
-        </div>
 
-      </div>
+<!-- ============================
+     SCREEN 1
+============================ -->
 
-      <div class="person-card purple">
+<section
+  id="setupScreen"
+  class="screen active"
+>
 
-        <div class="avatar-wrap">
-          <button
-            id="person2Button"
-            class="avatar-button"
-            type="button"
-            aria-label="Zamenjaj drugo osebo"
-          >
-            <span id="person2Icon" class="person-icon">👩</span>
-            <span class="swap" aria-hidden="true">↔</span>
-          </button>
-        </div>
 
-        <div class="person-options">
-          <div class="select-wrap">
-            <span id="flag2" class="flag">🇭🇺</span>
+<div class="person-card">
 
-            <select id="language2" aria-label="Drugi jezik">
-              <option value="sl-SI">Slovenščina</option>
-              <option value="hu-HU" selected>Magyar</option>
-            </select>
-          </div>
-        </div>
+  <div class="avatar-wrap">
 
-      </div>
+    <button
+      id="person1Button"
+      class="avatar-button"
+      type="button"
+    >
 
-      <div class="start-area">
-        <button id="startButton" class="start-button" type="button">
-          ▶&nbsp;&nbsp;Start
-        </button>
-      </div>
+      <span
+        id="person1Icon"
+        class="person-icon"
+      >
+        👨
+      </span>
 
-      <div id="setupWarning" class="browser-warning"></div>
+      <span class="swap">
+        ↔
+      </span>
 
-    </section>
+    </button>
 
-    <!-- =====================================
-         2. POGOVOR
-    ====================================== -->
+  </div>
 
-    <section id="conversationScreen" class="screen">
 
-      <div class="live-actions">
+  <div class="select-wrap">
 
-        <button
-          id="nextButton"
-          class="next-button"
-          type="button"
-          aria-label="Naprej, zamenjaj govorca"
-        >
-          ✓
-        </button>
+    <span
+      id="flag1"
+      class="flag"
+    >
+      🇸🇮
+    </span>
 
-        <button id="stopButton" class="stop-button" type="button">
-          <span class="stop-square" aria-hidden="true"></span>
-          Ustavi
-        </button>
+    <select id="language1">
 
-      </div>
+      <option
+        value="sl"
+        selected
+      >
+        Slovenščina
+      </option>
 
-      <div class="language-route">
+      <option value="hu">
+        Magyar
+      </option>
 
-        <div class="route-item">
-          <span id="conversationFlag1" class="flag">🇸🇮</span>
-          <span id="conversationLanguage1">Slovenščina</span>
-        </div>
+    </select>
 
-        <span class="route-arrow">→</span>
+  </div>
 
-        <div class="route-item">
-          <span id="conversationFlag2" class="flag">🇭🇺</span>
-          <span id="conversationLanguage2">Magyar</span>
-        </div>
+</div>
 
-      </div>
 
-      <div class="active-speaker">
 
-        <div id="activeAvatar" class="small-avatar">
-          👨
-        </div>
+<div class="person-card purple">
 
-        <div id="speakerName" class="speaker-name">
-          Govorec 1
-        </div>
+  <div class="avatar-wrap">
 
-      </div>
+    <button
+      id="person2Button"
+      class="avatar-button"
+      type="button"
+    >
 
-      <div class="orb-area">
+      <span
+        id="person2Icon"
+        class="person-icon"
+      >
+        👩
+      </span>
 
-        <div id="orbRings" class="orb-rings">
+      <span class="swap">
+        ↔
+      </span>
 
-          <!-- Veliki mikrofon ni gumb. -->
-          <div id="mainOrb" class="main-orb">
-            🎙️
-          </div>
+    </button>
 
-        </div>
+  </div>
 
-      </div>
 
-      <div class="stages">
+  <div class="select-wrap">
 
-        <div id="stageListen" class="stage listen">
-          🎙
-        </div>
+    <span
+      id="flag2"
+      class="flag"
+    >
+      🇭🇺
+    </span>
 
-        <div class="stage-arrow">→</div>
+    <select id="language2">
 
-        <div id="stageProcess" class="stage process">
-          🤫
-        </div>
+      <option value="sl">
+        Slovenščina
+      </option>
 
-        <div class="stage-arrow">→</div>
+      <option
+        value="hu"
+        selected
+      >
+        Magyar
+      </option>
 
-        <div id="stageSpeak" class="stage speak">
-          🔊
-        </div>
+    </select>
 
-      </div>
+  </div>
 
-      <div id="status" class="status">
-        Pripravljam mikrofon ...
-      </div>
+</div>
 
-      <div class="translation">
 
-        <div class="translation-line">
-          <span id="resultFlag1" class="flag">🇸🇮</span>
 
-          <span
-            id="sourceText"
-            class="translation-text translation-placeholder"
-          >
-            Govor se bo izpisal tukaj.
-          </span>
-        </div>
+<button
+  id="startButton"
+  class="start-button"
+  type="button"
+>
+  ▶ &nbsp;Start
+</button>
 
-        <div class="translation-line">
-          <span id="resultFlag2" class="flag">🇭🇺</span>
 
-          <span
-            id="translatedText"
-            class="translation-text translation-target translation-placeholder"
-          >
-            Prevod se bo izpisal tukaj.
-          </span>
-        </div>
+<div
+  id="setupError"
+  class="error"
+></div>
 
-      </div>
 
-      <div id="conversationWarning" class="browser-warning"></div>
+</section>
 
-    </section>
 
-  </main>
 
-  <script>
-    (() => {
-      "use strict";
+<!-- ============================
+     SCREEN 2
+============================ -->
 
-      /*
-       * PHONE 5
-       *
-       * Potek:
-       * Start
-       *   -> SpeechRecognition
-       *   -> zaznan govor
-       *   -> MyMemory prevod
-       *   -> SpeechSynthesis
-       *   -> ponovno poslušanje
-       *
-       * Uporabnik uporablja samo:
-       * - Naprej
-       * - Ustavi
-       */
+<section
+  id="conversationScreen"
+  class="screen"
+>
 
-      const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
 
-      const state = {
-        person1: {
-          gender: "male",
-          language: "sl-SI"
-        },
+<div class="live-actions">
 
-        person2: {
-          gender: "female",
-          language: "hu-HU"
-        },
 
-        activePerson: 1,
-        running: false,
-        phase: "stopped",
-        recognition: null,
-        recognitionStarting: false,
-        recognitionActive: false,
-        intentionalRecognitionStop: false,
-        restartTimer: null,
-        translationController: null,
-        voices: []
+<button
+  id="nextButton"
+  class="next-button"
+  type="button"
+>
+  ✓
+</button>
+
+
+<button
+  id="stopButton"
+  class="stop-button"
+  type="button"
+>
+
+  <span class="stop-square"></span>
+
+  Ustavi
+
+</button>
+
+
+</div>
+
+
+
+<div class="language-route">
+
+
+<div class="route-item">
+
+  <span
+    id="sourceFlag"
+    class="flag"
+  >
+    🇸🇮
+  </span>
+
+  <span id="sourceLanguage">
+    Slovenščina
+  </span>
+
+</div>
+
+
+<span class="route-arrow">
+→
+</span>
+
+
+<div class="route-item">
+
+  <span
+    id="targetFlag"
+    class="flag"
+  >
+    🇭🇺
+  </span>
+
+  <span id="targetLanguage">
+    Magyar
+  </span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="active-person">
+
+  <div
+    id="activeAvatar"
+    class="active-avatar"
+  >
+    👨
+  </div>
+
+</div>
+
+
+
+<div class="orb-area">
+
+  <div
+    id="orb"
+    class="orb-rings"
+  >
+
+    <div class="main-orb">
+      🎙️
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div class="stages">
+
+
+<div
+  id="stageListen"
+  class="stage listen"
+>
+  🎙
+</div>
+
+
+<div class="stage-arrow">
+→
+</div>
+
+
+<div
+  id="stageProcess"
+  class="stage process"
+>
+  🤫
+</div>
+
+
+<div class="stage-arrow">
+→
+</div>
+
+
+<div
+  id="stageSpeak"
+  class="stage speak"
+>
+  🔊
+</div>
+
+
+</div>
+
+
+
+<div
+  id="status"
+  class="status"
+>
+  Pripravljam mikrofon ...
+</div>
+
+
+
+<div class="translation">
+
+
+<div class="translation-line">
+
+  <span
+    id="resultSourceFlag"
+    class="flag"
+  >
+    🇸🇮
+  </span>
+
+  <span
+    id="originalText"
+    class="text"
+  >
+    ...
+  </span>
+
+</div>
+
+
+
+<div class="translation-line">
+
+  <span
+    id="resultTargetFlag"
+    class="flag"
+  >
+    🇭🇺
+  </span>
+
+  <span
+    id="translatedText"
+    class="text translated"
+  >
+    ...
+  </span>
+
+</div>
+
+
+</div>
+
+
+<div
+  id="conversationError"
+  class="error"
+></div>
+
+
+</section>
+
+
+</main>
+
+
+
+<script>
+
+(() => {
+
+"use strict";
+
+
+/* ============================= */
+/* SUPABASE                      */
+/* ============================= */
+
+const SUPABASE_URL =
+"https://kdixpdxmdfdbxpbuljfe.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+
+
+const TRANSCRIBE_URL =
+SUPABASE_URL +
+"/functions/v1/voice-transcribe";
+
+
+
+/* ============================= */
+/* STATE                         */
+/* ============================= */
+
+const state = {
+
+  person1:{
+    gender:"male",
+    language:"sl"
+  },
+
+  person2:{
+    gender:"female",
+    language:"hu"
+  },
+
+  activePerson:1,
+
+  running:false,
+
+  recording:false,
+
+  stream:null,
+
+  recorder:null,
+
+  chunks:[]
+
+};
+
+
+
+/* ============================= */
+/* ELEMENTS                      */
+/* ============================= */
+
+const setupScreen =
+document.getElementById("setupScreen");
+
+
+const conversationScreen =
+document.getElementById(
+  "conversationScreen"
+);
+
+
+const language1 =
+document.getElementById("language1");
+
+
+const language2 =
+document.getElementById("language2");
+
+
+const person1Button =
+document.getElementById(
+  "person1Button"
+);
+
+
+const person2Button =
+document.getElementById(
+  "person2Button"
+);
+
+
+const person1Icon =
+document.getElementById(
+  "person1Icon"
+);
+
+
+const person2Icon =
+document.getElementById(
+  "person2Icon"
+);
+
+
+const flag1 =
+document.getElementById("flag1");
+
+
+const flag2 =
+document.getElementById("flag2");
+
+
+const startButton =
+document.getElementById(
+  "startButton"
+);
+
+
+const nextButton =
+document.getElementById(
+  "nextButton"
+);
+
+
+const stopButton =
+document.getElementById(
+  "stopButton"
+);
+
+
+const orb =
+document.getElementById("orb");
+
+
+const status =
+document.getElementById("status");
+
+
+const stageListen =
+document.getElementById(
+  "stageListen"
+);
+
+
+const stageProcess =
+document.getElementById(
+  "stageProcess"
+);
+
+
+const stageSpeak =
+document.getElementById(
+  "stageSpeak"
+);
+
+
+const originalText =
+document.getElementById(
+  "originalText"
+);
+
+
+const translatedText =
+document.getElementById(
+  "translatedText"
+);
+
+
+const activeAvatar =
+document.getElementById(
+  "activeAvatar"
+);
+
+
+const setupError =
+document.getElementById(
+  "setupError"
+);
+
+
+const conversationError =
+document.getElementById(
+  "conversationError"
+);
+
+
+
+/* ============================= */
+/* LANGUAGE INFO                 */
+/* ============================= */
+
+function languageInfo(code){
+
+  if(code === "hu"){
+
+    return{
+      name:"Magyar",
+      flag:"🇭🇺",
+      speech:"hu-HU"
+    };
+
+  }
+
+  return{
+    name:"Slovenščina",
+    flag:"🇸🇮",
+    speech:"sl-SI"
+  };
+
+}
+
+
+
+function activePerson(){
+
+  return state.activePerson === 1
+    ? state.person1
+    : state.person2;
+
+}
+
+
+
+function targetPerson(){
+
+  return state.activePerson === 1
+    ? state.person2
+    : state.person1;
+
+}
+
+
+
+/* ============================= */
+/* SETUP                         */
+/* ============================= */
+
+function renderSetup(){
+
+  person1Icon.textContent =
+    state.person1.gender === "male"
+      ? "👨"
+      : "👩";
+
+
+  person2Icon.textContent =
+    state.person2.gender === "male"
+      ? "👨"
+      : "👩";
+
+
+  flag1.textContent =
+    languageInfo(
+      state.person1.language
+    ).flag;
+
+
+  flag2.textContent =
+    languageInfo(
+      state.person2.language
+    ).flag;
+
+}
+
+
+
+person1Button.addEventListener(
+"click",
+() => {
+
+  state.person1.gender =
+    state.person1.gender === "male"
+      ? "female"
+      : "male";
+
+  renderSetup();
+
+});
+
+
+
+person2Button.addEventListener(
+"click",
+() => {
+
+  state.person2.gender =
+    state.person2.gender === "male"
+      ? "female"
+      : "male";
+
+  renderSetup();
+
+});
+
+
+
+language1.addEventListener(
+"change",
+() => {
+
+  state.person1.language =
+    language1.value;
+
+  renderSetup();
+
+});
+
+
+
+language2.addEventListener(
+"change",
+() => {
+
+  state.person2.language =
+    language2.value;
+
+  renderSetup();
+
+});
+
+
+
+/* ============================= */
+/* CONVERSATION DISPLAY          */
+/* ============================= */
+
+function renderConversation(){
+
+  const source =
+    activePerson();
+
+  const target =
+    targetPerson();
+
+
+  const sourceInfo =
+    languageInfo(
+      source.language
+    );
+
+
+  const targetInfo =
+    languageInfo(
+      target.language
+    );
+
+
+  document.getElementById(
+    "sourceFlag"
+  ).textContent =
+    sourceInfo.flag;
+
+
+  document.getElementById(
+    "sourceLanguage"
+  ).textContent =
+    sourceInfo.name;
+
+
+  document.getElementById(
+    "targetFlag"
+  ).textContent =
+    targetInfo.flag;
+
+
+  document.getElementById(
+    "targetLanguage"
+  ).textContent =
+    targetInfo.name;
+
+
+  document.getElementById(
+    "resultSourceFlag"
+  ).textContent =
+    sourceInfo.flag;
+
+
+  document.getElementById(
+    "resultTargetFlag"
+  ).textContent =
+    targetInfo.flag;
+
+
+  activeAvatar.textContent =
+    source.gender === "male"
+      ? "👨"
+      : "👩";
+
+}
+
+
+
+/* ============================= */
+/* PHASE                         */
+/* ============================= */
+
+function clearPhase(){
+
+  orb.classList.remove(
+    "recording",
+    "processing",
+    "speaking"
+  );
+
+
+  stageListen.classList.remove(
+    "active"
+  );
+
+
+  stageProcess.classList.remove(
+    "active"
+  );
+
+
+  stageSpeak.classList.remove(
+    "active"
+  );
+
+}
+
+
+
+function showRecording(){
+
+  clearPhase();
+
+  orb.classList.add(
+    "recording"
+  );
+
+  stageListen.classList.add(
+    "active"
+  );
+
+  status.textContent =
+    "Poslušam ...";
+
+}
+
+
+
+function showProcessing(){
+
+  clearPhase();
+
+  orb.classList.add(
+    "processing"
+  );
+
+  stageProcess.classList.add(
+    "active"
+  );
+
+  status.textContent =
+    "Prevajam ...";
+
+}
+
+
+
+function showSpeaking(){
+
+  clearPhase();
+
+  orb.classList.add(
+    "speaking"
+  );
+
+  stageSpeak.classList.add(
+    "active"
+  );
+
+  status.textContent =
+    "Govorim ...";
+
+}
+
+
+
+/* ============================= */
+/* GET MICROPHONE                */
+/* ============================= */
+
+async function getMicrophone(){
+
+  if(state.stream){
+
+    const liveTrack =
+      state.stream
+        .getAudioTracks()
+        .find(
+          track =>
+            track.readyState === "live"
+        );
+
+
+    if(liveTrack){
+
+      return state.stream;
+
+    }
+
+  }
+
+
+  state.stream =
+    await navigator.mediaDevices
+      .getUserMedia({
+
+        audio:{
+          echoCancellation:true,
+          noiseSuppression:true,
+          autoGainControl:true
+        }
+
+      });
+
+
+  return state.stream;
+
+}
+
+
+
+/* ============================= */
+/* START RECORDING               */
+/* ============================= */
+
+async function startRecording(){
+
+  if(
+    !state.running ||
+    state.recording
+  ){
+    return;
+  }
+
+
+  conversationError.textContent = "";
+
+
+  try{
+
+    const stream =
+      await getMicrophone();
+
+
+    state.chunks = [];
+
+
+    let options = {};
+
+
+    if(
+      MediaRecorder.isTypeSupported(
+        "audio/webm;codecs=opus"
+      )
+    ){
+
+      options.mimeType =
+        "audio/webm;codecs=opus";
+
+    }
+
+
+    const recorder =
+      new MediaRecorder(
+        stream,
+        options
+      );
+
+
+    state.recorder =
+      recorder;
+
+
+    recorder.ondataavailable =
+      event => {
+
+        if(
+          event.data &&
+          event.data.size > 0
+        ){
+
+          state.chunks.push(
+            event.data
+          );
+
+        }
+
       };
 
-      /* ELEMENTI */
 
-      const setupScreen =
-        document.getElementById("setupScreen");
+    recorder.start(250);
 
-      const conversationScreen =
-        document.getElementById("conversationScreen");
 
-      const person1Button =
-        document.getElementById("person1Button");
+    state.recording =
+      true;
 
-      const person2Button =
-        document.getElementById("person2Button");
 
-      const person1Icon =
-        document.getElementById("person1Icon");
+    showRecording();
 
-      const person2Icon =
-        document.getElementById("person2Icon");
+  }
+  catch(error){
 
-      const language1 =
-        document.getElementById("language1");
+    console.error(error);
 
-      const language2 =
-        document.getElementById("language2");
 
-      const flag1 =
-        document.getElementById("flag1");
+    conversationError.textContent =
+      "Mikrofon ni dosegljiv. Preveri dovoljenje za mikrofon.";
 
-      const flag2 =
-        document.getElementById("flag2");
+  }
 
-      const startButton =
-        document.getElementById("startButton");
+}
 
-      const nextButton =
-        document.getElementById("nextButton");
 
-      const stopButton =
-        document.getElementById("stopButton");
 
-      const activeAvatar =
-        document.getElementById("activeAvatar");
+/* ============================= */
+/* STOP RECORDING                */
+/* ============================= */
 
-      const speakerName =
-        document.getElementById("speakerName");
+function stopRecording(){
 
-      const orbRings =
-        document.getElementById("orbRings");
+  return new Promise(
+    resolve => {
 
-      const mainOrb =
-        document.getElementById("mainOrb");
 
-      const stageListen =
-        document.getElementById("stageListen");
+      if(
+        !state.recorder ||
+        !state.recording
+      ){
 
-      const stageProcess =
-        document.getElementById("stageProcess");
+        resolve(null);
 
-      const stageSpeak =
-        document.getElementById("stageSpeak");
+        return;
 
-      const status =
-        document.getElementById("status");
-
-      const sourceText =
-        document.getElementById("sourceText");
-
-      const translatedText =
-        document.getElementById("translatedText");
-
-      const setupWarning =
-        document.getElementById("setupWarning");
-
-      const conversationWarning =
-        document.getElementById("conversationWarning");
-
-      /* JEZIKI */
-
-      function getLanguageInfo(code) {
-        if (code === "hu-HU") {
-          return {
-            name: "Magyar",
-            flag: "🇭🇺",
-            translateCode: "hu"
-          };
-        }
-
-        return {
-          name: "Slovenščina",
-          flag: "🇸🇮",
-          translateCode: "sl"
-        };
       }
 
-      function getActivePerson() {
-        return state.activePerson === 1
-          ? state.person1
-          : state.person2;
-      }
 
-      function getTargetPerson() {
-        return state.activePerson === 1
-          ? state.person2
-          : state.person1;
-      }
+      const recorder =
+        state.recorder;
 
-      /* PRVI EKRAN */
 
-      function toggleGender(personKey) {
-        const person = state[personKey];
+      recorder.onstop =
+        () => {
 
-        person.gender =
-          person.gender === "male"
-            ? "female"
-            : "male";
 
-        renderSetup();
-      }
+          const type =
+            recorder.mimeType ||
+            "audio/webm";
 
-      function renderSetup() {
-        person1Icon.textContent =
-          state.person1.gender === "male"
-            ? "👨"
-            : "👩";
 
-        person2Icon.textContent =
-          state.person2.gender === "male"
-            ? "👨"
-            : "👩";
-
-        flag1.textContent =
-          getLanguageInfo(state.person1.language).flag;
-
-        flag2.textContent =
-          getLanguageInfo(state.person2.language).flag;
-      }
-
-      person1Button.addEventListener("click", () => {
-        toggleGender("person1");
-      });
-
-      person2Button.addEventListener("click", () => {
-        toggleGender("person2");
-      });
-
-      language1.addEventListener("change", () => {
-        state.person1.language = language1.value;
-        renderSetup();
-      });
-
-      language2.addEventListener("change", () => {
-        state.person2.language = language2.value;
-        renderSetup();
-      });
-
-      /* PRIKAZ POGOVORA */
-
-      function renderConversation() {
-        const active = getActivePerson();
-        const target = getTargetPerson();
-
-        const activeLanguage =
-          getLanguageInfo(active.language);
-
-        const targetLanguage =
-          getLanguageInfo(target.language);
-
-        document.getElementById(
-          "conversationFlag1"
-        ).textContent = activeLanguage.flag;
-
-        document.getElementById(
-          "conversationLanguage1"
-        ).textContent = activeLanguage.name;
-
-        document.getElementById(
-          "conversationFlag2"
-        ).textContent = targetLanguage.flag;
-
-        document.getElementById(
-          "conversationLanguage2"
-        ).textContent = targetLanguage.name;
-
-        document.getElementById(
-          "resultFlag1"
-        ).textContent = activeLanguage.flag;
-
-        document.getElementById(
-          "resultFlag2"
-        ).textContent = targetLanguage.flag;
-
-        activeAvatar.textContent =
-          active.gender === "male"
-            ? "👨"
-            : "👩";
-
-        activeAvatar.classList.toggle(
-          "purple-active",
-          state.activePerson === 2
-        );
-
-        speakerName.textContent =
-          state.activePerson === 1
-            ? "Govorec 1"
-            : "Govorec 2";
-      }
-
-      /* FAZE */
-
-      function clearStageDisplay() {
-        stageListen.classList.remove("active");
-        stageProcess.classList.remove("active");
-        stageSpeak.classList.remove("active");
-
-        orbRings.classList.remove("listening");
-
-        mainOrb.classList.remove(
-          "processing",
-          "speaking"
-        );
-
-        status.classList.remove(
-          "processing-status",
-          "speaking-status",
-          "error-status"
-        );
-      }
-
-      function setListeningDisplay(message = "Poslušam ...") {
-        state.phase = "listen";
-
-        clearStageDisplay();
-
-        stageListen.classList.add("active");
-        orbRings.classList.add("listening");
-
-        mainOrb.textContent = "🎙️";
-        status.textContent = message;
-      }
-
-      function setProcessingDisplay() {
-        state.phase = "process";
-
-        clearStageDisplay();
-
-        stageProcess.classList.add("active");
-        mainOrb.classList.add("processing");
-
-        mainOrb.textContent = "🤫";
-
-        status.textContent = "Prevajam ...";
-        status.classList.add("processing-status");
-      }
-
-      function setSpeakingDisplay() {
-        state.phase = "speak";
-
-        clearStageDisplay();
-
-        stageSpeak.classList.add("active");
-        mainOrb.classList.add("speaking");
-
-        mainOrb.textContent = "🔊";
-
-        status.textContent = "Govorim ...";
-        status.classList.add("speaking-status");
-      }
-
-      function showError(message) {
-        clearStageDisplay();
-
-        status.textContent = message;
-        status.classList.add("error-status");
-      }
-
-      function clearTranslation() {
-        sourceText.textContent =
-          "Govor se bo izpisal tukaj.";
-
-        sourceText.classList.add(
-          "translation-placeholder"
-        );
-
-        translatedText.textContent =
-          "Prevod se bo izpisal tukaj.";
-
-        translatedText.classList.add(
-          "translation-placeholder"
-        );
-      }
-
-      /* SPEECH RECOGNITION */
-
-      function createRecognition() {
-        if (!SpeechRecognition) {
-          return null;
-        }
-
-        const recognition =
-          new SpeechRecognition();
-
-        /*
-         * Na iPhonu je zanesljiveje poslušati en stavek
-         * ter nato avtomatsko ponovno zagnati recognition.
-         */
-        recognition.continuous = false;
-        recognition.interimResults = true;
-        recognition.maxAlternatives = 1;
-
-        recognition.onstart = () => {
-          state.recognitionStarting = false;
-          state.recognitionActive = true;
-
-          if (
-            state.running &&
-            state.phase === "listen"
-          ) {
-            setListeningDisplay("Poslušam ...");
-          }
-        };
-
-        recognition.onspeechstart = () => {
-          if (
-            state.running &&
-            state.phase === "listen"
-          ) {
-            setListeningDisplay("Poslušam govor ...");
-          }
-        };
-
-        recognition.onresult = (event) => {
-          if (
-            !state.running ||
-            state.phase !== "listen"
-          ) {
-            return;
-          }
-
-          let interimTranscript = "";
-          let finalTranscript = "";
-
-          for (
-            let index = event.resultIndex;
-            index < event.results.length;
-            index += 1
-          ) {
-            const transcript =
-              event.results[index][0].transcript;
-
-            if (event.results[index].isFinal) {
-              finalTranscript += transcript;
-            } else {
-              interimTranscript += transcript;
-            }
-          }
-
-          const visibleText =
-            (
-              finalTranscript ||
-              interimTranscript
-            ).trim();
-
-          if (visibleText) {
-            sourceText.textContent = visibleText;
-
-            sourceText.classList.remove(
-              "translation-placeholder"
-            );
-          }
-
-          if (finalTranscript.trim()) {
-            const recognizedText =
-              finalTranscript.trim();
-
-            stopRecognition(true);
-
-            handleRecognizedSpeech(
-              recognizedText
-            );
-          }
-        };
-
-        recognition.onerror = (event) => {
-          state.recognitionStarting = false;
-          state.recognitionActive = false;
-
-          if (!state.running) {
-            return;
-          }
-
-          if (
-            event.error === "aborted" ||
-            event.error === "no-speech"
-          ) {
-            scheduleRecognitionRestart(450);
-            return;
-          }
-
-          if (event.error === "not-allowed") {
-            showError("Dovoli uporabo mikrofona.");
-
-            conversationWarning.textContent =
-              "Dostop do mikrofona ni dovoljen. V nastavitvah brskalnika omogoči mikrofon in ponovno zaženi pogovor.";
-
-            conversationWarning.classList.add(
-              "visible"
+          const blob =
+            new Blob(
+              state.chunks,
+              {type}
             );
 
-            return;
-          }
 
-          if (event.error === "audio-capture") {
-            showError("Mikrofon ni dosegljiv.");
-            return;
-          }
+          state.chunks = [];
 
-          if (event.error === "network") {
-            showError("Napaka omrežne povezave.");
+          state.recording =
+            false;
 
-            scheduleRecognitionRestart(1500);
-            return;
-          }
 
-          showError(
-            "Napaka mikrofona: " +
-            event.error
-          );
+          resolve(blob);
 
-          scheduleRecognitionRestart(1000);
         };
 
-        recognition.onend = () => {
-          state.recognitionStarting = false;
-          state.recognitionActive = false;
 
-          if (!state.running) {
-            return;
-          }
+      try{
 
-          if (state.intentionalRecognitionStop) {
-            state.intentionalRecognitionStop = false;
-            return;
-          }
+        recorder.stop();
 
-          if (state.phase === "listen") {
-            scheduleRecognitionRestart(350);
-          }
-        };
+      }
+      catch(error){
 
-        return recognition;
+        state.recording =
+          false;
+
+        resolve(null);
+
       }
 
-      function startRecognition() {
-        if (
-          !state.running ||
-          state.phase !== "listen"
-        ) {
-          return;
-        }
+    }
+  );
 
-        if (
-          state.recognitionStarting ||
-          state.recognitionActive
-        ) {
-          return;
-        }
+}
 
-        if (!state.recognition) {
-          state.recognition =
-            createRecognition();
-        }
 
-        if (!state.recognition) {
-          showError(
-            "Ta brskalnik ne podpira prepoznavanja govora."
-          );
 
-          conversationWarning.textContent =
-            "Prepoznavanje govora ni na voljo. Na iPhonu poskusi stran odpreti neposredno v Safariju prek HTTPS.";
+/* ============================= */
+/* CALL SUPABASE                 */
+/* ============================= */
 
-          conversationWarning.classList.add(
-            "visible"
-          );
+async function transcribeAndTranslate(
+  audioBlob
+){
 
-          return;
-        }
+  const source =
+    activePerson();
 
-        const active = getActivePerson();
 
-        state.recognition.lang =
-          active.language;
+  const target =
+    targetPerson();
 
-        state.recognitionStarting = true;
-        state.intentionalRecognitionStop = false;
 
-        setListeningDisplay("Poslušam ...");
+  const extension =
+    audioBlob.type.includes("mp4")
+      ? "m4a"
+      : "webm";
 
-        try {
-          state.recognition.start();
-        } catch (error) {
-          state.recognitionStarting = false;
 
-          /*
-           * Če je recognition že v stanju starting,
-           * počakamo in poskusimo znova.
-           */
-          scheduleRecognitionRestart(600);
-        }
+  const audioFile =
+    new File(
+
+      [audioBlob],
+
+      "voice." + extension,
+
+      {
+        type:
+          audioBlob.type ||
+          "audio/webm"
       }
 
-      function stopRecognition(intentional = true) {
-        clearTimeout(state.restartTimer);
+    );
 
-        if (
-          !state.recognition ||
-          (
-            !state.recognitionStarting &&
-            !state.recognitionActive
+
+  const form =
+    new FormData();
+
+
+  form.append(
+    "audio",
+    audioFile
+  );
+
+
+  form.append(
+    "language",
+    source.language
+  );
+
+
+  form.append(
+    "target_language",
+    target.language
+  );
+
+
+  const response =
+    await fetch(
+      TRANSCRIBE_URL,
+      {
+
+        method:"POST",
+
+        headers:{
+
+          "apikey":
+            SUPABASE_KEY,
+
+          "Authorization":
+            "Bearer " +
+            SUPABASE_KEY
+
+        },
+
+        body:form
+
+      }
+    );
+
+
+  const raw =
+    await response.text();
+
+
+  let data;
+
+
+  try{
+
+    data =
+      JSON.parse(raw);
+
+  }
+  catch(error){
+
+    throw new Error(
+      raw ||
+      "Neveljaven odgovor strežnika."
+    );
+
+  }
+
+
+  if(!response.ok){
+
+    throw new Error(
+      data.detail ||
+      data.error ||
+      "Napaka " +
+      response.status
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+
+/* ============================= */
+/* TTS                           */
+/* ============================= */
+
+function findVoice(
+  language,
+  gender
+){
+
+  if(
+    !("speechSynthesis" in window)
+  ){
+
+    return null;
+
+  }
+
+
+  const voices =
+    speechSynthesis
+      .getVoices();
+
+
+  const languagePrefix =
+    languageInfo(language)
+      .speech
+      .substring(0,2)
+      .toLowerCase();
+
+
+  const candidates =
+    voices.filter(
+      voice =>
+        voice.lang
+          .toLowerCase()
+          .startsWith(
+            languagePrefix
           )
-        ) {
-          state.recognitionStarting = false;
-          state.recognitionActive = false;
+    );
+
+
+  const maleNames = [
+    "male",
+    "david",
+    "daniel",
+    "mark",
+    "alex",
+    "tamas"
+  ];
+
+
+  const femaleNames = [
+    "female",
+    "zira",
+    "anna",
+    "samantha",
+    "helena",
+    "mariska"
+  ];
+
+
+  const names =
+    gender === "male"
+      ? maleNames
+      : femaleNames;
+
+
+  const preferred =
+    candidates.find(
+      voice => {
+
+        const n =
+          voice.name.toLowerCase();
+
+        return names.some(
+          name =>
+            n.includes(name)
+        );
+
+      }
+    );
+
+
+  return(
+    preferred ||
+    candidates[0] ||
+    null
+  );
+
+}
+
+
+
+/* ============================= */
+/* SPEAK                         */
+/* ============================= */
+
+function speak(text){
+
+  return new Promise(
+    resolve => {
+
+
+      if(
+        !text ||
+        !("speechSynthesis" in window)
+      ){
+
+        resolve();
+
+        return;
+
+      }
+
+
+      const target =
+        targetPerson();
+
+
+      showSpeaking();
+
+
+      speechSynthesis.cancel();
+
+
+      const utterance =
+        new SpeechSynthesisUtterance(
+          text
+        );
+
+
+      utterance.lang =
+        languageInfo(
+          target.language
+        ).speech;
+
+
+      utterance.rate =
+        .94;
+
+
+      utterance.pitch =
+        target.gender === "female"
+          ? 1.08
+          : .94;
+
+
+      const voice =
+        findVoice(
+          target.language,
+          target.gender
+        );
+
+
+      if(voice){
+
+        utterance.voice =
+          voice;
+
+      }
+
+
+      let completed = false;
+
+
+      function finish(){
+
+        if(completed){
           return;
         }
 
-        state.intentionalRecognitionStop =
-          intentional;
 
-        try {
-          state.recognition.stop();
-        } catch (error) {
-          try {
-            state.recognition.abort();
-          } catch (abortError) {
-            /* Ni dodatnega ukrepa. */
-          }
-        }
+        completed = true;
 
-        state.recognitionStarting = false;
-        state.recognitionActive = false;
+        resolve();
+
       }
 
-      function scheduleRecognitionRestart(delay) {
-        clearTimeout(state.restartTimer);
 
-        if (
-          !state.running ||
-          state.phase !== "listen"
-        ) {
-          return;
-        }
+      utterance.onend =
+        finish;
 
-        state.restartTimer =
-          window.setTimeout(() => {
-            startRecognition();
-          }, delay);
-      }
 
-      /* PREPOZNAN GOVOR */
+      utterance.onerror =
+        finish;
 
-      async function handleRecognizedSpeech(text) {
-        if (!state.running || !text) {
-          return;
-        }
 
-        sourceText.textContent = text;
+      speechSynthesis.speak(
+        utterance
+      );
 
-        sourceText.classList.remove(
-          "translation-placeholder"
-        );
 
-        translatedText.textContent = "...";
+      /*
+       Safari fallback.
+      */
 
-        translatedText.classList.add(
-          "translation-placeholder"
-        );
+      setTimeout(
+        finish,
+        Math.max(
+          3500,
+          text.length * 120
+        )
+      );
 
-        setProcessingDisplay();
+    }
+  );
 
-        try {
-          const translated =
-            await translateText(text);
+}
 
-          if (!state.running) {
-            return;
+
+
+/* ============================= */
+/* PROCESS CURRENT SPEECH        */
+/* ============================= */
+
+async function processSpeech(){
+
+  if(
+    !state.running ||
+    !state.recording
+  ){
+    return;
+  }
+
+
+  const blob =
+    await stopRecording();
+
+
+  if(
+    !blob ||
+    blob.size < 1000
+  ){
+
+    if(state.running){
+
+      await startRecording();
+
+    }
+
+    return;
+
+  }
+
+
+  showProcessing();
+
+
+  try{
+
+
+    const data =
+      await transcribeAndTranslate(
+        blob
+      );
+
+
+    /*
+      Backend iz stare delujoče
+      funkcije vrača:
+
+      text
+      translated
+    */
+
+
+    const original =
+      String(
+        data.text || ""
+      ).trim();
+
+
+    const translated =
+      String(
+        data.translated ||
+        data.translation ||
+        ""
+      ).trim();
+
+
+    if(!original){
+
+      throw new Error(
+        "Whisper ni vrnil besedila."
+      );
+
+    }
+
+
+    originalText.textContent =
+      original;
+
+
+    translatedText.textContent =
+      translated ||
+      original;
+
+
+    if(
+      translated &&
+      state.running
+    ){
+
+      await speak(
+        translated
+      );
+
+    }
+
+
+    if(state.running){
+
+      await startRecording();
+
+    }
+
+  }
+  catch(error){
+
+    console.error(error);
+
+
+    conversationError.textContent =
+      error.message ||
+      "Prepoznavanje ni uspelo.";
+
+
+    status.textContent =
+      "Poskusi ponovno.";
+
+
+    if(state.running){
+
+      setTimeout(
+        () => {
+
+          if(
+            state.running &&
+            !state.recording
+          ){
+
+            startRecording();
+
           }
 
-          translatedText.textContent =
-            translated;
+        },
+        1200
+      );
 
-          translatedText.classList.remove(
-            "translation-placeholder"
+    }
+
+  }
+
+}
+
+
+
+/* ============================= */
+/* START                         */
+/* ============================= */
+
+startButton.addEventListener(
+"click",
+async () => {
+
+
+  setupError.textContent = "";
+
+
+  if(
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ){
+
+    setupError.textContent =
+      "Brskalnik ne podpira mikrofona.";
+
+    return;
+
+  }
+
+
+  if(
+    state.person1.language ===
+    state.person2.language
+  ){
+
+    setupError.textContent =
+      "Izberi dva različna jezika.";
+
+    return;
+
+  }
+
+
+  state.running =
+    true;
+
+
+  state.activePerson =
+    1;
+
+
+  originalText.textContent =
+    "...";
+
+
+  translatedText.textContent =
+    "...";
+
+
+  setupScreen.classList.remove(
+    "active"
+  );
+
+
+  conversationScreen.classList.add(
+    "active"
+  );
+
+
+  renderConversation();
+
+
+  /*
+    Pomembno:
+    getUserMedia se izvede neposredno
+    po uporabnikovem kliku START.
+  */
+
+
+  await startRecording();
+
+});
+
+
+
+/* ============================= */
+/* NAPREJ                        */
+/* ============================= */
+
+nextButton.addEventListener(
+"click",
+async () => {
+
+
+  if(!state.running){
+    return;
+  }
+
+
+  /*
+    NAPREJ pomeni:
+
+    1. končaj govor trenutne osebe
+    2. pošlji zvok Whisperju
+    3. pokaži original
+    4. pokaži prevod
+    5. preberi prevod
+
+    Šele nato zamenjaj govorca.
+  */
+
+
+  if(state.recording){
+
+
+    const blob =
+      await stopRecording();
+
+
+    if(
+      blob &&
+      blob.size >= 1000
+    ){
+
+      showProcessing();
+
+
+      try{
+
+
+        const data =
+          await transcribeAndTranslate(
+            blob
           );
 
-          await speakTranslatedText(
-            translated
-          );
-        } catch (error) {
-          if (!state.running) {
-            return;
-          }
 
-          console.error(
-            "Napaka prevajanja:",
-            error
-          );
+        const original =
+          String(
+            data.text || ""
+          ).trim();
 
-          translatedText.textContent =
-            "Prevoda trenutno ni bilo mogoče pridobiti.";
-
-          translatedText.classList.remove(
-            "translation-placeholder"
-          );
-
-          showError(
-            "Prevajanje ni uspelo."
-          );
-
-          window.setTimeout(() => {
-            if (state.running) {
-              setListeningDisplay();
-              startRecognition();
-            }
-          }, 1400);
-        }
-      }
-
-      /* PREVOD */
-
-      async function translateText(text) {
-        const active = getActivePerson();
-        const target = getTargetPerson();
-
-        const sourceCode =
-          getLanguageInfo(
-            active.language
-          ).translateCode;
-
-        const targetCode =
-          getLanguageInfo(
-            target.language
-          ).translateCode;
-
-        if (sourceCode === targetCode) {
-          return text;
-        }
-
-        if (state.translationController) {
-          state.translationController.abort();
-        }
-
-        state.translationController =
-          new AbortController();
-
-        /*
-         * MyMemory je uporabljen kot preprost
-         * spletni prevajalnik brez API ključa.
-         *
-         * Za produkcijsko uporabo ga pozneje
-         * zamenjaj z lastnim backendom ali
-         * uradnim prevajalskim API-jem.
-         */
-        const endpoint =
-          "https://api.mymemory.translated.net/get" +
-          "?q=" +
-          encodeURIComponent(text) +
-          "&langpair=" +
-          encodeURIComponent(
-            sourceCode + "|" + targetCode
-          );
-
-        const response = await fetch(
-          endpoint,
-          {
-            method: "GET",
-            signal:
-              state.translationController.signal,
-            headers: {
-              Accept: "application/json"
-            }
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            "HTTP " + response.status
-          );
-        }
-
-        const data = await response.json();
 
         const translated =
-          data &&
-          data.responseData &&
-          data.responseData.translatedText
-            ? String(
-                data.responseData.translatedText
-              ).trim()
-            : "";
+          String(
+            data.translated ||
+            data.translation ||
+            ""
+          ).trim();
 
-        if (!translated) {
-          throw new Error(
-            "Prazen odgovor prevajalnika"
+
+        originalText.textContent =
+          original ||
+          "...";
+
+
+        translatedText.textContent =
+          translated ||
+          original ||
+          "...";
+
+
+        if(
+          translated &&
+          state.running
+        ){
+
+          await speak(
+            translated
           );
+
         }
 
-        return decodeHtmlEntities(
-          translated
-        );
+      }
+      catch(error){
+
+        console.error(error);
+
+
+        conversationError.textContent =
+          error.message ||
+          "Prepoznavanje ni uspelo.";
+
       }
 
-      function decodeHtmlEntities(value) {
-        const element =
-          document.createElement("textarea");
+    }
 
-        element.innerHTML = value;
+  }
 
-        return element.value;
-      }
 
-      /* GOVOR PREVODA */
+  if(!state.running){
+    return;
+  }
 
-      function loadVoices() {
-        if (!("speechSynthesis" in window)) {
-          state.voices = [];
-          return;
-        }
 
-        state.voices =
-          window.speechSynthesis.getVoices();
-      }
+  state.activePerson =
+    state.activePerson === 1
+      ? 2
+      : 1;
 
-      function findVoice(language, gender) {
-        const prefix =
-          language
-            .substring(0, 2)
-            .toLowerCase();
 
-        const matchingVoices =
-          state.voices.filter((voice) =>
-            voice.lang
-              .toLowerCase()
-              .startsWith(prefix)
-          );
+  renderConversation();
 
-        /*
-         * Web Speech API nima standardnega
-         * atributa gender. Izbira temelji na
-         * imenih glasov, če jih sistem poda.
-         */
-        const maleNames = [
-          "male",
-          "david",
-          "mark",
-          "daniel",
-          "alex",
-          "tamas",
-          "bence"
-        ];
 
-        const femaleNames = [
-          "female",
-          "zira",
-          "samantha",
-          "anna",
-          "helena",
-          "mariska",
-          "eszer"
-        ];
+  await startRecording();
 
-        const preferredNames =
-          gender === "male"
-            ? maleNames
-            : femaleNames;
+});
 
-        const preferredVoice =
-          matchingVoices.find((voice) => {
-            const voiceName =
-              voice.name.toLowerCase();
 
-            return preferredNames.some(
-              (name) =>
-                voiceName.includes(name)
-            );
-          });
 
-        return (
-          preferredVoice ||
-          matchingVoices[0] ||
-          null
-        );
-      }
+/* ============================= */
+/* STOP                          */
+/* ============================= */
 
-      function speakTranslatedText(text) {
-        return new Promise((resolve) => {
-          if (!state.running) {
-            resolve();
-            return;
-          }
+stopButton.addEventListener(
+"click",
+async () => {
 
-          setSpeakingDisplay();
 
-          if (
-            !("speechSynthesis" in window)
-          ) {
-            window.setTimeout(() => {
-              finishSpeaking();
-              resolve();
-            }, 900);
+  state.running =
+    false;
 
-            return;
-          }
 
-          stopRecognition(true);
+  if(
+    state.recording
+  ){
 
-          window.speechSynthesis.cancel();
+    await stopRecording();
 
-          const target =
-            getTargetPerson();
+  }
 
-          const utterance =
-            new SpeechSynthesisUtterance(text);
 
-          utterance.lang =
-            target.language;
+  if(
+    "speechSynthesis" in window
+  ){
 
-          utterance.rate = 0.93;
-          utterance.pitch =
-            target.gender === "female"
-              ? 1.08
-              : 0.92;
+    speechSynthesis.cancel();
 
-          const matchingVoice =
-            findVoice(
-              target.language,
-              target.gender
-            );
+  }
 
-          if (matchingVoice) {
-            utterance.voice = matchingVoice;
-          }
 
-          let completed = false;
+  if(state.stream){
 
-          function completeSpeech() {
-            if (completed) {
-              return;
-            }
-
-            completed = true;
-
-            finishSpeaking();
-            resolve();
-          }
-
-          utterance.onend =
-            completeSpeech;
-
-          utterance.onerror =
-            completeSpeech;
-
-          /*
-           * Varnostni zaključek, če Safari
-           * ne sproži dogodka onend.
-           */
-          const fallbackDuration =
-            Math.max(
-              2500,
-              Math.min(
-                12000,
-                text.length * 95
-              )
-            );
-
-          window.setTimeout(() => {
-            if (
-              state.running &&
-              state.phase === "speak"
-            ) {
-              completeSpeech();
-            }
-          }, fallbackDuration);
-
-          window.speechSynthesis.speak(
-            utterance
-          );
-        });
-      }
-
-      function finishSpeaking() {
-        if (!state.running) {
-          return;
-        }
-
-        setListeningDisplay();
-
-        window.setTimeout(() => {
-          startRecognition();
-        }, 500);
-      }
-
-      /* START */
-
-      startButton.addEventListener(
-        "click",
-        async () => {
-          setupWarning.classList.remove(
-            "visible"
-          );
-
-          conversationWarning.classList.remove(
-            "visible"
-          );
-
-          if (!SpeechRecognition) {
-            setupWarning.textContent =
-              "Ta brskalnik ne podpira prepoznavanja govora. Na iPhonu odpri stran neposredno v Safariju prek HTTPS.";
-
-            setupWarning.classList.add(
-              "visible"
-            );
-
-            return;
-          }
-
-          if (
-            state.person1.language ===
-            state.person2.language
-          ) {
-            setupWarning.textContent =
-              "Izberi dva različna jezika.";
-
-            setupWarning.classList.add(
-              "visible"
-            );
-
-            return;
-          }
-
-          state.running = true;
-          state.activePerson = 1;
-
-          clearTranslation();
-
-          setupScreen.classList.remove(
-            "active"
-          );
-
-          conversationScreen.classList.add(
-            "active"
-          );
-
-          renderConversation();
-          setListeningDisplay();
-
-          /*
-           * Recognition se mora zagnati neposredno
-           * znotraj uporabnikovega klika zaradi
-           * dovoljenja za mikrofon.
-           */
-          startRecognition();
-        }
+    state.stream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
       );
 
-      /* NAPREJ */
 
-      nextButton.addEventListener(
-        "click",
-        () => {
-          if (!state.running) {
-            return;
-          }
+    state.stream =
+      null;
 
-          stopRecognition(true);
+  }
 
-          if (
-            "speechSynthesis" in window
-          ) {
-            window.speechSynthesis.cancel();
-          }
 
-          if (
-            state.translationController
-          ) {
-            state.translationController.abort();
-            state.translationController = null;
-          }
+  state.recorder =
+    null;
 
-          state.activePerson =
-            state.activePerson === 1
-              ? 2
-              : 1;
 
-          clearTranslation();
-          renderConversation();
-          setListeningDisplay();
+  clearPhase();
 
-          window.setTimeout(() => {
-            startRecognition();
-          }, 350);
-        }
-      );
 
-      /* USTAVI */
+  conversationScreen
+    .classList
+    .remove("active");
 
-      stopButton.addEventListener(
-        "click",
-        stopConversation
-      );
 
-      function stopConversation() {
-        state.running = false;
-        state.phase = "stopped";
+  setupScreen
+    .classList
+    .add("active");
 
-        clearTimeout(state.restartTimer);
+});
 
-        stopRecognition(true);
 
-        if (
-          "speechSynthesis" in window
-        ) {
-          window.speechSynthesis.cancel();
-        }
 
-        if (
-          state.translationController
-        ) {
-          state.translationController.abort();
-          state.translationController = null;
-        }
+/* ============================= */
+/* INITIALIZE                    */
+/* ============================= */
 
-        clearStageDisplay();
+if(
+  "speechSynthesis" in window
+){
 
-        conversationScreen.classList.remove(
-          "active"
-        );
+  speechSynthesis.getVoices();
 
-        setupScreen.classList.add(
-          "active"
-        );
-      }
+}
 
-      /* GLASOVI */
 
-      if ("speechSynthesis" in window) {
-        loadVoices();
+renderSetup();
 
-        window.speechSynthesis.addEventListener(
-          "voiceschanged",
-          loadVoices
-        );
-      }
 
-      /* ČIŠČENJE OB ZAPRTJU */
+})();
 
-      window.addEventListener(
-        "pagehide",
-        () => {
-          state.running = false;
-
-          clearTimeout(state.restartTimer);
-
-          stopRecognition(true);
-
-          if (
-            "speechSynthesis" in window
-          ) {
-            window.speechSynthesis.cancel();
-          }
-
-          if (
-            state.translationController
-          ) {
-            state.translationController.abort();
-          }
-        }
-      );
-
-      renderSetup();
-    })();
-  </script>
+</script>
 
 </body>
 </html>
