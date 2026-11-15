@@ -1,39 +1,66 @@
 <!DOCTYPE html>
 <html lang="sl">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
+>
 
 <title>Voice Pogovor</title>
 
 <meta name="theme-color" content="#061224">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Voice Pogovor">
 
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
+
+<meta
+  name="apple-mobile-web-app-status-bar-style"
+  content="black-translucent"
+>
+
+<meta
+  name="apple-mobile-web-app-title"
+  content="Voice Pogovor"
+>
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="apple-touch-icon.png"
+>
+
+<link
+  rel="icon"
+  type="image/png"
+  href="apple-touch-icon.png"
+>
+
 
 <style>
+
 *{
-  box-sizing:border-box
+  box-sizing:border-box;
 }
 
 :root{
   --bg:#061224;
-  --card:#0d213d;
   --line:#294a75;
   --text:#f7f9ff;
   --muted:#a8b4c8;
-  --blue:#078cff;
-  --cyan:#13dfc5;
-  --red:#d62943;
-  --yellow:#ffd54a
+  --yellow:#ffd54a;
 }
 
-html,body{
+html,
+body{
   margin:0;
   min-height:100%;
+
   background:
     radial-gradient(
       circle at 50% 10%,
@@ -41,289 +68,392 @@ html,body{
       #061224 42%,
       #030b17 100%
     );
+
   color:var(--text);
-  font-family:Arial,sans-serif
+
+  font-family:
+    Arial,
+    sans-serif;
 }
 
 body{
   padding:
     max(18px,env(safe-area-inset-top))
     18px
-    max(18px,env(safe-area-inset-bottom))
+    max(18px,env(safe-area-inset-bottom));
 }
 
 .app{
   max-width:520px;
-  margin:auto
+  margin:auto;
 }
 
 .hidden{
-  display:none!important
+  display:none!important;
 }
 
 
-/* =========================
+/* ===========================
    ZAČETNI ZASLON
-========================= */
+=========================== */
 
 .brand{
   text-align:center;
-  margin:8px 0 28px
+  margin:8px 0 28px;
 }
 
 .brand img{
   width:82px;
   height:82px;
-  display:block;
-  margin:auto;
-  border-radius:23px
+
+  border-radius:23px;
 }
+
 
 .card{
   margin-bottom:15px;
   padding:18px;
-  border:1px solid var(--line);
+
+  border:
+    1px solid var(--line);
+
   border-radius:22px;
+
   background:
     linear-gradient(
       145deg,
       #102a4c,
       #0a1930
     );
-  box-shadow:0 16px 38px #0006
+
+  box-shadow:
+    0 16px 38px #0006;
 }
+
 
 input,
 select{
   width:100%;
   height:57px;
-  padding:0 15px;
+
+  padding:
+    0 15px;
+
   border-radius:15px;
   outline:none;
+
   color:#fff;
-  font-size:18px
+
+  font-size:18px;
 }
+
 
 input{
-  margin-bottom:12px
+  margin-bottom:12px;
 }
+
 
 select{
-  border:1px solid #5276a5;
-  background:#0b1c34
+  border:
+    1px solid #5276a5;
+
+  background:
+    #0b1c34;
 }
 
 
-/* OSEBA A */
+/* Oseba A */
 
-.nameAInput{
-  border:1px solid #168cff;
-  background:#08244a;
-  color:#72bdff;
-  font-weight:900
+.nameA{
+  border:
+    1px solid #168cff;
+
+  background:
+    #08244a;
+
+  color:
+    #72bdff;
+
+  font-weight:900;
 }
 
 
-/* OSEBA B */
+/* Oseba B */
 
-.nameBInput{
-  border:1px solid #13d7b9;
-  background:#073a35;
-  color:#67efd9;
-  font-weight:900
+.nameB{
+  border:
+    1px solid #13d7b9;
+
+  background:
+    #073a35;
+
+  color:
+    #67efd9;
+
+  font-weight:900;
 }
 
+
+/* ZAČNI */
 
 .start{
   width:100%;
   height:68px;
-  margin-top:7px;
+
   border:0;
+
   border-radius:18px;
+
   background:
     linear-gradient(
       90deg,
       #087df1,
       #079efe
     );
+
   color:#fff;
+
   font-size:19px;
   font-weight:900;
-  box-shadow:0 12px 30px #087df155
+
+  box-shadow:
+    0 12px 30px #087df155;
 }
 
 
-/* =========================
-   POGOVOR HEADER
-========================= */
+/* ===========================
+   POGOVOR
+=========================== */
 
 .top{
   display:flex;
-  justify-content:space-between;
+
+  justify-content:
+    space-between;
+
   align-items:center;
-  margin-bottom:24px
+
+  margin-bottom:24px;
 }
 
-.miniBrand img{
+
+.top img{
   width:44px;
   height:44px;
-  border-radius:13px
+
+  border-radius:13px;
 }
+
 
 .gear{
   border:0;
-  background:transparent;
-  color:#b7c6da;
-  font-size:25px
+
+  background:
+    transparent;
+
+  color:
+    #b7c6da;
+
+  font-size:25px;
 }
 
 
-/* =========================
+/* ===========================
    ZGORNJA GUMBA
-========================= */
+=========================== */
 
-.people{
+.actions{
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:12px;
-  margin-bottom:17px
+
+  margin-bottom:17px;
 }
 
-.topNext,
-.topEnd{
+
+.next,
+.end{
   height:56px;
+
   border-radius:27px;
+
   font-size:15px;
-  font-weight:900
-}
 
-.topNext{
-  border:0
+  font-weight:900;
 }
 
 
-/* Govori A */
+/* NAPREJ */
 
-.topNext.speakerA{
+.next{
+  border:0;
+}
+
+
+/* Oseba A govori */
+
+.next.a{
   background:
     linear-gradient(
       90deg,
       #078eff,
       #0a7bee
     );
-  color:#fff
+
+  color:#fff;
 }
 
 
-/* Govori B */
+/* Oseba B govori */
 
-.topNext.speakerB{
+.next.b{
   background:
     linear-gradient(
       90deg,
       #18dfbd,
       #10bda4
     );
-  color:#042d28
+
+  color:#042d28;
 }
 
 
-/* Končaj */
+/* KONČAJ */
 
-.topEnd{
-  border:1px solid #a63b4b;
+.end{
+  border:
+    1px solid #a63b4b;
+
   background:
     linear-gradient(
       90deg,
       #d62943,
       #a71730
     );
-  color:#fff
+
+  color:#fff;
 }
 
 
-/* =========================
-   SMER
-========================= */
+/* ===========================
+   SMER PREVODA
+=========================== */
 
 .direction{
   text-align:center;
-  color:#d4dbea;
-  font-size:14px
+
+  color:
+    #d4dbea;
+
+  font-size:14px;
 }
 
 
-/* =========================
+/* ===========================
    GOVOREC
-========================= */
+=========================== */
 
 .speaker{
-  margin:19px 0 0;
+  margin:
+    19px 0 0;
+
   text-align:center;
+
   font-size:36px;
+
   font-weight:900;
-  letter-spacing:1px
 }
+
 
 .speakLabel{
-  margin-top:5px;
   text-align:center;
-  color:#bfcae0;
+
+  color:
+    #bfcae0;
+
   font-size:20px;
-  font-weight:900
+
+  font-weight:900;
 }
 
 
-/* =========================
+/* ===========================
    MIKROFON
-========================= */
+=========================== */
 
 .pulse{
   position:relative;
+
   display:grid;
+
   place-items:center;
+
   width:205px;
   height:205px;
-  margin:14px auto 16px
+
+  margin:
+    14px auto 16px;
 }
+
 
 .ring{
   position:absolute;
-  border:2px solid #087fff55;
+
+  border:
+    2px solid #087fff66;
+
   border-radius:50%;
-  animation:ringPulse 1.6s infinite
+
+  animation:
+    ringPulse 1.6s infinite;
 }
 
+
 .r1{
-  inset:0
+  inset:0;
 }
+
 
 .r2{
   inset:20px;
-  animation-delay:.25s
+
+  animation-delay:
+    .25s;
 }
+
 
 .r3{
   inset:39px;
-  animation-delay:.5s
+
+  animation-delay:
+    .5s;
 }
 
 
 @keyframes ringPulse{
 
   0%{
-    transform:scale(.82);
-    opacity:.95
+    transform:
+      scale(.82);
+
+    opacity:.95;
   }
 
   70%{
-    transform:scale(1.05);
-    opacity:.12
+    transform:
+      scale(1.05);
+
+    opacity:.12;
   }
 
   100%{
-    transform:scale(1.05);
-    opacity:0
+    transform:
+      scale(1.05);
+
+    opacity:0;
   }
 
 }
@@ -331,19 +461,29 @@ select{
 
 .mic{
   position:relative;
+
   z-index:2;
+
   width:128px;
   height:128px;
+
   border:0;
+
   border-radius:50%;
-  color:#fff;
-  font-size:57px
+
+  font-size:57px;
+
+  animation:
+    micBeat
+    1.1s
+    ease-in-out
+    infinite;
 }
 
 
-/* A govori = MODRO */
+/* A = MODRA */
 
-.mic.speakerA{
+.mic.a{
   background:
     radial-gradient(
       circle at 35% 25%,
@@ -352,15 +492,17 @@ select{
       #0b58c4
     );
 
+  color:#fff;
+
   box-shadow:
     0 0 22px #078cff,
-    0 0 55px #078cff99
+    0 0 55px #078cff99;
 }
 
 
-/* B govori = ZELENO */
+/* B = ZELENA */
 
-.mic.speakerB{
+.mic.b{
   background:
     radial-gradient(
       circle at 35% 25%,
@@ -373,100 +515,112 @@ select{
 
   box-shadow:
     0 0 22px #13dfc5,
-    0 0 55px #13dfc599
+    0 0 55px #13dfc599;
 }
 
 
-/* Mikrofon utripa samo med snemanjem */
+/* Krogi osebe B */
 
-.mic.recording{
-  animation:micBeat 1.1s ease-in-out infinite
+.pulse.b .ring{
+  border-color:
+    #13dfc566;
 }
 
 
 @keyframes micBeat{
 
-  0%,100%{
-    transform:scale(1)
+  0%,
+  100%{
+    transform:
+      scale(1);
   }
 
   50%{
-    transform:scale(1.09)
+    transform:
+      scale(1.09);
   }
 
 }
 
 
-/* Barva krogov A */
-
-.pulse.speakerA .ring{
-  border-color:#078fff66
-}
-
-
-/* Barva krogov B */
-
-.pulse.speakerB .ring{
-  border-color:#13dfc566
-}
-
-
-/*
-Napisa SNEMANJE POTEKA
-ne prikazujemo.
-*/
-
-.recordState{
-  display:none
-}
-
-
-/* =========================
-   PREVOD
-========================= */
+/* ===========================
+   REZULTAT
+=========================== */
 
 .result{
-  margin:15px 0;
+  margin:
+    15px 0;
+
   padding:15px;
-  border:1px solid var(--line);
+
+  border:
+    1px solid var(--line);
+
   border-radius:18px;
-  background:#09192f
+
+  background:
+    #09192f;
 }
 
+
 .resultTitle{
-  color:#8697af;
+  color:
+    #8697af;
+
   font-size:11px;
-  font-weight:900
+
+  font-weight:900;
 }
+
 
 .original{
   margin-top:7px;
-  color:#cad4e3;
-  font-size:15px
+
+  color:
+    #cad4e3;
+
+  font-size:15px;
 }
+
 
 .translated{
   margin-top:7px;
-  color:var(--yellow);
+
+  color:
+    var(--yellow);
+
   font-size:19px;
-  font-weight:900
+
+  font-weight:900;
 }
 
+
 .instruction{
-  margin:16px 0 8px;
   text-align:center;
-  color:#aebbcf;
-  font-size:12px
+
+  color:
+    #aebbcf;
+
+  font-size:12px;
+
+  margin:
+    16px 0 8px;
 }
+
 
 .notice{
   min-height:22px;
-  margin-top:8px;
+
   text-align:center;
-  color:#ffd36b
+
+  color:
+    #ffd36b;
+
+  font-size:13px;
 }
 
 </style>
+
 </head>
 
 
@@ -475,11 +629,12 @@ ne prikazujemo.
 <div class="app">
 
 
-<!-- =========================
+<!-- ===========================
      NASTAVITVE
-========================= -->
+=========================== -->
 
 <section id="setup">
+
 
   <div class="brand">
 
@@ -491,28 +646,36 @@ ne prikazujemo.
   </div>
 
 
+  <!-- OSEBA A -->
+
   <div class="card">
 
     <input
       id="nameA"
-      class="nameAInput"
+      class="nameA"
       value="Oseba A"
     >
 
-    <select id="langA"></select>
+    <select
+      id="langA"
+    ></select>
 
   </div>
 
+
+  <!-- OSEBA B -->
 
   <div class="card">
 
     <input
       id="nameB"
-      class="nameBInput"
+      class="nameB"
       value="Oseba B"
     >
 
-    <select id="langB"></select>
+    <select
+      id="langB"
+    ></select>
 
   </div>
 
@@ -524,12 +687,13 @@ ne prikazujemo.
     ZAČNI POGOVOR
   </button>
 
+
 </section>
 
 
-<!-- =========================
+<!-- ===========================
      POGOVOR
-========================= -->
+=========================== -->
 
 <section
   id="talk"
@@ -537,21 +701,17 @@ ne prikazujemo.
 >
 
 
+  <!-- ikona + nastavitve -->
+
   <div class="top">
 
-    <div class="miniBrand">
-
-      <img
-        src="apple-touch-icon.png"
-        alt=""
-      >
-
-    </div>
-
+    <img
+      src="apple-touch-icon.png"
+      alt=""
+    >
 
     <button
       id="settings"
-      type="button"
       class="gear"
     >
       ⚙
@@ -560,14 +720,14 @@ ne prikazujemo.
   </div>
 
 
-  <!-- ZGORAJ -->
+  <!-- zgornja gumba -->
 
-  <div class="people">
+  <div class="actions">
+
 
     <button
       id="next"
-      type="button"
-      class="topNext speakerA"
+      class="next a"
     >
       NAPREJ
     </button>
@@ -575,16 +735,16 @@ ne prikazujemo.
 
     <button
       id="end"
-      type="button"
-      class="topEnd"
+      class="end"
     >
       KONČAJ POGOVOR
     </button>
 
+
   </div>
 
 
-  <!-- SMER -->
+  <!-- jezika -->
 
   <div
     id="direction"
@@ -592,7 +752,7 @@ ne prikazujemo.
   ></div>
 
 
-  <!-- GOVOREC -->
+  <!-- oseba -->
 
   <div
     id="speaker"
@@ -605,38 +765,32 @@ ne prikazujemo.
   </div>
 
 
-  <!-- MIKROFON -->
+  <!-- mikrofon -->
 
   <div
     id="pulse"
-    class="pulse speakerA"
+    class="pulse a"
   >
 
     <div class="ring r1"></div>
+
     <div class="ring r2"></div>
+
     <div class="ring r3"></div>
 
 
     <button
       id="mic"
-      type="button"
-      class="mic speakerA"
+      class="mic a"
     >
       🎤
     </button>
 
+
   </div>
 
 
-  <!-- skrit status -->
-
-  <div
-    id="recordState"
-    class="recordState"
-  ></div>
-
-
-  <!-- ZADNJI PREVOD -->
+  <!-- rezultat -->
 
   <div
     id="result"
@@ -647,21 +801,24 @@ ne prikazujemo.
       ZADNJI PREVOD
     </div>
 
+
     <div
       id="original"
       class="original"
     ></div>
+
 
     <div
       id="translated"
       class="translated"
     ></div>
 
+
   </div>
 
 
   <div class="instruction">
-    Govori. Po 10 sekundah tišine se samodejno nadaljuje.
+    Po zaznanem govoru 1,8 sekunde tišine samodejno zaključi poved.
   </div>
 
 
@@ -670,32 +827,41 @@ ne prikazujemo.
     class="notice"
   ></div>
 
+
 </section>
+
 
 </div>
 
 
 <script>
 
-/* =========================
+/* ===========================
    SUPABASE
-========================= */
+=========================== */
 
 const URL =
   "https://kdixpdxmdfdbxpbuljfe.supabase.co";
 
+
 const KEY =
   "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
 
+
 const HEADERS = {
-  "apikey":KEY,
-  "Authorization":"Bearer "+KEY
+
+  apikey:
+    KEY,
+
+  Authorization:
+    "Bearer " + KEY
+
 };
 
 
-/* =========================
+/* ===========================
    JEZIKI
-========================= */
+=========================== */
 
 const LANGUAGES = {
 
@@ -779,12 +945,14 @@ const LANGUAGES = {
 
 const $ =
   id =>
-    document.getElementById(id);
+    document.getElementById(
+      id
+    );
 
 
-/* =========================
-   DROPDOWN
-========================= */
+/* ===========================
+   NAPOLNI DROPDOWNE
+=========================== */
 
 Object.entries(
   LANGUAGES
@@ -792,20 +960,26 @@ Object.entries(
 .forEach(
   ([code,language]) => {
 
+
     $("langA").add(
+
       new Option(
         language.name,
         code
       )
+
     );
 
 
     $("langB").add(
+
       new Option(
         language.name,
         code
       )
+
     );
+
 
   }
 );
@@ -819,44 +993,67 @@ $("langB").value =
   "en";
 
 
-/* =========================
+/* ===========================
    STATE
-========================= */
+=========================== */
 
 let turn =
   0;
 
+
 let recorder =
   null;
 
-let stream =
+
+let mediaStream =
   null;
 
-let chunks =
+
+let audioChunks =
   [];
+
 
 let busy =
   false;
 
 
-/* TIŠINA */
+/* VAD */
 
 let audioContext =
   null;
 
+
 let analyser =
   null;
+
 
 let monitorFrame =
   null;
 
-let lastSoundAt =
+
+let speechDetected =
+  false;
+
+
+let speechMilliseconds =
   0;
 
 
-/* =========================
-   OSEBA
-========================= */
+let lastVoiceTime =
+  0;
+
+
+let lastFrameTime =
+  0;
+
+
+let recordingStarted =
+  0;
+
+
+/* ===========================
+   OSEBI
+=========================== */
 
 function personName(
   person
@@ -892,118 +1089,20 @@ function personLanguage(
   person
 ){
 
-  return person === 0
-    ? $("langA").value
-    : $("langB").value;
+  return (
+    person === 0
+      ? $("langA").value
+      : $("langB").value
+  );
 
 }
 
 
-/* =========================
-   TTS TIHI ODKLEP
-========================= */
-
-function unlockVoice(){
-
-  const code =
-    personLanguage(
-      turn
-    );
-
-
-  try{
-
-    speechSynthesis
-      .cancel();
-
-
-    const utterance =
-      new SpeechSynthesisUtterance(
-        " "
-      );
-
-
-    utterance.lang =
-      LANGUAGES[code].tts;
-
-
-    utterance.volume =
-      0.01;
-
-
-    speechSynthesis
-      .speak(
-        utterance
-      );
-
-
-    setTimeout(
-      () =>
-        speechSynthesis
-          .resume(),
-      80
-    );
-
-  }
-  catch(error){
-
-    console.log(
-      "TTS unlock:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================
-   START POGOVORA
-========================= */
-
-function showTalk(){
-
-  $("setup")
-    .classList
-    .add("hidden");
-
-
-  $("talk")
-    .classList
-    .remove("hidden");
-
-
-  turn =
-    0;
-
-
-  unlockVoice();
-
-
-  render();
-
-}
-
-
-/* =========================
+/* ===========================
    RENDER
-========================= */
+=========================== */
 
 function render(){
-
-  const nameA =
-    personName(0);
-
-
-  const nameB =
-    personName(1);
-
-
-  $("speaker").textContent =
-    turn === 0
-      ? nameA
-      : nameB;
-
 
   const source =
     personLanguage(
@@ -1019,80 +1118,59 @@ function render(){
     );
 
 
+  const listener =
+    personName(
+      turn === 0
+        ? 1
+        : 0
+    );
+
+
+  $("speaker").textContent =
+    personName(
+      turn
+    );
+
+
   $("direction").textContent =
     LANGUAGES[source].name +
     " → " +
     LANGUAGES[target].name;
 
 
-  const nextPerson =
-    turn === 0
-      ? nameB
-      : nameA;
-
-
   $("next").textContent =
     "NAPREJ → " +
-    nextPerson;
+    listener;
 
 
   /*
-  ZGORNJI GUMB
+  BARVE
   */
 
-  $("next")
-    .classList
-    .toggle(
-      "speakerA",
+  $("next").className =
+    "next " +
+    (
       turn === 0
+        ? "a"
+        : "b"
     );
 
 
-  $("next")
-    .classList
-    .toggle(
-      "speakerB",
-      turn === 1
-    );
-
-
-  /*
-  MIKROFON
-  */
-
-  $("mic")
-    .classList
-    .toggle(
-      "speakerA",
+  $("mic").className =
+    "mic " +
+    (
       turn === 0
+        ? "a"
+        : "b"
     );
 
 
-  $("mic")
-    .classList
-    .toggle(
-      "speakerB",
-      turn === 1
-    );
-
-
-  /*
-  KROGI
-  */
-
-  $("pulse")
-    .classList
-    .toggle(
-      "speakerA",
+  $("pulse").className =
+    "pulse " +
+    (
       turn === 0
-    );
-
-
-  $("pulse")
-    .classList
-    .toggle(
-      "speakerB",
-      turn === 1
+        ? "a"
+        : "b"
     );
 
 
@@ -1101,14 +1179,106 @@ function render(){
 }
 
 
-/* =========================
+/* ===========================
+   TTS UNLOCK
+=========================== */
+
+function unlockTTS(){
+
+  try{
+
+    speechSynthesis.cancel();
+
+
+    const utterance =
+      new SpeechSynthesisUtterance(
+        " "
+      );
+
+
+    utterance.lang =
+      LANGUAGES[
+        personLanguage(0)
+      ].tts;
+
+
+    utterance.volume =
+      0.01;
+
+
+    speechSynthesis.speak(
+      utterance
+    );
+
+
+    setTimeout(
+      () =>
+        speechSynthesis.resume(),
+      80
+    );
+
+  }
+  catch(error){
+
+    console.log(
+      "TTS unlock",
+      error
+    );
+
+  }
+
+}
+
+
+/* ===========================
+   ZAČNI
+=========================== */
+
+function startConversation(){
+
+  $("setup")
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  $("talk")
+    .classList
+    .remove(
+      "hidden"
+    );
+
+
+  turn =
+    0;
+
+
+  /*
+  Klik ZAČNI pomaga
+  odkleniti TTS v iOS.
+  */
+
+  unlockTTS();
+
+
+  render();
+
+}
+
+
+/* ===========================
    START RECORDING
-========================= */
+=========================== */
 
 async function startRecording(){
 
-  if(busy){
+  if(
+    busy
+  ){
+
     return;
+
   }
 
 
@@ -1119,12 +1289,13 @@ async function startRecording(){
   ){
 
     return;
+
   }
 
 
   try{
 
-    stream =
+    mediaStream =
       await navigator
         .mediaDevices
         .getUserMedia({
@@ -1133,11 +1304,11 @@ async function startRecording(){
 
 
     /*
-    NOV GOVOREC =
-    NOV PRAZEN AUDIO BUFFER
+    Nova oseba =
+    nov buffer.
     */
 
-    chunks =
+    audioChunks =
       [];
 
 
@@ -1175,7 +1346,7 @@ async function startRecording(){
 
     recorder =
       new MediaRecorder(
-        stream,
+        mediaStream,
         options
       );
 
@@ -1188,7 +1359,7 @@ async function startRecording(){
           event.data.size
         ){
 
-          chunks.push(
+          audioChunks.push(
             event.data
           );
 
@@ -1200,16 +1371,9 @@ async function startRecording(){
     recorder.start();
 
 
-    startSilenceMonitor(
-      stream
+    startVoiceDetection(
+      mediaStream
     );
-
-
-    $("mic")
-      .classList
-      .add(
-        "recording"
-      );
 
 
     $("notice").textContent =
@@ -1227,15 +1391,15 @@ async function startRecording(){
 }
 
 
-/* =========================
-   TIŠINA
-========================= */
+/* ===========================
+   VOICE ACTIVITY DETECTION
+=========================== */
 
-function startSilenceMonitor(
-  activeStream
+function startVoiceDetection(
+  stream
 ){
 
-  stopSilenceMonitor();
+  stopVoiceDetection();
 
 
   const AudioCtx =
@@ -1252,158 +1416,250 @@ function startSilenceMonitor(
   }
 
 
-  try{
-
-    audioContext =
-      new AudioCtx();
+  audioContext =
+    new AudioCtx();
 
 
-    const source =
-      audioContext
-        .createMediaStreamSource(
-          activeStream
-        );
-
-
-    analyser =
-      audioContext
-        .createAnalyser();
-
-
-    analyser.fftSize =
-      512;
-
-
-    source.connect(
-      analyser
-    );
-
-
-    const data =
-      new Uint8Array(
-        analyser.fftSize
+  const source =
+    audioContext
+      .createMediaStreamSource(
+        stream
       );
 
 
-    lastSoundAt =
-      Date.now();
+  analyser =
+    audioContext
+      .createAnalyser();
 
 
-    /*
-    Prag za zaznavanje govora.
-    */
-
-    const threshold =
-      8;
+  analyser.fftSize =
+    1024;
 
 
-    function monitor(){
-
-      if(
-        !recorder ||
-        recorder.state !==
-          "recording"
-      ){
-
-        return;
-
-      }
+  analyser
+    .smoothingTimeConstant =
+      0.2;
 
 
-      analyser
-        .getByteTimeDomainData(
-          data
-        );
+  source.connect(
+    analyser
+  );
 
 
-      let sum =
-        0;
+  const data =
+    new Uint8Array(
+      analyser.fftSize
+    );
 
 
-      for(
-        const value
-        of data
-      ){
+  /*
+  Še ni bilo govora.
+  */
 
-        const sample =
-          value - 128;
-
-
-        sum +=
-          sample *
-          sample;
-
-      }
+  speechDetected =
+    false;
 
 
-      const rms =
-        Math.sqrt(
-          sum /
-          data.length
-        );
+  speechMilliseconds =
+    0;
 
 
-      if(
-        rms >
-        threshold
-      ){
-
-        lastSoundAt =
-          Date.now();
-
-      }
+  lastVoiceTime =
+    0;
 
 
-      /*
-      10 SEKUND BREZ GOVORA
-      */
-
-      if(
-        Date.now() -
-        lastSoundAt >=
-        10000
-      ){
-
-        $("notice").textContent =
-          "Tišina zaznana. Nadaljujem ...";
+  recordingStarted =
+    Date.now();
 
 
-        nextTurn();
+  lastFrameTime =
+    performance.now();
 
 
-        return;
+  /*
+  RMS prag.
+  */
 
-      }
+  const speechThreshold =
+    0.018;
 
 
-      monitorFrame =
-        requestAnimationFrame(
-          monitor
-        );
+  function monitor(){
+
+    if(
+      !recorder ||
+      recorder.state !==
+        "recording"
+    ){
+
+      return;
 
     }
 
 
-    monitor();
+    analyser
+      .getByteTimeDomainData(
+        data
+      );
+
+
+    let sum =
+      0;
+
+
+    for(
+      const value
+      of data
+    ){
+
+      const normalized =
+        (value - 128) /
+        128;
+
+
+      sum +=
+        normalized *
+        normalized;
+
+    }
+
+
+    const rms =
+      Math.sqrt(
+        sum /
+        data.length
+      );
+
+
+    const now =
+      performance.now();
+
+
+    const frameDuration =
+      Math.min(
+        100,
+        now -
+        lastFrameTime
+      );
+
+
+    lastFrameTime =
+      now;
+
+
+    /*
+    DEJANSKI GOVOR
+    */
+
+    if(
+      rms >=
+      speechThreshold
+    ){
+
+      speechDetected =
+        true;
+
+
+      speechMilliseconds +=
+        frameDuration;
+
+
+      lastVoiceTime =
+        Date.now();
+
+    }
+
+
+    /*
+    Govor je bil zaznan
+    in imamo vsaj
+    450 ms dejanskega govora.
+
+    Nato čakamo 1,8 s tišine.
+    */
+
+    if(
+      speechDetected &&
+      speechMilliseconds >=
+        450 &&
+      Date.now() -
+        lastVoiceTime >=
+        1800
+    ){
+
+      $("notice").textContent =
+        "Prevajam ...";
+
+
+      nextTurn();
+
+
+      return;
+
+    }
+
+
+    /*
+    Če 30 sekund nihče
+    sploh ne začne govoriti,
+    NE pošiljaj Whisperju.
+    Samo obnovi snemanje.
+    */
+
+    if(
+      !speechDetected &&
+      Date.now() -
+        recordingStarted >=
+        30000
+    ){
+
+      restartIdleRecording();
+
+
+      return;
+
+    }
+
+
+    /*
+    Varnost:
+    največ 90 sekund
+    ene povedi.
+    */
+
+    if(
+      speechDetected &&
+      Date.now() -
+        recordingStarted >=
+        90000
+    ){
+
+      nextTurn();
+
+
+      return;
+
+    }
+
+
+    monitorFrame =
+      requestAnimationFrame(
+        monitor
+      );
 
   }
-  catch(error){
 
-    console.log(
-      "Silence monitor:",
-      error
-    );
 
-  }
+  monitor();
 
 }
 
 
-/* =========================
-   STOP SILENCE
-========================= */
+/* ===========================
+   STOP VAD
+=========================== */
 
-function stopSilenceMonitor(){
+function stopVoiceDetection(){
 
   if(
     monitorFrame
@@ -1443,14 +1699,54 @@ function stopSilenceMonitor(){
 }
 
 
-/* =========================
+/* ===========================
+   IDLE RESTART
+=========================== */
+
+async function restartIdleRecording(){
+
+  if(
+    busy
+  ){
+
+    return;
+
+  }
+
+
+  await stopRecording();
+
+
+  audioChunks =
+    [];
+
+
+  recorder =
+    null;
+
+
+  mediaStream =
+    null;
+
+
+  $("notice").textContent =
+    "Čakam na govor ...";
+
+
+  await startRecording();
+
+}
+
+
+/* ===========================
    STOP RECORDING
-========================= */
+=========================== */
 
 function stopRecording(){
 
   return new Promise(
     resolve => {
+
 
       if(
         !recorder ||
@@ -1465,7 +1761,7 @@ function stopRecording(){
       }
 
 
-      stopSilenceMonitor();
+      stopVoiceDetection();
 
 
       recorder.onstop =
@@ -1479,9 +1775,11 @@ function stopRecording(){
       recorder.stop();
 
 
-      if(stream){
+      if(
+        mediaStream
+      ){
 
-        stream
+        mediaStream
           .getTracks()
           .forEach(
             track =>
@@ -1491,23 +1789,17 @@ function stopRecording(){
       }
 
 
-      $("mic")
-        .classList
-        .remove(
-          "recording"
-        );
-
     }
   );
 
 }
 
 
-/* =========================
-   PREVOD
-========================= */
+/* ===========================
+   TRANSLATE
+=========================== */
 
-async function translate(){
+async function translateAudio(){
 
   const source =
     personLanguage(
@@ -1529,14 +1821,16 @@ async function translate(){
 
 
   const extension =
-    mime.includes("mp4")
+    mime.includes(
+      "mp4"
+    )
       ? "m4a"
       : "webm";
 
 
   const blob =
     new Blob(
-      chunks,
+      audioChunks,
       {
         type:mime
       }
@@ -1544,7 +1838,8 @@ async function translate(){
 
 
   if(
-    blob.size < 500
+    blob.size <
+    500
   ){
 
     throw new Error(
@@ -1596,7 +1891,8 @@ async function translate(){
 
       {
 
-        method:"POST",
+        method:
+          "POST",
 
         headers:
           HEADERS,
@@ -1651,18 +1947,89 @@ async function translate(){
 }
 
 
-/* =========================
-   TTS VOICE
-========================= */
+/* ===========================
+   HALUCINATION FILTER
+=========================== */
+
+function isLikelyHallucination(
+  text
+){
+
+  const normalized =
+    String(
+      text ||
+      ""
+    )
+    .toLowerCase()
+    .replace(
+      /[.!?,;:\-–—"'()]/g,
+      " "
+    )
+    .replace(
+      /\s+/g,
+      " "
+    )
+    .trim();
+
+
+  const blocked = [
+
+    "thanks for watching",
+
+    "thank you for watching",
+
+    "thank you for listening",
+
+    "please subscribe",
+
+    "subscribe to our channel",
+
+    "subtitles by",
+
+    "hvala za ogled",
+
+    "hvala ker ste gledali",
+
+    "hvala ker poslušate",
+
+    "hvala ker poslušate naš kanal",
+
+    "hvala za poslušanje",
+
+    "vala što ste gledali",
+
+    "danke fürs zuschauen",
+
+    "gracias por ver"
+
+  ];
+
+
+  return blocked.some(
+    phrase =>
+
+      normalized ===
+        phrase
+
+      ||
+
+      normalized
+        .startsWith(
+          phrase + " "
+        )
+
+  );
+
+}
+
+
+/* ===========================
+   FIND VOICE
+=========================== */
 
 function findVoice(
   languageCode
 ){
-
-  const voices =
-    speechSynthesis
-      .getVoices();
-
 
   const target =
     LANGUAGES[
@@ -1674,6 +2041,11 @@ function findVoice(
   const base =
     target
       .split("-")[0];
+
+
+  const voices =
+    speechSynthesis
+      .getVoices();
 
 
   return (
@@ -1703,9 +2075,9 @@ function findVoice(
 }
 
 
-/* =========================
-   PREDVAJANJE
-========================= */
+/* ===========================
+   PREDVAJAJ PREVOD
+=========================== */
 
 function speak(
   text,
@@ -1714,6 +2086,7 @@ function speak(
 
   return new Promise(
     resolve => {
+
 
       if(
         !text
@@ -1851,15 +2224,16 @@ function speak(
         100
       );
 
+
     }
   );
 
 }
 
 
-/* =========================
+/* ===========================
    NAPREJ
-========================= */
+=========================== */
 
 async function nextTurn(){
 
@@ -1880,29 +2254,96 @@ async function nextTurn(){
     true;
 
 
-  $("notice").textContent =
-    "Prepoznavam in prevajam ...";
+  const spokenTurn =
+    turn;
 
 
   try{
 
+
     /*
-    KDO JE GOVORIL?
+    Če dejanskega govora
+    ni bilo dovolj,
+    NI klica Whisper.
     */
 
-    const spokenTurn =
-      turn;
+    if(
+      !speechDetected ||
+      speechMilliseconds <
+        450
+    ){
 
+      await stopRecording();
+
+
+      audioChunks =
+        [];
+
+
+      recorder =
+        null;
+
+
+      mediaStream =
+        null;
+
+
+      $("notice").textContent =
+        "Govor ni bil zaznan. Poskusi ponovno.";
+
+
+      busy =
+        false;
+
+
+      await startRecording();
+
+
+      return;
+
+    }
+
+
+    /*
+    Konec snemanja.
+    */
 
     await stopRecording();
 
 
-    const data =
-      await translate();
+    $("notice").textContent =
+      "Prepoznavam in prevajam ...";
 
 
     /*
-    PRIKAŽI REZULTAT
+    Whisper + prevod.
+    */
+
+    const data =
+      await translateAudio();
+
+
+    /*
+    Sekundarna zaščita
+    pred tipičnimi
+    Whisper halucinacijami.
+    */
+
+    if(
+      isLikelyHallucination(
+        data.text
+      )
+    ){
+
+      throw new Error(
+        "Nezanesljiv prepis. Poved ponovi bolj jasno."
+      );
+
+    }
+
+
+    /*
+    Prikaži rezultat.
     */
 
     $("original").textContent =
@@ -1923,13 +2364,15 @@ async function nextTurn(){
 
 
     /*
-    JEZIK POSLUŠALCA
+    Jezik poslušalca.
     */
 
-    const targetLanguage =
-      spokenTurn === 0
-        ? $("langB").value
-        : $("langA").value;
+    const listenerLanguage =
+      personLanguage(
+        spokenTurn === 0
+          ? 1
+          : 0
+      );
 
 
     $("notice").textContent =
@@ -1937,17 +2380,17 @@ async function nextTurn(){
 
 
     /*
-    PREDVAJAJ PREVOD
+    TTS
     */
 
     await speak(
       data.translated,
-      targetLanguage
+      listenerLanguage
     );
 
 
     /*
-    MENJAVA
+    Zamenjaj osebo.
     */
 
     turn =
@@ -1957,9 +2400,9 @@ async function nextTurn(){
 
 
     /*
-    SPROSTI BUSY,
-    DA SE NOV GOVOREC
-    LAHKO TAKOJ SNEMA.
+    Zelo pomembno:
+    busy sprostimo PRED
+    novim startRecording().
     */
 
     busy =
@@ -1970,19 +2413,47 @@ async function nextTurn(){
       "";
 
 
+    /*
+    Za novo osebo
+    naredi nov audio buffer.
+    */
+
     render();
+
 
   }
   catch(error){
+
 
     $("notice").textContent =
       "Napaka: " +
       error.message;
 
 
+    /*
+    Starega zvoka ne uporabljaj.
+    */
+
+    audioChunks =
+      [];
+
+
+    recorder =
+      null;
+
+
+    mediaStream =
+      null;
+
+
     busy =
       false;
 
+
+    /*
+    Ista oseba lahko
+    ponovno pove stavek.
+    */
 
     await startRecording();
 
@@ -2001,71 +2472,43 @@ async function nextTurn(){
 }
 
 
-/* =========================
-   NASTAVITVE
-========================= */
+/* ===========================
+   POPOLN RESET
+=========================== */
 
-async function openSettings(){
-
-  stopSilenceMonitor();
-
-
-  await stopRecording();
-
-
-  speechSynthesis.cancel();
-
-
-  $("talk")
-    .classList
-    .add("hidden");
-
-
-  $("setup")
-    .classList
-    .remove("hidden");
-
-}
-
-
-/* =========================
-   KONČAJ POGOVOR
-========================= */
-
-async function endConversation(){
+async function clearConversation(){
 
   /*
-  1.
-  USTAVI TIŠINO
+  VAD stop
   */
 
-  stopSilenceMonitor();
+  stopVoiceDetection();
 
 
   /*
-  2.
-  USTAVI SNEMANJE
+  Snemanje stop
   */
 
   await stopRecording();
 
 
   /*
-  3.
-  USTAVI VSE GLASOVE
+  TTS stop
   */
 
-  speechSynthesis.cancel();
+  speechSynthesis
+    .cancel();
 
 
   /*
-  4.
-  USTAVI MIKROFON
+  Mikrofon stop
   */
 
-  if(stream){
+  if(
+    mediaStream
+  ){
 
-    stream
+    mediaStream
       .getTracks()
       .forEach(
         track =>
@@ -2076,11 +2519,10 @@ async function endConversation(){
 
 
   /*
-  5.
-  POBRIŠI AUDIO
+  Audio izbriši
   */
 
-  chunks =
+  audioChunks =
     [];
 
 
@@ -2088,13 +2530,32 @@ async function endConversation(){
     null;
 
 
-  stream =
+  mediaStream =
     null;
 
 
   /*
-  6.
-  POBRIŠI TEKST
+  VAD reset
+  */
+
+  speechDetected =
+    false;
+
+
+  speechMilliseconds =
+    0;
+
+
+  lastVoiceTime =
+    0;
+
+
+  recordingStarted =
+    0;
+
+
+  /*
+  Tekst izbriši
   */
 
   $("original").textContent =
@@ -2117,8 +2578,7 @@ async function endConversation(){
 
 
   /*
-  7.
-  PONASTAVI
+  Stanje
   */
 
   busy =
@@ -2129,16 +2589,8 @@ async function endConversation(){
     0;
 
 
-  $("mic")
-    .classList
-    .remove(
-      "recording"
-    );
-
-
   /*
-  8.
-  NAZAJ NA ZAČETEK
+  Nazaj na začetni ekran
   */
 
   $("talk")
@@ -2154,110 +2606,94 @@ async function endConversation(){
       "hidden"
     );
 
-
-  /*
-  Imena in izbrana jezika
-  namenoma ostaneta.
-  To sta nastavitvi,
-  ne zgodovina pogovora.
-  */
-
 }
 
 
-/* =========================
+/* ===========================
    EVENTS
-========================= */
+=========================== */
 
 $("start").onclick =
-  showTalk;
+  () => {
+
+
+    /*
+    Shrani nastavitve.
+    */
+
+    localStorage.setItem(
+      "phone4NameA",
+      personName(0)
+    );
+
+
+    localStorage.setItem(
+      "phone4NameB",
+      personName(1)
+    );
+
+
+    localStorage.setItem(
+      "phone4LangA",
+      personLanguage(0)
+    );
+
+
+    localStorage.setItem(
+      "phone4LangB",
+      personLanguage(1)
+    );
+
+
+    startConversation();
+
+  };
 
 
 $("next").onclick =
   nextTurn;
 
 
-$("settings").onclick =
-  openSettings;
-
-
-$("end").onclick =
-  endConversation;
-
-
 /*
-Klik mikrofona lahko
-ročno zaključi trenutni govor.
+Klik na mikrofon
+ima isto funkcijo
+kot NAPREJ.
 */
 
 $("mic").onclick =
-  async () => {
-
-    if(
-      recorder &&
-      recorder.state ===
-        "recording"
-    ){
-
-      await nextTurn();
-
-    }
-    else{
-
-      await startRecording();
-
-    }
-
-  };
+  nextTurn;
 
 
-/* =========================
-   SAVE SETTINGS
-========================= */
+/*
+KONČAJ:
+popoln reset pogovora.
+*/
 
-$("start")
-  .addEventListener(
-    "click",
-    () => {
-
-      localStorage.setItem(
-        "phone4NameA",
-        personName(0)
-      );
+$("end").onclick =
+  clearConversation;
 
 
-      localStorage.setItem(
-        "phone4NameB",
-        personName(1)
-      );
+/*
+Zobnik:
+tudi konča trenutno
+sejo in gre v nastavitve.
+*/
+
+$("settings").onclick =
+  clearConversation;
 
 
-      localStorage.setItem(
-        "phone4LangA",
-        personLanguage(0)
-      );
-
-
-      localStorage.setItem(
-        "phone4LangB",
-        personLanguage(1)
-      );
-
-    }
-  );
-
-
-/* =========================
+/* ===========================
    RESTORE SETTINGS
-========================= */
+=========================== */
 
-const savedA =
+const savedNameA =
   localStorage.getItem(
     "phone4NameA"
   );
 
 
-const savedB =
+const savedNameB =
   localStorage.getItem(
     "phone4NameB"
   );
@@ -2276,21 +2712,21 @@ const savedLangB =
 
 
 if(
-  savedA
+  savedNameA
 ){
 
   $("nameA").value =
-    savedA;
+    savedNameA;
 
 }
 
 
 if(
-  savedB
+  savedNameB
 ){
 
   $("nameB").value =
-    savedB;
+    savedNameB;
 
 }
 
@@ -2321,23 +2757,27 @@ if(
 }
 
 
-/* =========================
+/* ===========================
    CLEANUP
-========================= */
+=========================== */
 
 window.addEventListener(
   "beforeunload",
   () => {
 
-    stopSilenceMonitor();
+
+    stopVoiceDetection();
 
 
-    speechSynthesis.cancel();
+    speechSynthesis
+      .cancel();
 
 
-    if(stream){
+    if(
+      mediaStream
+    ){
 
-      stream
+      mediaStream
         .getTracks()
         .forEach(
           track =>
@@ -2346,10 +2786,12 @@ window.addEventListener(
 
     }
 
+
   }
 );
 
 </script>
 
 </body>
+
 </html>
