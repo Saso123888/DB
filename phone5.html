@@ -2,25 +2,29 @@
 <html lang="sl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<title>Phone5 - 6 Languages</title>
+<title>Voice Translator</title>
 
-<meta name="theme-color" content="#020916">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020916">
 
 <style>
+
 :root{
   --bg:#020916;
-  --panel:#07182e;
-  --blue:#079cff;
-  --cyan:#38e4ff;
+  --panel:#07162b;
+  --blue:#009dff;
+  --cyan:#28dcff;
   --purple:#a84cff;
   --red:#ff405b;
   --yellow:#ffd65a;
-  --text:#fff;
-  --muted:#8ba4c7;
+  --text:#ffffff;
+  --muted:#8da4c5;
 }
 
 *{
@@ -32,11 +36,11 @@ html,body{
   margin:0;
   min-height:100%;
   background:
-    radial-gradient(circle at 50% 15%,
-      #09284b 0%,
-      #031327 38%,
-      #020916 73%);
-  color:var(--text);
+    radial-gradient(circle at 50% 20%,
+      #08284c 0%,
+      #031226 36%,
+      #020916 72%);
+  color:white;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
@@ -57,11 +61,47 @@ button{
   max-width:480px;
   min-height:100dvh;
   margin:auto;
+
   padding:
-    max(24px,env(safe-area-inset-top))
+    max(22px,env(safe-area-inset-top))
     20px
     max(24px,env(safe-area-inset-bottom));
 }
+
+
+/* ============================= */
+/* HEADER                        */
+/* ============================= */
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  min-height:48px;
+  margin-bottom:22px;
+}
+
+.app-icon{
+  width:44px;
+  height:44px;
+
+  border-radius:12px;
+  overflow:hidden;
+
+  box-shadow:
+    0 0 14px rgba(0,157,255,.55);
+}
+
+.app-icon img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+
+/* ============================= */
+/* SCREENS                       */
+/* ============================= */
 
 .screen{
   display:none;
@@ -71,76 +111,97 @@ button{
   display:block;
 }
 
-/* PERSON */
+
+/* ============================= */
+/* PERSON CARD                   */
+/* ============================= */
 
 .person-card{
+
   display:grid;
   grid-template-columns:110px 1fr;
+
   gap:16px;
   align-items:center;
 
   padding:20px 18px;
+
   margin-bottom:20px;
 
-  border:1px solid rgba(7,156,255,.75);
   border-radius:23px;
+
+  border:1px solid rgba(0,157,255,.75);
 
   background:
     linear-gradient(
       145deg,
-      rgba(9,39,75,.97),
-      rgba(7,23,46,.94)
+      rgba(9,39,75,.96),
+      rgba(7,23,46,.92)
     );
 
   box-shadow:
-    0 0 22px rgba(0,157,255,.13);
+    0 0 23px rgba(0,157,255,.13);
 }
 
-.person-card.two{
+
+.person-card.purple{
+
   border-color:rgba(168,76,255,.82);
 
   box-shadow:
-    0 0 22px rgba(168,76,255,.16);
+    0 0 23px rgba(168,76,255,.16);
 }
 
-.avatar{
+
+/* ============================= */
+/* AVATAR                        */
+/* ============================= */
+
+.avatar-wrap{
+  display:flex;
+  justify-content:center;
+}
+
+
+.avatar-button{
+
   position:relative;
 
-  width:100px;
-  height:100px;
+  width:105px;
+  height:105px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border:1px solid var(--cyan);
   border-radius:50%;
+
+  border:1px solid #28caff;
 
   background:
     radial-gradient(
       circle,
-      rgba(25,148,255,.86),
-      rgba(0,69,167,.30) 58%,
-      transparent 74%
+      rgba(24,133,255,.8),
+      rgba(0,71,168,.3) 60%,
+      transparent 73%
     );
 
-  color:white;
-  font-size:55px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 
   box-shadow:
     0 0 12px #008cff,
     0 0 32px rgba(0,157,255,.45);
 }
 
-.two .avatar{
-  border-color:#b664ff;
+
+.purple .avatar-button{
+
+  border-color:#a84cff;
 
   background:
     radial-gradient(
       circle,
-      rgba(157,75,255,.85),
-      rgba(75,24,145,.30) 58%,
-      transparent 74%
+      rgba(153,70,255,.82),
+      rgba(77,24,147,.3) 60%,
+      transparent 73%
     );
 
   box-shadow:
@@ -148,178 +209,357 @@ button{
     0 0 32px rgba(168,76,255,.42);
 }
 
-.swap-person{
+
+.person-icon{
+  font-size:57px;
+}
+
+
+.swap{
+
   position:absolute;
-  right:-4px;
+
+  right:-3px;
   bottom:2px;
 
-  width:36px;
-  height:36px;
+  width:38px;
+  height:38px;
+
+  border-radius:50%;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  border:1px solid var(--cyan);
-  border-radius:50%;
+  background:#083873;
 
-  background:#073874;
+  border:1px solid #35bfff;
 
-  font-size:20px;
+  box-shadow:
+    0 0 12px #008cff;
 }
 
-.two .swap-person{
-  border-color:#bd78ff;
-  background:#41196f;
+
+.purple .swap{
+
+  background:#3d176c;
+
+  border-color:#ba71ff;
+
+  box-shadow:
+    0 0 12px #a84cff;
 }
 
-/* LANGUAGE */
 
-.language-box{
+/* ============================= */
+/* LANGUAGE                      */
+/* ============================= */
+
+.select-wrap{
+
   display:flex;
   align-items:center;
+
   gap:10px;
 
   min-height:60px;
 
-  padding:4px 12px;
+  padding:4px 13px;
 
-  border:1px solid rgba(105,160,226,.34);
   border-radius:14px;
 
-  background:#0b2444;
+  border:1px solid rgba(101,154,218,.35);
+
+  background:rgba(8,28,54,.85);
 }
+
 
 .flag{
   font-size:25px;
 }
 
+
 select{
+
   width:100%;
-  min-width:0;
 
   border:0;
   outline:0;
 
   background:transparent;
+
   color:white;
 
   font-size:16px;
 }
+
 
 select option{
   color:#111;
 }
 
-/* LANGUAGE SWAP */
 
-.swap-languages{
-  display:block;
+/* ============================= */
+/* START                         */
+/* ============================= */
 
-  width:58px;
-  height:48px;
+.start-button{
 
-  margin:-3px auto 15px;
-
-  border:0;
-
-  background:transparent;
-
-  color:var(--cyan);
-
-  font-size:32px;
-}
-
-/* START */
-
-.start{
   width:100%;
   height:70px;
 
-  margin-top:26px;
+  margin-top:30px;
 
-  border:1px solid var(--cyan);
   border-radius:21px;
 
+  border:1px solid #45e3ff;
+
   background:
-    linear-gradient(135deg,#04b5ff,#0063ed);
+    linear-gradient(
+      135deg,
+      #04b5ff,
+      #0063ed
+    );
 
   color:white;
 
-  font-size:30px;
+  font-size:26px;
   font-weight:700;
 
   box-shadow:
-    0 0 13px #009cff,
-    0 0 32px rgba(0,157,255,.43);
+    0 0 14px #009cff,
+    0 0 33px rgba(0,157,255,.43);
 }
 
-/* LIVE */
 
-.actions{
+/* ============================= */
+/* LIVE BUTTONS                  */
+/* ============================= */
+
+.live-actions{
+
   display:grid;
+
   grid-template-columns:1fr 1fr;
+
   gap:14px;
 
-  margin-bottom:22px;
+  margin-bottom:23px;
 }
 
-.next,
-.stop{
+
+.next-button{
+
   height:64px;
 
   border-radius:18px;
 
+  border:1px solid #39dbff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #08b7ff,
+      #0675ed
+    );
+
   color:white;
 
-  font-size:31px;
+  font-size:35px;
+
+  box-shadow:
+    0 0 16px rgba(0,157,255,.45);
+}
+
+
+.stop-button{
+
+  height:64px;
+
+  border-radius:18px;
+
+  border:1px solid #ff6076;
+
+  background:
+    linear-gradient(
+      135deg,
+      #a71e36,
+      #66152a
+    );
+
+  color:white;
+
+  font-size:19px;
   font-weight:700;
 }
 
-.next{
-  border:1px solid var(--cyan);
-  background:#087cff;
+
+.stop-square{
+
+  display:inline-block;
+
+  width:17px;
+  height:17px;
+
+  margin-right:8px;
+
+  border-radius:3px;
+
+  background:white;
+
+  vertical-align:-2px;
 }
 
-.next:disabled{
-  opacity:.4;
-}
 
-.stop{
-  border:1px solid #ff6076;
-  background:#81192f;
-}
+/* ============================= */
+/* ROUTE                         */
+/* ============================= */
 
-.route{
-  min-height:34px;
-
-  text-align:center;
-
-  font-size:16px;
-}
-
-.active-person{
-  text-align:center;
-
-  margin-top:12px;
-
-  font-size:38px;
-}
-
-/* ORB */
-
-.orb{
-  width:200px;
-  height:200px;
-
-  margin:25px auto 20px;
+.language-route{
 
   display:flex;
+
   align-items:center;
   justify-content:center;
 
-  border:1px solid #60efff;
+  gap:11px;
+
+  margin-bottom:15px;
+
+  font-size:14px;
+}
+
+
+.route-item{
+
+  display:flex;
+  align-items:center;
+
+  gap:7px;
+}
+
+
+.route-arrow{
+
+  font-size:22px;
+
+  color:#9db8d9;
+}
+
+
+/* ============================= */
+/* ACTIVE PERSON                 */
+/* ============================= */
+
+.active-person{
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  margin-bottom:3px;
+}
+
+
+.active-avatar{
+
+  width:48px;
+  height:48px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
   border-radius:50%;
+
+  border:1px solid #168fff;
+
+  background:#0d376e;
+
+  font-size:28px;
+
+  box-shadow:
+    0 0 14px rgba(0,157,255,.35);
+}
+
+
+/* ============================= */
+/* MICROPHONE                    */
+/* ============================= */
+
+.orb-area{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin:8px 0 12px;
+}
+
+
+.orb-rings{
+
+  position:relative;
+
+  width:260px;
+  height:260px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border:
+    1px solid rgba(0,113,255,.58);
+}
+
+
+.orb-rings:before,
+.orb-rings:after{
+
+  content:"";
+
+  position:absolute;
+
+  border-radius:50%;
+
+  border:
+    1px solid rgba(0,119,255,.48);
+}
+
+
+.orb-rings:before{
+  inset:18px;
+}
+
+
+.orb-rings:after{
+  inset:36px;
+}
+
+
+.main-orb{
+
+  position:relative;
+
+  z-index:2;
+
+  width:180px;
+  height:180px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  font-size:72px;
+
+  border:1px solid #60efff;
 
   background:
     radial-gradient(
@@ -330,198 +570,299 @@ select option{
       #06234c
     );
 
-  font-size:72px;
-
   box-shadow:
     0 0 13px #20d8ff,
-    0 0 42px rgba(0,145,255,.80);
+    0 0 42px rgba(0,145,255,.8);
 }
 
-.orb.recording{
-  animation:pulse 1.05s ease-in-out infinite;
+
+/* ============================= */
+/* RECORDING ANIMATION           */
+/* ============================= */
+
+.recording{
+
+  animation:
+    ringPulse 1s ease-in-out infinite;
 }
 
-.orb.processing{
-  border-color:#ffe887;
 
-  background:
-    radial-gradient(
-      circle,
-      #fff29b,
-      #f0b81a 48%,
-      #8c6000
-    );
+.recording .main-orb{
 
-  box-shadow:
-    0 0 46px rgba(255,180,0,.72);
+  animation:
+    micPulse 1s ease-in-out infinite;
 }
 
-.orb.speaking{
-  border-color:#dc9cff;
 
-  background:
-    radial-gradient(
-      circle,
-      #e28cff,
-      #a341f2 48%,
-      #5816a5
-    );
+@keyframes micPulse{
 
-  box-shadow:
-    0 0 46px rgba(168,76,255,.76);
+  0%,100%{
+
+    transform:scale(.94);
+
+    box-shadow:
+      0 0 10px #20d8ff,
+      0 0 27px rgba(0,145,255,.65);
+  }
+
+  50%{
+
+    transform:scale(1.05);
+
+    box-shadow:
+      0 0 23px #63efff,
+      0 0 68px rgba(0,157,255,.96);
+  }
 }
 
-@keyframes pulse{
+
+@keyframes ringPulse{
+
   0%,100%{
     transform:scale(.94);
   }
 
   50%{
-    transform:scale(1.05);
-
-    box-shadow:
-      0 0 20px #38e4ff,
-      0 0 70px rgba(0,157,255,.95);
+    transform:scale(1.04);
   }
 }
 
-/* STAGES */
+
+/* ============================= */
+/* PROCESS                       */
+/* ============================= */
+
+.processing .main-orb{
+
+  background:
+    radial-gradient(
+      circle,
+      #ffe771,
+      #edae13 48%,
+      #825900
+    );
+
+  box-shadow:
+    0 0 45px rgba(255,180,0,.7);
+}
+
+
+/* ============================= */
+/* SPEAKING                      */
+/* ============================= */
+
+.speaking .main-orb{
+
+  background:
+    radial-gradient(
+      circle,
+      #d975ff,
+      #9838f5 48%,
+      #51169e
+    );
+
+  box-shadow:
+    0 0 45px rgba(168,76,255,.75);
+}
+
+
+/* ============================= */
+/* PHASES                        */
+/* ============================= */
 
 .stages{
+
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   gap:12px;
 }
 
+
 .stage{
-  width:50px;
-  height:50px;
+
+  width:52px;
+  height:52px;
+
+  border-radius:50%;
+
+  border:1px solid #4e759f;
 
   display:flex;
+
   align-items:center;
   justify-content:center;
 
-  border:1px solid #4e759f;
-  border-radius:50%;
-
   background:#06162c;
 
-  font-size:22px;
+  font-size:23px;
 
-  opacity:.35;
+  opacity:.42;
 }
 
+
 .stage.active{
+
   opacity:1;
 }
 
+
 .stage.listen.active{
+
   border-color:#35dfff;
-  box-shadow:0 0 15px #009cff;
+
+  box-shadow:
+    0 0 15px #009cff;
 }
+
 
 .stage.process.active{
+
   border-color:#ffd748;
-  box-shadow:0 0 15px #e5aa00;
+
+  box-shadow:
+    0 0 15px #e5aa00;
 }
+
 
 .stage.speak.active{
+
   border-color:#ca6cff;
-  box-shadow:0 0 15px #a84cff;
+
+  box-shadow:
+    0 0 15px #a84cff;
 }
 
-.arrow{
+
+.stage-arrow{
+
   color:#7293ba;
-  font-size:21px;
+
+  font-size:22px;
 }
+
 
 .status{
-  margin:12px 0 17px;
+
+  margin:13px 0 17px;
 
   text-align:center;
 
-  color:#2dccff;
-
   font-size:19px;
   font-weight:700;
+
+  color:#2dccff;
 }
 
-/* RESULT */
 
-.result{
-  min-height:125px;
+/* ============================= */
+/* TRANSLATION                   */
+/* ============================= */
+
+.translation{
 
   padding:17px;
 
-  border:1px solid rgba(96,138,187,.36);
   border-radius:18px;
 
-  background:rgba(8,29,56,.85);
+  border:
+    1px solid rgba(96,138,187,.35);
+
+  background:
+    rgba(8,29,56,.84);
 }
 
-.result-row{
+
+.translation-line{
+
   display:flex;
+
   align-items:flex-start;
+
   gap:12px;
 
   min-height:34px;
 
+  font-size:17px;
+
   line-height:1.4;
 }
 
-.result-row + .result-row{
+
+.translation-line +
+.translation-line{
+
   margin-top:13px;
+
   padding-top:13px;
 
   border-top:
     1px solid rgba(129,159,195,.35);
 }
 
+
 .text{
+
   flex:1;
+
+  overflow-wrap:anywhere;
 }
 
+
 .translated{
-  color:var(--yellow);
+
+  color:#ffd65a;
 
   font-size:20px;
+
   font-weight:700;
 }
 
+
 .error{
-  margin-top:14px;
+
+  margin-top:12px;
+
+  text-align:center;
 
   color:#ff7184;
 
-  line-height:1.4;
+  font-size:14px;
 }
 
-/* SMALL PHONE */
 
 @media(max-width:370px){
 
-  .app{
-    padding-left:14px;
-    padding-right:14px;
-  }
-
   .person-card{
-    grid-template-columns:85px 1fr;
 
-    padding:14px 11px;
+    grid-template-columns:90px 1fr;
+
+    padding:15px 11px;
   }
 
-  .avatar{
-    width:80px;
-    height:80px;
+  .avatar-button{
 
-    font-size:44px;
+    width:85px;
+    height:85px;
   }
 
-  .orb{
-    width:175px;
-    height:175px;
+  .person-icon{
+
+    font-size:47px;
+  }
+
+  .orb-rings{
+
+    width:220px;
+    height:220px;
+  }
+
+  .main-orb{
+
+    width:155px;
+    height:155px;
 
     font-size:62px;
   }
@@ -531,33 +872,65 @@ select option{
 </style>
 </head>
 
+
 <body>
 
 <main class="app">
 
-<!-- SETUP -->
+
+<header class="header">
+
+  <div class="app-icon">
+
+    <img
+      src="apple-touch-icon.png"
+      alt=""
+      onerror="this.style.display='none'"
+    >
+
+  </div>
+
+</header>
+
+
+
+<!-- ============================
+     SCREEN 1
+============================ -->
 
 <section
   id="setupScreen"
   class="screen active"
 >
 
+
 <div class="person-card">
 
-  <button
-    id="person1Avatar"
-    class="avatar"
-    type="button"
-  >
-    <span id="person1Icon">👨</span>
+  <div class="avatar-wrap">
 
-    <span class="swap-person">
-      ↔
-    </span>
-  </button>
+    <button
+      id="person1Button"
+      class="avatar-button"
+      type="button"
+    >
+
+      <span
+        id="person1Icon"
+        class="person-icon"
+      >
+        👨
+      </span>
+
+      <span class="swap">
+        ↔
+      </span>
+
+    </button>
+
+  </div>
 
 
-  <div class="language-box">
+  <div class="select-wrap">
 
     <span
       id="flag1"
@@ -568,28 +941,15 @@ select option{
 
     <select id="language1">
 
-      <option value="sl" selected>
-        🇸🇮 Slovenščina
+      <option
+        value="sl"
+        selected
+      >
+        Slovenščina
       </option>
 
       <option value="hu">
-        🇭🇺 Magyar
-      </option>
-
-      <option value="en">
-        🇬🇧 English
-      </option>
-
-      <option value="pl">
-        🇵🇱 Polski
-      </option>
-
-      <option value="it">
-        🇮🇹 Italiano
-      </option>
-
-      <option value="hr">
-        🇭🇷 Hrvatski
+        Magyar
       </option>
 
     </select>
@@ -599,31 +959,34 @@ select option{
 </div>
 
 
-<button
-  id="swapLanguages"
-  class="swap-languages"
-  type="button"
->
-  ⇄
-</button>
+
+<div class="person-card purple">
+
+  <div class="avatar-wrap">
+
+    <button
+      id="person2Button"
+      class="avatar-button"
+      type="button"
+    >
+
+      <span
+        id="person2Icon"
+        class="person-icon"
+      >
+        👩
+      </span>
+
+      <span class="swap">
+        ↔
+      </span>
+
+    </button>
+
+  </div>
 
 
-<div class="person-card two">
-
-  <button
-    id="person2Avatar"
-    class="avatar"
-    type="button"
-  >
-    <span id="person2Icon">👩</span>
-
-    <span class="swap-person">
-      ↔
-    </span>
-  </button>
-
-
-  <div class="language-box">
+  <div class="select-wrap">
 
     <span
       id="flag2"
@@ -635,27 +998,14 @@ select option{
     <select id="language2">
 
       <option value="sl">
-        🇸🇮 Slovenščina
+        Slovenščina
       </option>
 
-      <option value="hu" selected>
-        🇭🇺 Magyar
-      </option>
-
-      <option value="en">
-        🇬🇧 English
-      </option>
-
-      <option value="pl">
-        🇵🇱 Polski
-      </option>
-
-      <option value="it">
-        🇮🇹 Italiano
-      </option>
-
-      <option value="hr">
-        🇭🇷 Hrvatski
+      <option
+        value="hu"
+        selected
+      >
+        Magyar
       </option>
 
     </select>
@@ -665,12 +1015,13 @@ select option{
 </div>
 
 
+
 <button
   id="startButton"
-  class="start"
+  class="start-button"
   type="button"
 >
-  ▶
+  ▶ &nbsp;Start
 </button>
 
 
@@ -679,147 +1030,230 @@ select option{
   class="error"
 ></div>
 
+
 </section>
 
 
-<!-- LIVE -->
+
+<!-- ============================
+     SCREEN 2
+============================ -->
 
 <section
-  id="liveScreen"
+  id="conversationScreen"
   class="screen"
 >
 
-<div class="actions">
 
-  <button
-    id="nextButton"
-    class="next"
-    type="button"
-  >
-    ✓
-  </button>
-
-  <button
-    id="stopButton"
-    class="stop"
-    type="button"
-  >
-    ■
-  </button>
-
-</div>
+<div class="live-actions">
 
 
-<div
-  id="route"
-  class="route"
-></div>
-
-
-<div
-  id="activePerson"
-  class="active-person"
+<button
+  id="nextButton"
+  class="next-button"
+  type="button"
 >
-  👨
-</div>
+  ✓
+</button>
 
 
-<div
-  id="orb"
-  class="orb"
+<button
+  id="stopButton"
+  class="stop-button"
+  type="button"
 >
-  🎙️
+
+  <span class="stop-square"></span>
+
+  Ustavi
+
+</button>
+
+
 </div>
+
+
+
+<div class="language-route">
+
+
+<div class="route-item">
+
+  <span
+    id="sourceFlag"
+    class="flag"
+  >
+    🇸🇮
+  </span>
+
+  <span id="sourceLanguage">
+    Slovenščina
+  </span>
+
+</div>
+
+
+<span class="route-arrow">
+→
+</span>
+
+
+<div class="route-item">
+
+  <span
+    id="targetFlag"
+    class="flag"
+  >
+    🇭🇺
+  </span>
+
+  <span id="targetLanguage">
+    Magyar
+  </span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="active-person">
+
+  <div
+    id="activeAvatar"
+    class="active-avatar"
+  >
+    👨
+  </div>
+
+</div>
+
+
+
+<div class="orb-area">
+
+  <div
+    id="orb"
+    class="orb-rings"
+  >
+
+    <div class="main-orb">
+      🎙️
+    </div>
+
+  </div>
+
+</div>
+
 
 
 <div class="stages">
 
-  <div
-    id="listenStage"
-    class="stage listen"
-  >
-    🎙
-  </div>
 
-  <div class="arrow">→</div>
+<div
+  id="stageListen"
+  class="stage listen"
+>
+  🎙
+</div>
 
-  <div
-    id="processStage"
-    class="stage process"
-  >
-    🤫
-  </div>
 
-  <div class="arrow">→</div>
+<div class="stage-arrow">
+→
+</div>
 
-  <div
-    id="speakStage"
-    class="stage speak"
-  >
-    🔊
-  </div>
+
+<div
+  id="stageProcess"
+  class="stage process"
+>
+  🤫
+</div>
+
+
+<div class="stage-arrow">
+→
+</div>
+
+
+<div
+  id="stageSpeak"
+  class="stage speak"
+>
+  🔊
+</div>
+
 
 </div>
+
 
 
 <div
   id="status"
   class="status"
 >
-  ...
+  Pripravljam mikrofon ...
 </div>
 
 
-<div class="result">
 
-  <div class="result-row">
-
-    <span
-      id="sourceFlag"
-      class="flag"
-    >
-      🇸🇮
-    </span>
-
-    <div
-      id="originalText"
-      class="text"
-    >
-      ...
-    </div>
-
-  </div>
+<div class="translation">
 
 
-  <div class="result-row">
+<div class="translation-line">
 
-    <span
-      id="targetFlag"
-      class="flag"
-    >
-      🇭🇺
-    </span>
+  <span
+    id="resultSourceFlag"
+    class="flag"
+  >
+    🇸🇮
+  </span>
 
-    <div
-      id="translatedText"
-      class="text translated"
-    >
-      ...
-    </div>
+  <span
+    id="originalText"
+    class="text"
+  >
+    ...
+  </span>
 
-  </div>
+</div>
+
+
+
+<div class="translation-line">
+
+  <span
+    id="resultTargetFlag"
+    class="flag"
+  >
+    🇭🇺
+  </span>
+
+  <span
+    id="translatedText"
+    class="text translated"
+  >
+    ...
+  </span>
+
+</div>
+
 
 </div>
 
 
 <div
-  id="liveError"
+  id="conversationError"
   class="error"
 ></div>
 
+
 </section>
 
+
 </main>
+
 
 
 <script>
@@ -829,71 +1263,27 @@ select option{
 "use strict";
 
 
-/* ==========================================
-   CONFIG
-========================================== */
+/* ============================= */
+/* SUPABASE                      */
+/* ============================= */
 
 const SUPABASE_URL =
-  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
+"https://kdixpdxmdfdbxpbuljfe.supabase.co";
 
 
 const SUPABASE_KEY =
-  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+"sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
 
 
-const FUNCTION_URL =
-  SUPABASE_URL +
-  "/functions/v1/voice-transcribe-gemini";
+const TRANSCRIBE_URL =
+SUPABASE_URL +
+"/functions/v1/voice-transcribe";
 
 
-/* ==========================================
-   LANGUAGES
-========================================== */
 
-const LANGUAGES = {
-
-  sl:{
-    name:"Slovenščina",
-    flag:"🇸🇮",
-    locale:"sl-SI"
-  },
-
-  hu:{
-    name:"Magyar",
-    flag:"🇭🇺",
-    locale:"hu-HU"
-  },
-
-  en:{
-    name:"English",
-    flag:"🇬🇧",
-    locale:"en-GB"
-  },
-
-  pl:{
-    name:"Polski",
-    flag:"🇵🇱",
-    locale:"pl-PL"
-  },
-
-  it:{
-    name:"Italiano",
-    flag:"🇮🇹",
-    locale:"it-IT"
-  },
-
-  hr:{
-    name:"Hrvatski",
-    flag:"🇭🇷",
-    locale:"hr-HR"
-  }
-
-};
-
-
-/* ==========================================
-   STATE
-========================================== */
+/* ============================= */
+/* STATE                         */
+/* ============================= */
 
 const state = {
 
@@ -913,8 +1303,6 @@ const state = {
 
   recording:false,
 
-  processing:false,
-
   stream:null,
 
   recorder:null,
@@ -924,128 +1312,163 @@ const state = {
 };
 
 
-/* ==========================================
-   ELEMENTS
-========================================== */
 
-const $ =
-  id =>
-    document.getElementById(id);
-
+/* ============================= */
+/* ELEMENTS                      */
+/* ============================= */
 
 const setupScreen =
-  $("setupScreen");
+document.getElementById("setupScreen");
 
 
-const liveScreen =
-  $("liveScreen");
-
-
-const person1Avatar =
-  $("person1Avatar");
-
-
-const person2Avatar =
-  $("person2Avatar");
-
-
-const person1Icon =
-  $("person1Icon");
-
-
-const person2Icon =
-  $("person2Icon");
+const conversationScreen =
+document.getElementById(
+  "conversationScreen"
+);
 
 
 const language1 =
-  $("language1");
+document.getElementById("language1");
 
 
 const language2 =
-  $("language2");
+document.getElementById("language2");
+
+
+const person1Button =
+document.getElementById(
+  "person1Button"
+);
+
+
+const person2Button =
+document.getElementById(
+  "person2Button"
+);
+
+
+const person1Icon =
+document.getElementById(
+  "person1Icon"
+);
+
+
+const person2Icon =
+document.getElementById(
+  "person2Icon"
+);
 
 
 const flag1 =
-  $("flag1");
+document.getElementById("flag1");
 
 
 const flag2 =
-  $("flag2");
-
-
-const swapLanguages =
-  $("swapLanguages");
+document.getElementById("flag2");
 
 
 const startButton =
-  $("startButton");
+document.getElementById(
+  "startButton"
+);
 
 
 const nextButton =
-  $("nextButton");
+document.getElementById(
+  "nextButton"
+);
 
 
 const stopButton =
-  $("stopButton");
-
-
-const route =
-  $("route");
-
-
-const activePersonElement =
-  $("activePerson");
+document.getElementById(
+  "stopButton"
+);
 
 
 const orb =
-  $("orb");
-
-
-const listenStage =
-  $("listenStage");
-
-
-const processStage =
-  $("processStage");
-
-
-const speakStage =
-  $("speakStage");
+document.getElementById("orb");
 
 
 const status =
-  $("status");
+document.getElementById("status");
 
 
-const sourceFlag =
-  $("sourceFlag");
+const stageListen =
+document.getElementById(
+  "stageListen"
+);
 
 
-const targetFlag =
-  $("targetFlag");
+const stageProcess =
+document.getElementById(
+  "stageProcess"
+);
+
+
+const stageSpeak =
+document.getElementById(
+  "stageSpeak"
+);
 
 
 const originalText =
-  $("originalText");
+document.getElementById(
+  "originalText"
+);
 
 
 const translatedText =
-  $("translatedText");
+document.getElementById(
+  "translatedText"
+);
+
+
+const activeAvatar =
+document.getElementById(
+  "activeAvatar"
+);
 
 
 const setupError =
-  $("setupError");
+document.getElementById(
+  "setupError"
+);
 
 
-const liveError =
-  $("liveError");
+const conversationError =
+document.getElementById(
+  "conversationError"
+);
 
 
-/* ==========================================
-   ACTIVE / TARGET
-========================================== */
 
-function getActivePerson(){
+/* ============================= */
+/* LANGUAGE INFO                 */
+/* ============================= */
+
+function languageInfo(code){
+
+  if(code === "hu"){
+
+    return{
+      name:"Magyar",
+      flag:"🇭🇺",
+      speech:"hu-HU"
+    };
+
+  }
+
+  return{
+    name:"Slovenščina",
+    flag:"🇸🇮",
+    speech:"sl-SI"
+  };
+
+}
+
+
+
+function activePerson(){
 
   return state.activePerson === 1
     ? state.person1
@@ -1054,7 +1477,8 @@ function getActivePerson(){
 }
 
 
-function getTargetPerson(){
+
+function targetPerson(){
 
   return state.activePerson === 1
     ? state.person2
@@ -1063,11 +1487,12 @@ function getTargetPerson(){
 }
 
 
-/* ==========================================
-   SETUP DISPLAY
-========================================== */
 
-function updateSetup(){
+/* ============================= */
+/* SETUP                         */
+/* ============================= */
+
+function renderSetup(){
 
   person1Icon.textContent =
     state.person1.gender === "male"
@@ -1082,304 +1507,256 @@ function updateSetup(){
 
 
   flag1.textContent =
-    LANGUAGES[
+    languageInfo(
       state.person1.language
-    ].flag;
+    ).flag;
 
 
   flag2.textContent =
-    LANGUAGES[
+    languageInfo(
       state.person2.language
-    ].flag;
+    ).flag;
 
 }
 
 
-/* ==========================================
-   PERSON TOGGLE
-========================================== */
 
-person1Avatar.addEventListener(
-  "click",
-  () => {
+person1Button.addEventListener(
+"click",
+() => {
 
-    state.person1.gender =
-      state.person1.gender === "male"
-        ? "female"
-        : "male";
+  state.person1.gender =
+    state.person1.gender === "male"
+      ? "female"
+      : "male";
 
+  renderSetup();
 
-    updateSetup();
-
-  }
-);
+});
 
 
-person2Avatar.addEventListener(
-  "click",
-  () => {
 
-    state.person2.gender =
-      state.person2.gender === "male"
-        ? "female"
-        : "male";
+person2Button.addEventListener(
+"click",
+() => {
+
+  state.person2.gender =
+    state.person2.gender === "male"
+      ? "female"
+      : "male";
+
+  renderSetup();
+
+});
 
 
-    updateSetup();
-
-  }
-);
-
-
-/* ==========================================
-   LANGUAGE CHANGE
-========================================== */
 
 language1.addEventListener(
-  "change",
-  () => {
+"change",
+() => {
 
-    state.person1.language =
-      language1.value;
+  state.person1.language =
+    language1.value;
 
+  renderSetup();
 
-    updateSetup();
+});
 
-  }
-);
 
 
 language2.addEventListener(
-  "change",
-  () => {
+"change",
+() => {
 
-    state.person2.language =
-      language2.value;
+  state.person2.language =
+    language2.value;
 
+  renderSetup();
 
-    updateSetup();
-
-  }
-);
+});
 
 
-/* ==========================================
-   SWAP LANGUAGES
-========================================== */
 
-swapLanguages.addEventListener(
-  "click",
-  () => {
+/* ============================= */
+/* CONVERSATION DISPLAY          */
+/* ============================= */
 
-    const first =
-      language1.value;
+function renderConversation(){
 
+  const source =
+    activePerson();
 
-    language1.value =
-      language2.value;
+  const target =
+    targetPerson();
 
 
-    language2.value =
-      first;
+  const sourceInfo =
+    languageInfo(
+      source.language
+    );
 
 
-    state.person1.language =
-      language1.value;
+  const targetInfo =
+    languageInfo(
+      target.language
+    );
 
 
-    state.person2.language =
-      language2.value;
+  document.getElementById(
+    "sourceFlag"
+  ).textContent =
+    sourceInfo.flag;
 
 
-    updateSetup();
-
-  }
-);
-
-
-/* ==========================================
-   LIVE DISPLAY
-========================================== */
-
-function updateConversation(){
-
-  const speaker =
-    getActivePerson();
+  document.getElementById(
+    "sourceLanguage"
+  ).textContent =
+    sourceInfo.name;
 
 
-  const listener =
-    getTargetPerson();
+  document.getElementById(
+    "targetFlag"
+  ).textContent =
+    targetInfo.flag;
 
 
-  const speakerLanguage =
-    LANGUAGES[
-      speaker.language
-    ];
+  document.getElementById(
+    "targetLanguage"
+  ).textContent =
+    targetInfo.name;
 
 
-  const listenerLanguage =
-    LANGUAGES[
-      listener.language
-    ];
+  document.getElementById(
+    "resultSourceFlag"
+  ).textContent =
+    sourceInfo.flag;
 
 
-  route.textContent =
-    speakerLanguage.flag +
-    " " +
-    speakerLanguage.name +
-    "  →  " +
-    listenerLanguage.flag +
-    " " +
-    listenerLanguage.name;
+  document.getElementById(
+    "resultTargetFlag"
+  ).textContent =
+    targetInfo.flag;
 
 
-  activePersonElement.textContent =
-    speaker.gender === "male"
+  activeAvatar.textContent =
+    source.gender === "male"
       ? "👨"
       : "👩";
 
-
-  sourceFlag.textContent =
-    speakerLanguage.flag;
+}
 
 
-  targetFlag.textContent =
-    listenerLanguage.flag;
+
+/* ============================= */
+/* PHASE                         */
+/* ============================= */
+
+function clearPhase(){
+
+  orb.classList.remove(
+    "recording",
+    "processing",
+    "speaking"
+  );
+
+
+  stageListen.classList.remove(
+    "active"
+  );
+
+
+  stageProcess.classList.remove(
+    "active"
+  );
+
+
+  stageSpeak.classList.remove(
+    "active"
+  );
 
 }
 
 
-/* ==========================================
-   UI STATES
-========================================== */
 
-function clearStages(){
+function showRecording(){
 
-  listenStage.classList.remove(
-    "active"
-  );
-
-
-  processStage.classList.remove(
-    "active"
-  );
-
-
-  speakStage.classList.remove(
-    "active"
-  );
-
-
-  orb.className =
-    "orb";
-
-}
-
-
-function showListening(){
-
-  clearStages();
-
+  clearPhase();
 
   orb.classList.add(
     "recording"
   );
 
-
-  orb.textContent =
-    "🎙️";
-
-
-  listenStage.classList.add(
+  stageListen.classList.add(
     "active"
   );
-
 
   status.textContent =
     "Poslušam ...";
 
-
-  nextButton.disabled =
-    false;
-
 }
+
 
 
 function showProcessing(){
 
-  clearStages();
-
+  clearPhase();
 
   orb.classList.add(
     "processing"
   );
 
-
-  orb.textContent =
-    "🤫";
-
-
-  processStage.classList.add(
+  stageProcess.classList.add(
     "active"
   );
-
 
   status.textContent =
     "Prevajam ...";
 
-
-  nextButton.disabled =
-    true;
-
 }
+
 
 
 function showSpeaking(){
 
-  clearStages();
-
+  clearPhase();
 
   orb.classList.add(
     "speaking"
   );
 
-
-  orb.textContent =
-    "🔊";
-
-
-  speakStage.classList.add(
+  stageSpeak.classList.add(
     "active"
   );
 
-
   status.textContent =
-    "Predvajam ...";
-
-
-  nextButton.disabled =
-    true;
+    "Govorim ...";
 
 }
 
 
-/* ==========================================
-   MICROPHONE
-========================================== */
+
+/* ============================= */
+/* GET MICROPHONE                */
+/* ============================= */
 
 async function getMicrophone(){
 
-  if(
-    state.stream &&
-    state.stream
-      .getAudioTracks()
-      .some(
-        track =>
-          track.readyState === "live"
-      )
-  ){
+  if(state.stream){
 
-    return state.stream;
+    const liveTrack =
+      state.stream
+        .getAudioTracks()
+        .find(
+          track =>
+            track.readyState === "live"
+        );
+
+
+    if(liveTrack){
+
+      return state.stream;
+
+    }
 
   }
 
@@ -1402,67 +1779,22 @@ async function getMicrophone(){
 }
 
 
-/* ==========================================
-   MEDIARECORDER OPTIONS
-========================================== */
 
-function getRecorderOptions(){
-
-  const types = [
-
-    "audio/mp4",
-
-    "audio/webm;codecs=opus",
-
-    "audio/webm"
-
-  ];
-
-
-  for(
-    const mimeType of types
-  ){
-
-    if(
-      MediaRecorder.isTypeSupported &&
-      MediaRecorder.isTypeSupported(
-        mimeType
-      )
-    ){
-
-      return {
-        mimeType
-      };
-
-    }
-
-  }
-
-
-  return {};
-
-}
-
-
-/* ==========================================
-   START RECORDING
-========================================== */
+/* ============================= */
+/* START RECORDING               */
+/* ============================= */
 
 async function startRecording(){
 
   if(
     !state.running ||
-    state.recording ||
-    state.processing
+    state.recording
   ){
-
     return;
-
   }
 
 
-  liveError.textContent =
-    "";
+  conversationError.textContent = "";
 
 
   try{
@@ -1471,21 +1803,36 @@ async function startRecording(){
       await getMicrophone();
 
 
-    state.chunks =
-      [];
+    state.chunks = [];
 
 
-    state.recorder =
+    let options = {};
+
+
+    if(
+      MediaRecorder.isTypeSupported(
+        "audio/webm;codecs=opus"
+      )
+    ){
+
+      options.mimeType =
+        "audio/webm;codecs=opus";
+
+    }
+
+
+    const recorder =
       new MediaRecorder(
-
         stream,
-
-        getRecorderOptions()
-
+        options
       );
 
 
-    state.recorder.ondataavailable =
+    state.recorder =
+      recorder;
+
+
+    recorder.ondataavailable =
       event => {
 
         if(
@@ -1502,16 +1849,14 @@ async function startRecording(){
       };
 
 
-    state.recorder.start(
-      250
-    );
+    recorder.start(250);
 
 
     state.recording =
       true;
 
 
-    showListening();
+    showRecording();
 
   }
   catch(error){
@@ -1519,22 +1864,22 @@ async function startRecording(){
     console.error(error);
 
 
-    liveError.textContent =
-      "Mikrofon ni dosegljiv ali nima dovoljenja.";
+    conversationError.textContent =
+      "Mikrofon ni dosegljiv. Preveri dovoljenje za mikrofon.";
 
   }
 
 }
 
 
-/* ==========================================
-   STOP RECORDING
-========================================== */
+
+/* ============================= */
+/* STOP RECORDING                */
+/* ============================= */
 
 function stopRecording(){
 
   return new Promise(
-
     resolve => {
 
 
@@ -1558,33 +1903,22 @@ function stopRecording(){
         () => {
 
 
-          const mimeType =
+          const type =
             recorder.mimeType ||
             "audio/webm";
 
 
           const blob =
             new Blob(
-
               state.chunks,
-
-              {
-                type:mimeType
-              }
-
+              {type}
             );
 
 
+          state.chunks = [];
+
           state.recording =
             false;
-
-
-          state.recorder =
-            null;
-
-
-          state.chunks =
-            [];
 
 
           resolve(blob);
@@ -1602,57 +1936,37 @@ function stopRecording(){
         state.recording =
           false;
 
-
-        state.recorder =
-          null;
-
-
         resolve(null);
 
       }
 
     }
-
   );
 
 }
 
 
-/* ==========================================
-   SEND TO GEMINI
-========================================== */
 
-async function sendToGemini(
+/* ============================= */
+/* CALL SUPABASE                 */
+/* ============================= */
+
+async function transcribeAndTranslate(
   audioBlob
 ){
 
-  const speaker =
-    getActivePerson();
+  const source =
+    activePerson();
 
 
-  const listener =
-    getTargetPerson();
+  const target =
+    targetPerson();
 
 
-  const mimeType =
-    audioBlob.type ||
-    "audio/webm";
-
-
-  let extension =
-    "webm";
-
-
-  if(
-    mimeType.includes(
-      "mp4"
-    )
-  ){
-
-    extension =
-      "m4a";
-
-  }
+  const extension =
+    audioBlob.type.includes("mp4")
+      ? "m4a"
+      : "webm";
 
 
   const audioFile =
@@ -1660,11 +1974,12 @@ async function sendToGemini(
 
       [audioBlob],
 
-      "phone5." +
-      extension,
+      "voice." + extension,
 
       {
-        type:mimeType
+        type:
+          audioBlob.type ||
+          "audio/webm"
       }
 
     );
@@ -1682,37 +1997,29 @@ async function sendToGemini(
 
   form.append(
     "language",
-    speaker.language
-  );
-
-
-  form.append(
-    "source_language",
-    speaker.language
+    source.language
   );
 
 
   form.append(
     "target_language",
-    listener.language
+    target.language
   );
 
 
   const response =
     await fetch(
-
-      FUNCTION_URL,
-
+      TRANSCRIBE_URL,
       {
 
         method:"POST",
 
         headers:{
 
-          apikey:
+          "apikey":
             SUPABASE_KEY,
 
-          Authorization:
+          "Authorization":
             "Bearer " +
             SUPABASE_KEY
 
@@ -1721,7 +2028,6 @@ async function sendToGemini(
         body:form
 
       }
-
     );
 
 
@@ -1735,18 +2041,14 @@ async function sendToGemini(
   try{
 
     data =
-      JSON.parse(
-        raw
-      );
+      JSON.parse(raw);
 
   }
   catch(error){
 
     throw new Error(
-
       raw ||
       "Neveljaven odgovor strežnika."
-
     );
 
   }
@@ -1755,154 +2057,127 @@ async function sendToGemini(
   if(!response.ok){
 
     throw new Error(
-
-      data.error ||
       data.detail ||
-      data.message ||
-      (
-        "HTTP " +
-        response.status
-      )
-
+      data.error ||
+      "Napaka " +
+      response.status
     );
 
   }
 
 
-  return normalizeResponse(
-    data
+  return data;
+
+}
+
+
+
+/* ============================= */
+/* TTS                           */
+/* ============================= */
+
+function findVoice(
+  language,
+  gender
+){
+
+  if(
+    !("speechSynthesis" in window)
+  ){
+
+    return null;
+
+  }
+
+
+  const voices =
+    speechSynthesis
+      .getVoices();
+
+
+  const languagePrefix =
+    languageInfo(language)
+      .speech
+      .substring(0,2)
+      .toLowerCase();
+
+
+  const candidates =
+    voices.filter(
+      voice =>
+        voice.lang
+          .toLowerCase()
+          .startsWith(
+            languagePrefix
+          )
+    );
+
+
+  const maleNames = [
+    "male",
+    "david",
+    "daniel",
+    "mark",
+    "alex",
+    "tamas"
+  ];
+
+
+  const femaleNames = [
+    "female",
+    "zira",
+    "anna",
+    "samantha",
+    "helena",
+    "mariska"
+  ];
+
+
+  const names =
+    gender === "male"
+      ? maleNames
+      : femaleNames;
+
+
+  const preferred =
+    candidates.find(
+      voice => {
+
+        const n =
+          voice.name.toLowerCase();
+
+        return names.some(
+          name =>
+            n.includes(name)
+        );
+
+      }
+    );
+
+
+  return(
+    preferred ||
+    candidates[0] ||
+    null
   );
 
 }
 
 
-/* ==========================================
-   NORMALIZE GEMINI RESPONSE
-========================================== */
 
-function firstText(
-  values
-){
+/* ============================= */
+/* SPEAK                         */
+/* ============================= */
 
-  for(
-    const value of values
-  ){
-
-    if(
-      typeof value === "string" &&
-      value.trim()
-    ){
-
-      return value.trim();
-
-    }
-
-  }
-
-
-  return "";
-
-}
-
-
-function normalizeResponse(
-  data
-){
-
-  const original =
-    firstText([
-
-      data.text,
-
-      data.transcript,
-
-      data.transcription,
-
-      data.original,
-
-      data.original_text,
-
-      data.source_text,
-
-      data.result?.text,
-
-      data.result?.transcript,
-
-      data.data?.text,
-
-      data.data?.transcript
-
-    ]);
-
-
-  const translation =
-    firstText([
-
-      data.translated,
-
-      data.translation,
-
-      data.translated_text,
-
-      data.target_text,
-
-      data.result?.translated,
-
-      data.result?.translation,
-
-      data.data?.translated,
-
-      data.data?.translation
-
-    ]);
-
-
-  if(
-    !original &&
-    !translation
-  ){
-
-    throw new Error(
-      "Gemini ni vrnil besedila."
-    );
-
-  }
-
-
-  return {
-
-    original:
-      original ||
-      translation,
-
-    translation:
-      translation ||
-      original
-
-  };
-
-}
-
-
-/* ==========================================
-   SPEECH SYNTHESIS
-========================================== */
-
-function speak(
-  text
-){
+function speak(text){
 
   return new Promise(
-
     resolve => {
 
 
       if(
         !text ||
-        !(
-          "speechSynthesis"
-          in window
-        )
+        !("speechSynthesis" in window)
       ){
 
         resolve();
@@ -1912,22 +2187,14 @@ function speak(
       }
 
 
-      const listener =
-        getTargetPerson();
-
-
-      const language =
-        LANGUAGES[
-          listener.language
-        ];
+      const target =
+        targetPerson();
 
 
       showSpeaking();
 
 
-      window
-        .speechSynthesis
-        .cancel();
+      speechSynthesis.cancel();
 
 
       const utterance =
@@ -1937,7 +2204,9 @@ function speak(
 
 
       utterance.lang =
-        language.locale;
+        languageInfo(
+          target.language
+        ).speech;
 
 
       utterance.rate =
@@ -1945,26 +2214,37 @@ function speak(
 
 
       utterance.pitch =
-        listener.gender ===
-        "female"
-          ? 1.07
+        target.gender === "female"
+          ? 1.08
           : .94;
 
 
-      let finished =
-        false;
+      const voice =
+        findVoice(
+          target.language,
+          target.gender
+        );
 
 
-      function end(){
+      if(voice){
 
-        if(finished){
+        utterance.voice =
+          voice;
+
+      }
+
+
+      let completed = false;
+
+
+      function finish(){
+
+        if(completed){
           return;
         }
 
 
-        finished =
-          true;
-
+        completed = true;
 
         resolve();
 
@@ -1972,267 +2252,158 @@ function speak(
 
 
       utterance.onend =
-        end;
+        finish;
 
 
       utterance.onerror =
-        end;
+        finish;
 
 
-      window
-        .speechSynthesis
-        .speak(
-          utterance
-        );
+      speechSynthesis.speak(
+        utterance
+      );
 
+
+      /*
+       Safari fallback.
+      */
 
       setTimeout(
-
-        end,
-
+        finish,
         Math.max(
           3500,
           text.length * 120
         )
-
       );
 
     }
-
   );
 
 }
 
 
-/* ==========================================
-   START
-========================================== */
 
-startButton.addEventListener(
-  "click",
-  async () => {
+/* ============================= */
+/* PROCESS CURRENT SPEECH        */
+/* ============================= */
 
+async function processSpeech(){
 
-    setupError.textContent =
-      "";
-
-
-    state.person1.language =
-      language1.value;
-
-
-    state.person2.language =
-      language2.value;
-
-
-    if(
-      state.person1.language ===
-      state.person2.language
-    ){
-
-      setupError.textContent =
-        "Izberi dva različna jezika.";
-
-
-      return;
-
-    }
-
-
-    if(
-      !navigator.mediaDevices ||
-      !navigator.mediaDevices
-        .getUserMedia
-    ){
-
-      setupError.textContent =
-        "Brskalnik ne podpira mikrofona.";
-
-
-      return;
-
-    }
-
-
-    if(
-      typeof MediaRecorder ===
-      "undefined"
-    ){
-
-      setupError.textContent =
-        "Brskalnik ne podpira snemanja zvoka.";
-
-
-      return;
-
-    }
-
-
-    state.activePerson =
-      1;
-
-
-    state.running =
-      true;
-
-
-    state.processing =
-      false;
-
-
-    originalText.textContent =
-      "...";
-
-
-    translatedText.textContent =
-      "...";
-
-
-    setupScreen
-      .classList
-      .remove(
-        "active"
-      );
-
-
-    liveScreen
-      .classList
-      .add(
-        "active"
-      );
-
-
-    updateConversation();
-
-
-    await startRecording();
-
+  if(
+    !state.running ||
+    !state.recording
+  ){
+    return;
   }
 
-);
+
+  const blob =
+    await stopRecording();
 
 
-/* ==========================================
-   ✓ NEXT
-========================================== */
+  if(
+    !blob ||
+    blob.size < 1000
+  ){
 
-nextButton.addEventListener(
-  "click",
-  async () => {
-
-
-    if(
-      !state.running ||
-      !state.recording ||
-      state.processing
-    ){
-
-      return;
-
-    }
-
-
-    state.processing =
-      true;
-
-
-    liveError.textContent =
-      "";
-
-
-    try{
-
-      const audioBlob =
-        await stopRecording();
-
-
-      if(
-        !audioBlob ||
-        audioBlob.size < 800
-      ){
-
-        throw new Error(
-          "Posnetek je prekratek."
-        );
-
-      }
-
-
-      showProcessing();
-
-
-      const result =
-        await sendToGemini(
-          audioBlob
-        );
-
-
-      originalText.textContent =
-        result.original;
-
-
-      translatedText.textContent =
-        result.translation;
-
-
-      await speak(
-        result.translation
-      );
-
-
-      if(
-        !state.running
-      ){
-
-        return;
-
-      }
-
-
-      /*
-       * Po prevodu avtomatsko
-       * zamenjamo govorca.
-       */
-
-      state.activePerson =
-        state.activePerson === 1
-          ? 2
-          : 1;
-
-
-      state.processing =
-        false;
-
-
-      updateConversation();
-
+    if(state.running){
 
       await startRecording();
 
     }
-    catch(error){
 
-      console.error(
-        error
+    return;
+
+  }
+
+
+  showProcessing();
+
+
+  try{
+
+
+    const data =
+      await transcribeAndTranslate(
+        blob
       );
 
 
-      state.processing =
-        false;
+    /*
+      Backend iz stare delujoče
+      funkcije vrača:
+
+      text
+      translated
+    */
 
 
-      liveError.textContent =
-        error.message ||
-        "Prepoznavanje ni uspelo.";
+    const original =
+      String(
+        data.text || ""
+      ).trim();
 
 
-      status.textContent =
-        "Poskusi ponovno.";
+    const translated =
+      String(
+        data.translated ||
+        data.translation ||
+        ""
+      ).trim();
 
 
-      nextButton.disabled =
-        false;
+    if(!original){
 
+      throw new Error(
+        "Whisper ni vrnil besedila."
+      );
+
+    }
+
+
+    originalText.textContent =
+      original;
+
+
+    translatedText.textContent =
+      translated ||
+      original;
+
+
+    if(
+      translated &&
+      state.running
+    ){
+
+      await speak(
+        translated
+      );
+
+    }
+
+
+    if(state.running){
+
+      await startRecording();
+
+    }
+
+  }
+  catch(error){
+
+    console.error(error);
+
+
+    conversationError.textContent =
+      error.message ||
+      "Prepoznavanje ni uspelo.";
+
+
+    status.textContent =
+      "Poskusi ponovno.";
+
+
+    if(state.running){
 
       setTimeout(
         () => {
@@ -2254,93 +2425,299 @@ nextButton.addEventListener(
 
   }
 
-);
+}
 
 
-/* ==========================================
-   STOP
-========================================== */
 
-stopButton.addEventListener(
-  "click",
-  async () => {
+/* ============================= */
+/* START                         */
+/* ============================= */
 
-
-    state.running =
-      false;
+startButton.addEventListener(
+"click",
+async () => {
 
 
-    state.processing =
-      false;
+  setupError.textContent = "";
 
 
-    if(
-      state.recording
-    ){
+  if(
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ){
 
-      await stopRecording();
+    setupError.textContent =
+      "Brskalnik ne podpira mikrofona.";
 
-    }
-
-
-    if(
-      "speechSynthesis"
-      in window
-    ){
-
-      window
-        .speechSynthesis
-        .cancel();
-
-    }
-
-
-    if(
-      state.stream
-    ){
-
-      state.stream
-        .getTracks()
-        .forEach(
-          track =>
-            track.stop()
-        );
-
-
-      state.stream =
-        null;
-
-    }
-
-
-    clearStages();
-
-
-    liveScreen
-      .classList
-      .remove(
-        "active"
-      );
-
-
-    setupScreen
-      .classList
-      .add(
-        "active"
-      );
+    return;
 
   }
 
-);
+
+  if(
+    state.person1.language ===
+    state.person2.language
+  ){
+
+    setupError.textContent =
+      "Izberi dva različna jezika.";
+
+    return;
+
+  }
 
 
-/* ==========================================
-   INIT
-========================================== */
+  state.running =
+    true;
 
-updateSetup();
+
+  state.activePerson =
+    1;
+
+
+  originalText.textContent =
+    "...";
+
+
+  translatedText.textContent =
+    "...";
+
+
+  setupScreen.classList.remove(
+    "active"
+  );
+
+
+  conversationScreen.classList.add(
+    "active"
+  );
+
+
+  renderConversation();
+
+
+  /*
+    Pomembno:
+    getUserMedia se izvede neposredno
+    po uporabnikovem kliku START.
+  */
+
+
+  await startRecording();
+
+});
+
+
+
+/* ============================= */
+/* NAPREJ                        */
+/* ============================= */
+
+nextButton.addEventListener(
+"click",
+async () => {
+
+
+  if(!state.running){
+    return;
+  }
+
+
+  /*
+    NAPREJ pomeni:
+
+    1. končaj govor trenutne osebe
+    2. pošlji zvok Whisperju
+    3. pokaži original
+    4. pokaži prevod
+    5. preberi prevod
+
+    Šele nato zamenjaj govorca.
+  */
+
+
+  if(state.recording){
+
+
+    const blob =
+      await stopRecording();
+
+
+    if(
+      blob &&
+      blob.size >= 1000
+    ){
+
+      showProcessing();
+
+
+      try{
+
+
+        const data =
+          await transcribeAndTranslate(
+            blob
+          );
+
+
+        const original =
+          String(
+            data.text || ""
+          ).trim();
+
+
+        const translated =
+          String(
+            data.translated ||
+            data.translation ||
+            ""
+          ).trim();
+
+
+        originalText.textContent =
+          original ||
+          "...";
+
+
+        translatedText.textContent =
+          translated ||
+          original ||
+          "...";
+
+
+        if(
+          translated &&
+          state.running
+        ){
+
+          await speak(
+            translated
+          );
+
+        }
+
+      }
+      catch(error){
+
+        console.error(error);
+
+
+        conversationError.textContent =
+          error.message ||
+          "Prepoznavanje ni uspelo.";
+
+      }
+
+    }
+
+  }
+
+
+  if(!state.running){
+    return;
+  }
+
+
+  state.activePerson =
+    state.activePerson === 1
+      ? 2
+      : 1;
+
+
+  renderConversation();
+
+
+  await startRecording();
+
+});
+
+
+
+/* ============================= */
+/* STOP                          */
+/* ============================= */
+
+stopButton.addEventListener(
+"click",
+async () => {
+
+
+  state.running =
+    false;
+
+
+  if(
+    state.recording
+  ){
+
+    await stopRecording();
+
+  }
+
+
+  if(
+    "speechSynthesis" in window
+  ){
+
+    speechSynthesis.cancel();
+
+  }
+
+
+  if(state.stream){
+
+    state.stream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
+      );
+
+
+    state.stream =
+      null;
+
+  }
+
+
+  state.recorder =
+    null;
+
+
+  clearPhase();
+
+
+  conversationScreen
+    .classList
+    .remove("active");
+
+
+  setupScreen
+    .classList
+    .add("active");
+
+});
+
+
+
+/* ============================= */
+/* INITIALIZE                    */
+/* ============================= */
+
+if(
+  "speechSynthesis" in window
+){
+
+  speechSynthesis.getVoices();
+
+}
+
+
+renderSetup();
+
 
 })();
+
 </script>
 
 </body>
