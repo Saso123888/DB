@@ -1,0 +1,2099 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+
+<title>Voice Pogovor</title>
+
+<meta name="theme-color" content="#061224">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Voice Pogovor">
+
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+
+<style>
+*{
+  box-sizing:border-box
+}
+
+:root{
+  --bg:#061224;
+  --card:#0d213d;
+  --line:#294a75;
+  --text:#f7f9ff;
+  --muted:#a8b4c8;
+  --blue:#078cff;
+  --cyan:#13dfc5;
+  --red:#ff485d;
+  --yellow:#ffd54a;
+  --green:#30df92
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      #0c2e58 0,
+      #061224 42%,
+      #030b17 100%
+    );
+  color:var(--text);
+  font-family:Arial,sans-serif
+}
+
+body{
+  padding:
+    max(18px,env(safe-area-inset-top))
+    18px
+    max(18px,env(safe-area-inset-bottom))
+}
+
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:calc(100vh - 36px)
+}
+
+.hidden{
+  display:none!important
+}
+
+
+/* ================================
+   BRAND
+================================ */
+
+.brand{
+  text-align:center;
+  margin:8px 0 31px
+}
+
+.brand img{
+  width:86px;
+  height:86px;
+  border-radius:24px;
+  display:block;
+  margin:auto
+}
+
+.brandName{
+  margin-top:9px;
+  font-size:20px;
+  font-weight:900
+}
+
+.brandName span{
+  color:var(--cyan)
+}
+
+
+/* ================================
+   SETUP
+================================ */
+
+h1{
+  margin:0;
+  text-align:center;
+  font-size:34px;
+  line-height:1.08
+}
+
+.subtitle{
+  margin:12px 0 27px;
+  text-align:center;
+  color:var(--muted);
+  font-size:19px
+}
+
+.card{
+  margin-bottom:16px;
+  padding:19px;
+  background:
+    linear-gradient(
+      145deg,
+      #102a4c,
+      #0a1930
+    );
+  border:1px solid var(--line);
+  border-radius:23px;
+  box-shadow:0 16px 38px #0006
+}
+
+.who{
+  display:flex;
+  gap:11px;
+  align-items:center;
+  margin-bottom:14px;
+  color:var(--blue);
+  font-size:18px;
+  font-weight:900
+}
+
+.who.two{
+  color:var(--cyan)
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#176cff;
+  color:#fff
+}
+
+.two .avatar{
+  background:#11cdb7;
+  color:#04231f
+}
+
+label{
+  display:block;
+  margin:12px 0 7px;
+  color:#bac5d7;
+  font-size:13px
+}
+
+input,
+select{
+  width:100%;
+  height:57px;
+  padding:0 15px;
+  border:1px solid #5276a5;
+  border-radius:15px;
+  outline:none;
+  background:#0b1c34;
+  color:#fff;
+  font-size:18px
+}
+
+.start{
+  width:100%;
+  height:68px;
+  margin-top:8px;
+  border:0;
+  border-radius:18px;
+  background:
+    linear-gradient(
+      90deg,
+      #087df1,
+      #079efe
+    );
+  color:#fff;
+  font-size:19px;
+  font-weight:900;
+  box-shadow:0 12px 30px #087df155
+}
+
+.hint{
+  margin:14px 0 0;
+  text-align:center;
+  color:#b6c0d0;
+  font-size:14px
+}
+
+
+/* ================================
+   CONVERSATION
+================================ */
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:24px
+}
+
+.miniBrand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900
+}
+
+.miniBrand img{
+  width:44px;
+  height:44px;
+  border-radius:13px
+}
+
+.gear{
+  border:0;
+  background:transparent;
+  color:#b7c6da;
+  font-size:25px
+}
+
+.people{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:12px;
+  margin-bottom:17px
+}
+
+.pill{
+  height:53px;
+  border:1px solid #284b78;
+  border-radius:25px;
+  background:#0d203c;
+  color:#b8c7db;
+  font-size:17px;
+  font-weight:900
+}
+
+.pill.active{
+  border:0;
+  background:
+    linear-gradient(
+      90deg,
+      #078eff,
+      #0a7bee
+    );
+  color:#fff
+}
+
+.arrow{
+  color:#cbd6e6;
+  font-size:28px
+}
+
+.direction{
+  text-align:center;
+  color:#d4dbea;
+  font-size:15px
+}
+
+.speaker{
+  margin:22px 0 0;
+  text-align:center;
+  font-size:53px;
+  font-weight:900;
+  letter-spacing:1px
+}
+
+.speakLabel{
+  margin-top:7px;
+  text-align:center;
+  color:#bfcae0;
+  font-size:29px;
+  font-weight:900
+}
+
+
+/* ================================
+   MICROPHONE
+================================ */
+
+.pulse{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:210px;
+  height:210px;
+  margin:17px auto
+}
+
+.ring{
+  position:absolute;
+  border:2px solid #087fff55;
+  border-radius:50%;
+  animation:pulse 1.6s infinite
+}
+
+.r1{
+  inset:0
+}
+
+.r2{
+  inset:20px;
+  animation-delay:.25s
+}
+
+.r3{
+  inset:39px;
+  animation-delay:.5s
+}
+
+@keyframes pulse{
+  0%{
+    transform:scale(.82);
+    opacity:.9
+  }
+
+  70%{
+    transform:scale(1.04);
+    opacity:.15
+  }
+
+  100%{
+    transform:scale(1.04);
+    opacity:0
+  }
+}
+
+.mic{
+  position:relative;
+  z-index:2;
+  width:128px;
+  height:128px;
+  border:0;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      #24d8ff,
+      #0784ff 50%,
+      #0b58c4
+    );
+  color:#fff;
+  font-size:57px;
+  box-shadow:0 0 42px #07a7ffcc
+}
+
+.mic.recording{
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      #ff7181,
+      #e72943 55%,
+      #9e1027
+    )
+}
+
+.recordState{
+  min-height:25px;
+  text-align:center;
+  color:#d9e0ec;
+  font-size:15px
+}
+
+.dot{
+  display:inline-block;
+  width:12px;
+  height:12px;
+  margin-right:9px;
+  border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 12px var(--red);
+  animation:blink 1s infinite
+}
+
+@keyframes blink{
+  50%{
+    opacity:.25
+  }
+}
+
+
+/* ================================
+   TTS
+================================ */
+
+.unlock{
+  width:100%;
+  height:53px;
+  margin:15px 0 2px;
+  border:1px solid #70622c;
+  border-radius:15px;
+  background:#493b0e;
+  color:#ffe58c;
+  font-weight:900
+}
+
+.unlock.done{
+  border-color:#277655;
+  background:#123e2c;
+  color:#7cf0b5
+}
+
+
+/* ================================
+   RESULT
+================================ */
+
+.result{
+  margin:17px 0;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#09192f
+}
+
+.resultTitle{
+  color:#8697af;
+  font-size:11px;
+  font-weight:900
+}
+
+.original{
+  margin-top:7px;
+  color:#cad4e3;
+  font-size:15px
+}
+
+.translated{
+  margin-top:7px;
+  color:var(--yellow);
+  font-size:19px;
+  font-weight:900
+}
+
+
+/* ================================
+   NEXT
+================================ */
+
+.instruction{
+  margin:24px 0 11px;
+  text-align:center;
+  color:#c2ccda
+}
+
+.next{
+  width:100%;
+  height:76px;
+  border:0;
+  border-radius:23px;
+  background:
+    linear-gradient(
+      90deg,
+      #14e5c6,
+      #18d6bb
+    );
+  color:#062d2a;
+  font-size:20px;
+  font-weight:900;
+  box-shadow:0 12px 30px #10d7bd44
+}
+
+.next:disabled{
+  opacity:.45
+}
+
+.small{
+  margin:13px;
+  text-align:center;
+  color:#aeb9c9;
+  font-size:13px
+}
+
+.notice{
+  min-height:23px;
+  margin-top:10px;
+  text-align:center;
+  color:#ffd36b
+}
+
+.bottom{
+  margin-top:29px;
+  padding-top:20px;
+  border-top:1px solid #29405d;
+  text-align:center
+}
+
+.endText{
+  border:0;
+  background:transparent;
+  color:#b1bdcf;
+  font-size:16px
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- ================================
+     SETUP SCREEN
+================================ -->
+
+<section id="setup">
+
+  <div class="brand">
+
+    <img
+      src="apple-touch-icon.png"
+      alt=""
+    >
+
+    <div class="brandName">
+      VOICE <span>POGOVOR</span>
+    </div>
+
+  </div>
+
+
+  <h1>
+    Kdo se pogovarja?
+  </h1>
+
+  <div class="subtitle">
+    Nastavi imeni in jezika.
+  </div>
+
+
+  <!-- OSEBA A -->
+
+  <div class="card">
+
+    <div class="who">
+
+      <span class="avatar">
+        A
+      </span>
+
+      OSEBA A
+
+    </div>
+
+
+    <label>
+      Ime
+    </label>
+
+    <input
+      id="nameA"
+      value="Oseba A"
+    >
+
+
+    <label>
+      Jezik
+    </label>
+
+    <select id="langA"></select>
+
+  </div>
+
+
+  <!-- OSEBA B -->
+
+  <div class="card">
+
+    <div class="who two">
+
+      <span class="avatar">
+        B
+      </span>
+
+      OSEBA B
+
+    </div>
+
+
+    <label>
+      Ime
+    </label>
+
+    <input
+      id="nameB"
+      value="Oseba B"
+    >
+
+
+    <label>
+      Jezik
+    </label>
+
+    <select id="langB"></select>
+
+  </div>
+
+
+  <div class="hint">
+
+    Prva začne
+    <strong id="firstName">
+      Oseba A
+    </strong>.
+
+  </div>
+
+
+  <button
+    id="start"
+    class="start"
+  >
+    ZAČNI POGOVOR
+  </button>
+
+</section>
+
+
+<!-- ================================
+     CONVERSATION SCREEN
+================================ -->
+
+<section
+  id="talk"
+  class="hidden"
+>
+
+
+  <div class="top">
+
+    <div class="miniBrand">
+
+      <img
+        src="apple-touch-icon.png"
+        alt=""
+      >
+
+      VOICE
+      <span style="color:var(--cyan)">
+        POGOVOR
+      </span>
+
+    </div>
+
+
+    <button
+      id="settings"
+      class="gear"
+      type="button"
+    >
+      ⚙
+    </button>
+
+  </div>
+
+
+  <!-- PEOPLE -->
+
+  <div class="people">
+
+    <button
+      id="pillA"
+      type="button"
+      class="pill active"
+    ></button>
+
+    <div class="arrow">
+      ⇄
+    </div>
+
+    <button
+      id="pillB"
+      type="button"
+      class="pill"
+    ></button>
+
+  </div>
+
+
+  <div
+    id="direction"
+    class="direction"
+  ></div>
+
+
+  <!-- CURRENT SPEAKER -->
+
+  <div
+    id="speaker"
+    class="speaker"
+  ></div>
+
+  <div class="speakLabel">
+    GOVORI
+  </div>
+
+
+  <!-- MICROPHONE -->
+
+  <div class="pulse">
+
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+
+    <button
+      id="mic"
+      type="button"
+      class="mic"
+    >
+      🎤
+    </button>
+
+  </div>
+
+
+  <div
+    id="recordState"
+    class="recordState"
+  >
+
+    <span class="dot"></span>
+    Snemanje poteka
+
+  </div>
+
+
+  <!-- TTS UNLOCK -->
+
+  <button
+    id="unlock"
+    type="button"
+    class="unlock"
+  >
+    🔓 ODKLENI GLAS
+  </button>
+
+
+  <!-- RESULT -->
+
+  <div
+    id="result"
+    class="result hidden"
+  >
+
+    <div class="resultTitle">
+      ZADNJI PREVOD
+    </div>
+
+    <div
+      id="original"
+      class="original"
+    ></div>
+
+    <div
+      id="translated"
+      class="translated"
+    ></div>
+
+  </div>
+
+
+  <!-- NEXT -->
+
+  <div class="instruction">
+    Ko končaš, pritisni NAPREJ.
+  </div>
+
+
+  <button
+    id="next"
+    type="button"
+    class="next"
+  >
+    NAPREJ
+  </button>
+
+
+  <div class="small">
+    Prevedi, predvajaj in predaj besedo.
+  </div>
+
+
+  <div
+    id="notice"
+    class="notice"
+  ></div>
+
+
+  <div class="bottom">
+
+    <button
+      id="end"
+      type="button"
+      class="endText"
+    >
+      Končaj pogovor
+    </button>
+
+  </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/*
+=========================================
+SUPABASE / GROQ EDGE FUNCTION
+=========================================
+*/
+
+const URL =
+  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
+
+const KEY =
+  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+
+const HEADERS = {
+
+  "apikey":
+    KEY,
+
+  "Authorization":
+    "Bearer " + KEY
+
+};
+
+
+/*
+=========================================
+LANGUAGES
+=========================================
+*/
+
+const LANGUAGES = {
+
+  sl:{
+    name:"🇸🇮 Slovenščina",
+    tts:"sl-SI",
+    test:"Glas je pripravljen."
+  },
+
+  hu:{
+    name:"🇭🇺 Magyar",
+    tts:"hu-HU",
+    test:"A hang készen áll."
+  },
+
+  en:{
+    name:"🇬🇧 English",
+    tts:"en-US",
+    test:"Voice is ready."
+  },
+
+  tl:{
+    name:"🇵🇭 Filipino",
+    tts:"fil-PH",
+    test:"Handa na ang boses."
+  },
+
+  it:{
+    name:"🇮🇹 Italiano",
+    tts:"it-IT",
+    test:"La voce è pronta."
+  },
+
+  hr:{
+    name:"🇭🇷 Hrvatski",
+    tts:"hr-HR",
+    test:"Glas je spreman."
+  }
+
+};
+
+
+const $ =
+  id =>
+    document.getElementById(id);
+
+
+/*
+=========================================
+DROP DOWNS
+=========================================
+*/
+
+Object.entries(
+  LANGUAGES
+)
+.forEach(
+  ([code,language]) => {
+
+    $("langA").add(
+      new Option(
+        language.name,
+        code
+      )
+    );
+
+    $("langB").add(
+      new Option(
+        language.name,
+        code
+      )
+    );
+
+  }
+);
+
+
+$("langA").value =
+  "sl";
+
+
+$("langB").value =
+  "en";
+
+
+/*
+=========================================
+STATE
+=========================================
+*/
+
+let turn =
+  0;
+/*
+0 = Oseba A
+1 = Oseba B
+*/
+
+let recorder =
+  null;
+
+let stream =
+  null;
+
+let chunks =
+  [];
+
+let unlocked =
+  false;
+
+let busy =
+  false;
+
+
+/*
+=========================================
+SETUP
+=========================================
+*/
+
+$("nameA").oninput =
+  () => {
+
+    $("firstName").textContent =
+      $("nameA").value.trim() ||
+      "Oseba A";
+
+  };
+
+
+function personName(
+  person
+){
+
+  if(person === 0){
+
+    return (
+      $("nameA")
+        .value
+        .trim() ||
+      "Oseba A"
+    );
+
+  }
+
+
+  return (
+    $("nameB")
+      .value
+      .trim() ||
+    "Oseba B"
+  );
+
+}
+
+
+function personLanguage(
+  person
+){
+
+  return person === 0
+    ? $("langA").value
+    : $("langB").value;
+
+}
+
+
+/*
+=========================================
+START CONVERSATION
+=========================================
+*/
+
+async function startConversation(){
+
+  /*
+  Shrani lokalne nastavitve.
+  Sobe ni. Supabase tabela ni potrebna.
+  */
+
+  localStorage.setItem(
+    "phone4NameA",
+    personName(0)
+  );
+
+  localStorage.setItem(
+    "phone4NameB",
+    personName(1)
+  );
+
+  localStorage.setItem(
+    "phone4LangA",
+    personLanguage(0)
+  );
+
+  localStorage.setItem(
+    "phone4LangB",
+    personLanguage(1)
+  );
+
+
+  turn =
+    0;
+
+
+  $("setup")
+    .classList
+    .add("hidden");
+
+
+  $("talk")
+    .classList
+    .remove("hidden");
+
+
+  render();
+
+
+  /*
+  ZAČNI POGOVOR je neposredna uporabniška gesta.
+  Zato tukaj poskusimo odkleniti TTS.
+  */
+
+  await unlockVoice();
+
+
+  /*
+  Nato zaženemo prvo snemanje.
+  */
+
+  await startRecording();
+
+}
+
+
+/*
+=========================================
+RENDER ACTIVE PERSON
+=========================================
+*/
+
+function render(){
+
+  const nameA =
+    personName(0);
+
+  const nameB =
+    personName(1);
+
+
+  $("pillA").textContent =
+    nameA;
+
+
+  $("pillB").textContent =
+    nameB;
+
+
+  $("speaker").textContent =
+    turn === 0
+      ? nameA
+      : nameB;
+
+
+  $("pillA")
+    .classList
+    .toggle(
+      "active",
+      turn === 0
+    );
+
+
+  $("pillB")
+    .classList
+    .toggle(
+      "active",
+      turn === 1
+    );
+
+
+  const source =
+    personLanguage(
+      turn
+    );
+
+
+  const target =
+    personLanguage(
+      turn === 0
+        ? 1
+        : 0
+    );
+
+
+  $("direction").textContent =
+    LANGUAGES[source].name +
+    " → " +
+    LANGUAGES[target].name;
+
+
+  const nextPerson =
+    turn === 0
+      ? nameB
+      : nameA;
+
+
+  $("next").textContent =
+    "NAPREJ → " +
+    nextPerson;
+
+
+  $("recordState").innerHTML =
+    '<span class="dot"></span>' +
+    "Snemanje poteka";
+
+}
+
+
+/*
+=========================================
+MEDIA RECORDER
+=========================================
+*/
+
+async function startRecording(){
+
+  if(busy){
+    return;
+  }
+
+
+  try{
+
+    stream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+          audio:true
+        });
+
+
+    chunks =
+      [];
+
+
+    let options =
+      {};
+
+
+    if(
+      MediaRecorder
+        .isTypeSupported(
+          "audio/mp4"
+        )
+    ){
+
+      options = {
+        mimeType:
+          "audio/mp4"
+      };
+
+    }
+    else if(
+      MediaRecorder
+        .isTypeSupported(
+          "audio/webm"
+        )
+    ){
+
+      options = {
+        mimeType:
+          "audio/webm"
+      };
+
+    }
+
+
+    recorder =
+      new MediaRecorder(
+        stream,
+        options
+      );
+
+
+    recorder.ondataavailable =
+      event => {
+
+        if(
+          event.data &&
+          event.data.size
+        ){
+
+          chunks.push(
+            event.data
+          );
+
+        }
+
+      };
+
+
+    recorder.start();
+
+
+    $("mic")
+      .classList
+      .add(
+        "recording"
+      );
+
+
+    $("mic").textContent =
+      "■";
+
+
+    $("recordState").innerHTML =
+      '<span class="dot"></span>' +
+      "Snemanje poteka";
+
+
+    $("notice").textContent =
+      "";
+
+  }
+  catch(error){
+
+    $("notice").textContent =
+      "Napaka mikrofona: " +
+      error.message;
+
+  }
+
+}
+
+
+/*
+=========================================
+STOP RECORDING
+=========================================
+*/
+
+function stopRecording(){
+
+  return new Promise(
+    resolve => {
+
+      if(
+        !recorder ||
+        recorder.state !==
+          "recording"
+      ){
+
+        resolve();
+
+        return;
+
+      }
+
+
+      recorder.onstop =
+        () => {
+
+          resolve();
+
+        };
+
+
+      recorder.stop();
+
+
+      if(stream){
+
+        stream
+          .getTracks()
+          .forEach(
+            track =>
+              track.stop()
+          );
+
+      }
+
+
+      $("mic")
+        .classList
+        .remove(
+          "recording"
+        );
+
+
+      $("mic").textContent =
+        "🎤";
+
+
+      $("recordState")
+        .textContent =
+          "Prepoznavam govor ...";
+
+    }
+
+  );
+
+}
+
+
+/*
+=========================================
+WHISPER + TRANSLATION
+=========================================
+*/
+
+async function translate(){
+
+  const source =
+    personLanguage(
+      turn
+    );
+
+
+  const target =
+    personLanguage(
+      turn === 0
+        ? 1
+        : 0
+    );
+
+
+  const mime =
+    recorder?.mimeType ||
+    "audio/webm";
+
+
+  const extension =
+    mime.includes(
+      "mp4"
+    )
+      ? "m4a"
+      : "webm";
+
+
+  const blob =
+    new Blob(
+      chunks,
+      {
+        type:
+          mime
+      }
+    );
+
+
+  if(
+    blob.size < 500
+  ){
+
+    throw new Error(
+      "Posnetek je prekratek."
+    );
+
+  }
+
+
+  const file =
+    new File(
+      [blob],
+      "voice." +
+      extension,
+      {
+        type:
+          mime
+      }
+    );
+
+
+  const form =
+    new FormData();
+
+
+  form.append(
+    "audio",
+    file
+  );
+
+
+  form.append(
+    "language",
+    source
+  );
+
+
+  form.append(
+    "target_language",
+    target
+  );
+
+
+  const response =
+    await fetch(
+
+      URL +
+      "/functions/v1/" +
+      "voice-transcribe",
+
+      {
+
+        method:
+          "POST",
+
+        headers:
+          HEADERS,
+
+        body:
+          form
+
+      }
+
+    );
+
+
+  const raw =
+    await response.text();
+
+
+  let data;
+
+
+  try{
+
+    data =
+      JSON.parse(
+        raw
+      );
+
+  }
+  catch{
+
+    throw new Error(
+      "Neveljaven odgovor prevajalnika."
+    );
+
+  }
+
+
+  if(
+    !response.ok
+  ){
+
+    throw new Error(
+      data.detail ||
+      data.error ||
+      raw
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/*
+=========================================
+VOICE / TTS
+=========================================
+*/
+
+function findVoice(
+  languageCode
+){
+
+  const voices =
+    speechSynthesis
+      .getVoices();
+
+
+  const target =
+    LANGUAGES[
+      languageCode
+    ].tts
+      .toLowerCase();
+
+
+  const base =
+    target
+      .split("-")[0];
+
+
+  return (
+
+    voices.find(
+      voice =>
+        voice.lang
+          .toLowerCase() ===
+        target
+    )
+
+    ||
+
+    voices.find(
+      voice =>
+        voice.lang
+          .toLowerCase()
+          .startsWith(base)
+    )
+
+    ||
+
+    null
+
+  );
+
+}
+
+
+function speak(
+  text,
+  languageCode
+){
+
+  return new Promise(
+    resolve => {
+
+      if(!text){
+
+        resolve(false);
+
+        return;
+
+      }
+
+
+      speechSynthesis
+        .cancel();
+
+
+      const utterance =
+        new SpeechSynthesisUtterance(
+          text
+        );
+
+
+      utterance.lang =
+        LANGUAGES[
+          languageCode
+        ].tts;
+
+
+      const voice =
+        findVoice(
+          languageCode
+        );
+
+
+      if(voice){
+
+        utterance.voice =
+          voice;
+
+      }
+
+
+      utterance.rate =
+        0.92;
+
+
+      utterance.pitch =
+        1;
+
+
+      utterance.volume =
+        1;
+
+
+      let finished =
+        false;
+
+
+      const timeout =
+        setTimeout(
+          () => {
+
+            finish(
+              false
+            );
+
+          },
+
+          Math.max(
+            7000,
+            text.length * 170
+          )
+
+        );
+
+
+      function finish(
+        success
+      ){
+
+        if(finished){
+          return;
+        }
+
+
+        finished =
+          true;
+
+
+        clearTimeout(
+          timeout
+        );
+
+
+        resolve(
+          success
+        );
+
+      }
+
+
+      utterance.onend =
+        () =>
+          finish(true);
+
+
+      utterance.onerror =
+        () =>
+          finish(false);
+
+
+      speechSynthesis
+        .speak(
+          utterance
+        );
+
+
+      setTimeout(
+        () =>
+          speechSynthesis
+            .resume(),
+        100
+      );
+
+    }
+  );
+
+}
+
+
+/*
+=========================================
+UNLOCK TTS
+=========================================
+*/
+
+async function unlockVoice(){
+
+  const code =
+    personLanguage(
+      turn
+    );
+
+
+  const success =
+    await speak(
+      LANGUAGES[
+        code
+      ].test,
+      code
+    );
+
+
+  unlocked =
+    success;
+
+
+  if(success){
+
+    $("unlock")
+      .textContent =
+        "✓ GLAS ODKLENJEN";
+
+
+    $("unlock")
+      .classList
+      .add(
+        "done"
+      );
+
+  }
+  else{
+
+    $("unlock")
+      .textContent =
+        "🔓 ODKLENI GLAS";
+
+  }
+
+}
+
+
+/*
+=========================================
+NAPREJ
+=========================================
+*/
+
+async function nextTurn(){
+
+  if(busy){
+    return;
+  }
+
+
+  busy =
+    true;
+
+
+  $("next").disabled =
+    true;
+
+
+  $("notice").textContent =
+    "Prepoznavam in prevajam ...";
+
+
+  try{
+
+    await stopRecording();
+
+
+    const data =
+      await translate();
+
+
+    $("original").textContent =
+      data.text ||
+      "";
+
+
+    $("translated").textContent =
+      data.translated ||
+      "";
+
+
+    $("result")
+      .classList
+      .remove(
+        "hidden"
+      );
+
+
+    const target =
+      personLanguage(
+        turn === 0
+          ? 1
+          : 0
+      );
+
+
+    $("notice").textContent =
+      "Predvajam prevod ...";
+
+
+    await speak(
+      data.translated,
+      target
+    );
+
+
+    /*
+    ZAMENJAJ GOVORCA
+    */
+
+    turn =
+      turn === 0
+        ? 1
+        : 0;
+
+
+    render();
+
+
+    $("notice").textContent =
+      "";
+
+
+    /*
+    Mikrofon ostane stalno pripravljen
+    med celotnim pogovorom.
+    */
+
+    await startRecording();
+
+  }
+  catch(error){
+
+    $("notice").textContent =
+      "Napaka: " +
+      error.message;
+
+
+    await startRecording();
+
+  }
+  finally{
+
+    busy =
+      false;
+
+
+    $("next").disabled =
+      false;
+
+  }
+
+}
+
+
+/*
+=========================================
+SETTINGS
+=========================================
+*/
+
+async function openSettings(){
+
+  await stopRecording();
+
+
+  speechSynthesis
+    .cancel();
+
+
+  $("talk")
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  $("setup")
+    .classList
+    .remove(
+      "hidden"
+    );
+
+}
+
+
+/*
+=========================================
+END
+=========================================
+*/
+
+async function endConversation(){
+
+  await stopRecording();
+
+
+  speechSynthesis
+    .cancel();
+
+
+  $("talk")
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  $("setup")
+    .classList
+    .remove(
+      "hidden"
+    );
+
+
+  $("result")
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  turn =
+    0;
+
+}
+
+
+/*
+=========================================
+EVENTS
+=========================================
+*/
+
+$("start").onclick =
+  startConversation;
+
+
+$("next").onclick =
+  nextTurn;
+
+
+$("unlock").onclick =
+  unlockVoice;
+
+
+$("settings").onclick =
+  openSettings;
+
+
+$("end").onclick =
+  endConversation;
+
+
+/*
+Če uporabnik tapne mikrofon,
+ga lahko ročno ustavi/ponovno zažene.
+*/
+
+$("mic").onclick =
+  async () => {
+
+    if(
+      recorder &&
+      recorder.state ===
+        "recording"
+    ){
+
+      await stopRecording();
+
+    }
+    else{
+
+      await startRecording();
+
+    }
+
+  };
+
+
+/*
+=========================================
+RESTORE SETTINGS
+=========================================
+*/
+
+const savedA =
+  localStorage.getItem(
+    "phone4NameA"
+  );
+
+
+const savedB =
+  localStorage.getItem(
+    "phone4NameB"
+  );
+
+
+const savedLangA =
+  localStorage.getItem(
+    "phone4LangA"
+  );
+
+
+const savedLangB =
+  localStorage.getItem(
+    "phone4LangB"
+  );
+
+
+if(savedA){
+
+  $("nameA").value =
+    savedA;
+
+}
+
+
+if(savedB){
+
+  $("nameB").value =
+    savedB;
+
+}
+
+
+if(
+  savedLangA &&
+  LANGUAGES[
+    savedLangA
+  ]
+){
+
+  $("langA").value =
+    savedLangA;
+
+}
+
+
+if(
+  savedLangB &&
+  LANGUAGES[
+    savedLangB
+  ]
+){
+
+  $("langB").value =
+    savedLangB;
+
+}
+
+
+$("firstName").textContent =
+  $("nameA").value;
+
+
+/*
+Ob zapiranju ustavimo mikrofon in govor.
+*/
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    speechSynthesis
+      .cancel();
+
+
+    if(stream){
+
+      stream
+        .getTracks()
+        .forEach(
+          track =>
+            track.stop()
+        );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
