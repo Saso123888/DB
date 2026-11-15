@@ -2,10 +2,7 @@
 <html lang="sl">
 <head>
 <meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
->
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 
 <title>Voice Pogovor</title>
 
@@ -78,7 +75,8 @@ body{
   border-radius:23px;
 }
 
-.card{
+.card,
+.aiBox{
   margin-bottom:15px;
   padding:18px;
 
@@ -130,6 +128,80 @@ select{
   color:#67efd9;
   font-weight:900;
 }
+
+
+/* =========================
+   IZBIRA AI
+========================= */
+
+.aiBox{
+  padding:15px;
+}
+
+.aiTitle{
+  margin-bottom:11px;
+
+  text-align:center;
+
+  color:#aebbd0;
+
+  font-size:12px;
+  font-weight:900;
+}
+
+.aiChoices{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.aiButton{
+  height:52px;
+
+  border:1px solid #385984;
+  border-radius:15px;
+
+  background:#0b1c34;
+  color:#b7c4d7;
+
+  font-size:15px;
+  font-weight:900;
+}
+
+.aiButton.selected.gemini{
+  border-color:#9b63ff;
+
+  background:
+    linear-gradient(
+      90deg,
+      #6e45c9,
+      #a34ee8
+    );
+
+  color:#fff;
+
+  box-shadow:0 8px 24px #874bd044;
+}
+
+.aiButton.selected.groq{
+  border-color:#ff9f38;
+
+  background:
+    linear-gradient(
+      90deg,
+      #d66b15,
+      #ef9835
+    );
+
+  color:#fff;
+
+  box-shadow:0 8px 24px #e7812444;
+}
+
+
+/* =========================
+   ZAČNI
+========================= */
 
 .start{
   width:100%;
@@ -245,6 +317,39 @@ select{
     );
 
   color:#fff;
+}
+
+
+/* =========================
+   AI STATUS
+========================= */
+
+.engineStatus{
+  width:max-content;
+
+  max-width:100%;
+
+  margin:0 auto 13px;
+  padding:7px 12px;
+
+  border:1px solid #36557d;
+  border-radius:16px;
+
+  background:#0b1c34;
+  color:#afbdd1;
+
+  font-size:11px;
+  font-weight:900;
+}
+
+.engineStatus.gemini{
+  border-color:#8651d1;
+  color:#d6b6ff;
+}
+
+.engineStatus.groq{
+  border-color:#c96f28;
+  color:#ffc282;
 }
 
 
@@ -525,9 +630,43 @@ select{
   </div>
 
 
+  <!-- IZBIRA AI -->
+
+  <div class="aiBox">
+
+    <div class="aiTitle">
+      AI PREPOZNAVA IN PREVOD
+    </div>
+
+
+    <div class="aiChoices">
+
+      <button
+        id="aiGemini"
+        class="aiButton gemini"
+        type="button"
+      >
+        ✦ GEMINI
+      </button>
+
+
+      <button
+        id="aiGroq"
+        class="aiButton groq"
+        type="button"
+      >
+        ⚡ GROQ
+      </button>
+
+    </div>
+
+  </div>
+
+
   <button
     id="start"
     class="start"
+    type="button"
   >
     ZAČNI POGOVOR
   </button>
@@ -583,6 +722,12 @@ select{
     </button>
 
   </div>
+
+
+  <div
+    id="engineStatus"
+    class="engineStatus"
+  ></div>
 
 
   <div
@@ -789,22 +934,18 @@ Object.entries(
   ([code,language]) => {
 
     $("langA").add(
-
       new Option(
         language.name,
         code
       )
-
     );
 
 
     $("langB").add(
-
       new Option(
         language.name,
         code
       )
-
     );
 
   }
@@ -843,10 +984,6 @@ let busy =
   false;
 
 
-/*
-Vsak posnetek dobi ID.
-*/
-
 let recordingId =
   0;
 
@@ -855,39 +992,33 @@ let activeRecordingId =
   0;
 
 
-/*
-Vsak prevod dobi ID.
-*/
-
 let processingId =
   0;
 
-
-/*
-Zadnji TTS, ki je že
-bil predvajan.
-*/
 
 let lastPlayedId =
   0;
 
 
-/*
-Vsaka seja dobi ID.
-Stari async rezultati
-iz prejšnje seje se ignorirajo.
-*/
-
 let sessionId =
   0;
 
 
-/*
-2 minuti neaktivnosti.
-*/
-
 let inactivityTimer =
   null;
+
+
+/*
+Privzeto je Gemini.
+Telefon si zadnjo izbiro zapomni.
+*/
+
+let selectedAI =
+  localStorage.getItem(
+    "phone4AI"
+  )
+  ||
+  "gemini";
 
 
 /* =========================
@@ -938,17 +1069,80 @@ function personLanguage(
 
 
 /* =========================
-   NEAKTIVNOST
+   IZBIRA AI
 ========================= */
 
-function markActivity(){
+function chooseAI(
+  ai
+){
 
-  resetInactivityTimer();
+  selectedAI =
+    ai;
+
+
+  localStorage.setItem(
+    "phone4AI",
+    selectedAI
+  );
+
+
+  renderAISelection();
 
 }
 
 
-function resetInactivityTimer(){
+function renderAISelection(){
+
+  $("aiGemini")
+    .classList
+    .toggle(
+      "selected",
+      selectedAI ===
+        "gemini"
+    );
+
+
+  $("aiGroq")
+    .classList
+    .toggle(
+      "selected",
+      selectedAI ===
+        "groq"
+    );
+
+
+  if(
+    selectedAI ===
+    "gemini"
+  ){
+
+    $("engineStatus").textContent =
+      "✦ GEMINI AI";
+
+
+    $("engineStatus").className =
+      "engineStatus gemini";
+
+  }
+  else{
+
+    $("engineStatus").textContent =
+      "⚡ GROQ AI";
+
+
+    $("engineStatus").className =
+      "engineStatus groq";
+
+  }
+
+}
+
+
+/* =========================
+   NEAKTIVNOST
+========================= */
+
+function markActivity(){
 
   if(
     inactivityTimer
@@ -1058,6 +1252,9 @@ function render(){
     );
 
 
+  renderAISelection();
+
+
   startRecording();
 
 }
@@ -1154,11 +1351,6 @@ function startConversation(){
     );
 
 
-  /*
-  Odklep TTS z uporabniškim
-  pritiskom na ZAČNI POGOVOR.
-  */
-
   unlockTTS();
 
 
@@ -1209,9 +1401,8 @@ async function startRecording(){
 
 
   /*
-  Pred novim snemanjem
-  vedno uničimo stari stream
-  in stari buffer.
+  Popolno čiščenje
+  prejšnjega recorderja.
   */
 
   if(
@@ -1249,11 +1440,6 @@ async function startRecording(){
           audio:true
         });
 
-
-    /*
-    Med čakanjem se je morda
-    seja že spremenila.
-    */
 
     if(
       mySession !==
@@ -1323,11 +1509,6 @@ async function startRecording(){
       newRecorder;
 
 
-    /*
-    Lokalni buffer pripada samo
-    temu posnetku.
-    */
-
     const localChunks =
       [];
 
@@ -1367,7 +1548,6 @@ async function startRecording(){
     $("notice").textContent =
       "";
 
-
   }
   catch(error){
 
@@ -1405,18 +1585,18 @@ function stopRecording(
     resolve => {
 
 
-      const currentRecorder =
+      const activeRecorder =
         recorder;
 
 
-      const currentStream =
+      const activeStream =
         mediaStream;
 
 
       if(
-        !currentRecorder
+        !activeRecorder
         ||
-        currentRecorder.state !==
+        activeRecorder.state !==
           "recording"
         ||
         expectedSession !==
@@ -1426,7 +1606,7 @@ function stopRecording(
           activeRecordingId
       ){
 
-        currentStream
+        activeStream
           ?.getTracks()
           .forEach(
             track =>
@@ -1442,7 +1622,7 @@ function stopRecording(
       }
 
 
-      currentRecorder.onstop =
+      activeRecorder.onstop =
         () => {
 
           resolve();
@@ -1450,10 +1630,10 @@ function stopRecording(
         };
 
 
-      currentRecorder.stop();
+      activeRecorder.stop();
 
 
-      currentStream
+      activeStream
         ?.getTracks()
         .forEach(
           track =>
@@ -1552,12 +1732,24 @@ async function translateAudio(
   );
 
 
+  /*
+  Glede na izbiro uporabimo
+  pravo Supabase Edge Function.
+  */
+
+  const endpoint =
+    selectedAI ===
+      "gemini"
+      ? "voice-transcribe-gemini"
+      : "voice-transcribe";
+
+
   const response =
     await fetch(
 
       URL +
       "/functions/v1/" +
-      "voice-transcribe",
+      endpoint,
 
       {
 
@@ -1593,7 +1785,7 @@ async function translateAudio(
   catch{
 
     throw new Error(
-      "Neveljaven odgovor prevajalnika."
+      "Neveljaven odgovor AI."
     );
 
   }
@@ -1607,6 +1799,19 @@ async function translateAudio(
       data.detail ||
       data.error ||
       raw
+    );
+
+  }
+
+
+  if(
+    !data.text
+    ||
+    !data.translated
+  ){
+
+    throw new Error(
+      "AI ni zaznal zanesljivega govora."
     );
 
   }
@@ -1764,11 +1969,6 @@ function speakOnce(
     resolve => {
 
 
-      /*
-      Neveljavna ali že
-      predvajana zahteva.
-      */
-
       if(
         !text
         ||
@@ -1793,7 +1993,9 @@ function speakOnce(
 
 
       /*
-      Takoj označi kot predvajano.
+      Takoj označimo,
+      da tega prevoda ne smemo
+      ponovno predvajati.
       */
 
       lastPlayedId =
@@ -1888,12 +2090,6 @@ function speakOnce(
         );
 
 
-        /*
-        Staro predvajanje
-        ne sme vplivati
-        na novo sejo.
-        */
-
         if(
           playSession !==
             sessionId
@@ -1968,11 +2164,6 @@ async function nextTurn(
   markActivity();
 
 
-  /*
-  Če že prevajamo,
-  drugi klik ignoriramo.
-  */
-
   if(
     busy
   ){
@@ -1981,11 +2172,6 @@ async function nextTurn(
 
   }
 
-
-  /*
-  Star dogodek ne sme
-  zaključiti novega snemanja.
-  */
 
   if(
     requestedSession !==
@@ -2026,30 +2212,15 @@ async function nextTurn(
     );
 
 
-  /*
-  Nova obdelava.
-  */
-
   const myProcessingId =
     ++processingId;
 
-
-  /*
-  Zamrznemo trenutni buffer.
-  */
 
   const frozenRecorder =
     recorder;
 
 
   try{
-
-
-    /*
-    Najprej ustavi recorder,
-    da dobimo še zadnji
-    audio chunk.
-    */
 
     await stopRecording(
       requestedRecordingId,
@@ -2058,32 +2229,22 @@ async function nextTurn(
 
 
     /*
-    Daj brskalniku trenutek,
-    da zaključi zadnji
-    dataavailable dogodek.
+    Počakaj, da MediaRecorder
+    doda zadnji audio chunk.
     */
 
     await new Promise(
       resolve =>
         setTimeout(
           resolve,
-          80
+          100
         )
     );
 
 
-    /*
-    Kopijo naredimo šele zdaj.
-    */
-
     const frozenChunks =
       audioChunks.slice();
 
-
-    /*
-    Če je bila seja medtem
-    končana, ne nadaljuj.
-    */
 
     if(
       requestedSession !==
@@ -2099,7 +2260,13 @@ async function nextTurn(
 
 
     $("notice").textContent =
-      "Prepoznavam in prevajam ...";
+
+      selectedAI ===
+        "gemini"
+
+        ? "Gemini prepoznava in prevaja ..."
+
+        : "Groq prepoznava in prevaja ...";
 
 
     const data =
@@ -2116,11 +2283,6 @@ async function nextTurn(
       );
 
 
-    /*
-    Pozni odgovor starega
-    requesta ignoriramo.
-    */
-
     if(
       requestedSession !==
         sessionId
@@ -2133,11 +2295,6 @@ async function nextTurn(
 
     }
 
-
-    /*
-    Zaščita pred tipičnimi
-    Whisper halucinacijami.
-    */
 
     if(
       isLikelyHallucination(
@@ -2152,19 +2309,12 @@ async function nextTurn(
     }
 
 
-    /*
-    Prikaži samo rezultat
-    te izmenjave.
-    */
-
     $("original").textContent =
-      data.text ||
-      "";
+      data.text;
 
 
     $("translated").textContent =
-      data.translated ||
-      "";
+      data.translated;
 
 
     $("result")
@@ -2177,11 +2327,6 @@ async function nextTurn(
     $("notice").textContent =
       "Predvajam prevod ...";
 
-
-    /*
-    Predvajaj prevod
-    samo enkrat.
-    */
 
     await speakOnce(
 
@@ -2196,11 +2341,6 @@ async function nextTurn(
     );
 
 
-    /*
-    Še enkrat preveri,
-    ali rezultat še velja.
-    */
-
     if(
       requestedSession !==
         sessionId
@@ -2214,10 +2354,6 @@ async function nextTurn(
     }
 
 
-    /*
-    Zamenjaj govorca.
-    */
-
     turn =
       spokenTurn === 0
         ? 1
@@ -2225,8 +2361,8 @@ async function nextTurn(
 
 
     /*
-    STARI POSNETEK
-    dokončno odstrani.
+    Stari posnetek
+    dokončno odstranimo.
     */
 
     audioChunks =
@@ -2249,17 +2385,10 @@ async function nextTurn(
       "";
 
 
-    /*
-    Nova oseba dobi
-    čisto nov recorder.
-    */
-
     render();
-
 
   }
   catch(error){
-
 
     if(
       requestedSession ===
@@ -2273,11 +2402,6 @@ async function nextTurn(
         "Napaka: " +
         error.message;
 
-
-      /*
-      Starega bufferja
-      NIKOLI ne uporabi ponovno.
-      */
 
       audioChunks =
         [];
@@ -2296,8 +2420,8 @@ async function nextTurn(
 
 
       /*
-      Ista oseba
-      ponovno posname poved.
+      Ista oseba ponovno posname
+      poved z novim recorderjem.
       */
 
       await startRecording();
@@ -2306,7 +2430,6 @@ async function nextTurn(
 
   }
   finally{
-
 
     if(
       requestedSession ===
@@ -2332,11 +2455,6 @@ async function nextTurn(
 ========================= */
 
 async function clearConversation(){
-
-  /*
-  Uniči veljavnost vseh
-  async operacij.
-  */
 
   sessionId++;
 
@@ -2367,16 +2485,8 @@ async function clearConversation(){
     null;
 
 
-  /*
-  TTS takoj OFF.
-  */
-
   speechSynthesis.cancel();
 
-
-  /*
-  Recorder OFF.
-  */
 
   const oldRecorder =
     recorder;
@@ -2420,10 +2530,6 @@ async function clearConversation(){
     );
 
 
-  /*
-  Audio izbriši.
-  */
-
   audioChunks =
     [];
 
@@ -2436,9 +2542,13 @@ async function clearConversation(){
     null;
 
 
-  /*
-  Besedilo izbriši.
-  */
+  busy =
+    false;
+
+
+  turn =
+    0;
+
 
   $("original").textContent =
     "";
@@ -2459,25 +2569,9 @@ async function clearConversation(){
     "";
 
 
-  /*
-  State reset.
-  */
-
-  busy =
-    false;
-
-
-  turn =
-    0;
-
-
   $("next").disabled =
     false;
 
-
-  /*
-  Nazaj na setup.
-  */
 
   $("talk")
     .classList
@@ -2496,8 +2590,28 @@ async function clearConversation(){
 
 
 /* =========================
-   EVENTS
+   DOGODKI
 ========================= */
+
+$("aiGemini").onclick =
+  () => {
+
+    chooseAI(
+      "gemini"
+    );
+
+  };
+
+
+$("aiGroq").onclick =
+  () => {
+
+    chooseAI(
+      "groq"
+    );
+
+  };
+
 
 $("start").onclick =
   () => {
@@ -2527,6 +2641,12 @@ $("start").onclick =
     );
 
 
+    localStorage.setItem(
+      "phone4AI",
+      selectedAI
+    );
+
+
     startConversation();
 
   };
@@ -2544,8 +2664,8 @@ $("next").onclick =
 
 
 /*
-Tudi klik mikrofona
-štejemo kot ročni NAPREJ.
+Klik mikrofona ima
+isto funkcijo kot NAPREJ.
 */
 
 $("mic").onclick =
@@ -2639,6 +2759,14 @@ if(
     savedLangB;
 
 }
+
+
+/*
+Prikaži zadnjo
+shranjeno AI izbiro.
+*/
+
+renderAISelection();
 
 
 /* =========================
