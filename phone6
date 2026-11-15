@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>Phone6 CORE V0.1</title>
+
+<meta name="theme-color" content="#020916">
+
+<style>
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:#020916;
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+body{
+  min-height:100dvh;
+}
+
+button,select{
+  font:inherit;
+}
+
+.app{
+  max-width:480px;
+  min-height:100dvh;
+  margin:auto;
+  padding:30px 20px;
+}
+
+/* SCREENS */
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+}
+
+/* SETUP */
+
+.person{
+  display:grid;
+  grid-template-columns:90px 1fr;
+  align-items:center;
+  gap:15px;
+
+  margin-bottom:18px;
+  padding:18px;
+
+  border:1px solid #087cff;
+  border-radius:20px;
+
+  background:#07182e;
+}
+
+.person.two{
+  border-color:#a84cff;
+}
+
+.avatar{
+  width:80px;
+  height:80px;
+
+  border:1px solid #38e4ff;
+  border-radius:50%;
+
+  background:#0a3268;
+
+  color:white;
+  font-size:45px;
+}
+
+.two .avatar{
+  border-color:#c176ff;
+  background:#41196f;
+}
+
+.language{
+  width:100%;
+  height:58px;
+
+  border:1px solid #31577f;
+  border-radius:14px;
+
+  padding:0 12px;
+
+  background:#0b2444;
+  color:white;
+
+  font-size:17px;
+}
+
+.swap{
+  display:block;
+
+  width:60px;
+  height:50px;
+
+  margin:8px auto 18px;
+
+  border:0;
+  background:transparent;
+
+  color:#39dfff;
+
+  font-size:34px;
+}
+
+.start{
+  width:100%;
+  height:70px;
+
+  margin-top:20px;
+
+  border:1px solid #38e4ff;
+  border-radius:20px;
+
+  background:#087cff;
+  color:white;
+
+  font-size:30px;
+  font-weight:bold;
+}
+
+/* LIVE */
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:14px;
+}
+
+.next,
+.stop{
+  height:64px;
+
+  border-radius:18px;
+
+  color:white;
+
+  font-size:30px;
+  font-weight:bold;
+}
+
+.next{
+  border:1px solid #38e4ff;
+  background:#087cff;
+}
+
+.next:disabled{
+  opacity:.35;
+}
+
+.stop{
+  border:1px solid #ff6076;
+  background:#81192f;
+}
+
+.route{
+  margin-top:24px;
+
+  text-align:center;
+
+  font-size:18px;
+}
+
+.orb{
+  width:190px;
+  height:190px;
+
+  margin:45px auto 25px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:#087cff;
+
+  font-size:70px;
+
+  box-shadow:
+    0 0 45px rgba(0,157,255,.8);
+}
+
+.orb.recording{
+  animation:pulse 1s ease-in-out infinite;
+}
+
+.orb.processing{
+  background:#d79e0a;
+
+  box-shadow:
+    0 0 45px rgba(255,190,0,.75);
+}
+
+@keyframes pulse{
+
+  0%,100%{
+    transform:scale(.94);
+  }
+
+  50%{
+    transform:scale(1.06);
+
+    box-shadow:
+      0 0 75px #38e4ff;
+  }
+}
+
+.status{
+  margin-bottom:25px;
+
+  color:#38e4ff;
+
+  text-align:center;
+
+  font-size:21px;
+  font-weight:bold;
+}
+
+.result{
+  padding:18px;
+
+  border:1px solid #31577f;
+  border-radius:18px;
+
+  background:#07182e;
+}
+
+.original{
+  min-height:35px;
+
+  font-size:18px;
+}
+
+.translation{
+  min-height:35px;
+
+  margin-top:15px;
+  padding-top:15px;
+
+  border-top:1px solid #31577f;
+
+  color:#ffd65a;
+
+  font-size:20px;
+  font-weight:bold;
+}
+
+.error{
+  margin-top:16px;
+
+  color:#ff7184;
+
+  line-height:1.4;
+}
+
+</style>
+</head>
+
+<body>
+
+<main class="app">
+
+<!-- ==================================
+     SCREEN 1
+=================================== -->
+
+<section id="setupScreen"
+         class="screen active">
+
+<div class="person">
+
+  <button id="person1Avatar"
+          class="avatar"
+          type="button">
+    👨
+  </button>
+
+  <select id="language1"
+          class="language">
+
+    <option value="sl" selected>
+      🇸🇮 Slovenščina
+    </option>
+
+    <option value="hu">
+      🇭🇺 Magyar
+    </option>
+
+    <option value="en">
+      🇬🇧 English
+    </option>
+
+    <option value="pl">
+      🇵🇱 Polski
+    </option>
+
+    <option value="it">
+      🇮🇹 Italiano
+    </option>
+
+    <option value="hr">
+      🇭🇷 Hrvatski
+    </option>
+
+  </select>
+
+</div>
+
+
+<button id="swapLanguages"
+        class="swap"
+        type="button"
+        aria-label="Zamenjaj jezika">
+  ⇄
+</button>
+
+
+<div class="person two">
+
+  <button id="person2Avatar"
+          class="avatar"
+          type="button">
+    👩
+  </button>
+
+  <select id="language2"
+          class="language">
+
+    <option value="sl">
+      🇸🇮 Slovenščina
+    </option>
+
+    <option value="hu" selected>
+      🇭🇺 Magyar
+    </option>
+
+    <option value="en">
+      🇬🇧 English
+    </option>
+
+    <option value="pl">
+      🇵🇱 Polski
+    </option>
+
+    <option value="it">
+      🇮🇹 Italiano
+    </option>
+
+    <option value="hr">
+      🇭🇷 Hrvatski
+    </option>
+
+  </select>
+
+</div>
+
+
+<button id="startButton"
+        class="start"
+        type="button">
+  ▶
+</button>
+
+
+<div id="setupError"
+     class="error"></div>
+
+</section>
+
+
+
+<!-- ==================================
+     SCREEN 2
+=================================== -->
+
+<section id="liveScreen"
+         class="screen">
+
+<div class="actions">
+
+  <button id="nextButton"
+          class="next"
+          type="button">
+    ✓
+  </button>
+
+  <button id="stopButton"
+          class="stop"
+          type="button">
+    ■
+  </button>
+
+</div>
+
+
+<div id="route"
+     class="route">
+</div>
+
+
+<div id="orb"
+     class="orb">
+  🎙️
+</div>
+
+
+<div id="status"
+     class="status">
+  ...
+</div>
+
+
+<div class="result">
+
+  <div id="originalText"
+       class="original">
+    ...
+  </div>
+
+  <div id="translatedText"
+       class="translation">
+    ...
+  </div>
+
+</div>
+
+
+<div id="liveError"
+     class="error"></div>
+
+</section>
+
+</main>
+
+
+<script>
+
+(() => {
+
+"use strict";
+
+
+/* =========================================
+   CONFIG
+========================================= */
+
+const SUPABASE_URL =
+  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
+
+
+const SUPABASE_KEY =
+  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+
+
+const GEMINI_URL =
+  SUPABASE_URL +
+  "/functions/v1/voice-transcribe-gemini";
+
+
+/* =========================================
+   LANGUAGES
+
+   PHONE6 CORE ima TOČNO teh 6 jezikov.
+========================================= */
+
+const LANGUAGES = {
+
+  sl:{
+    name:"Slovenščina",
+    flag:"🇸🇮"
+  },
+
+  hu:{
+    name:"Magyar",
+    flag:"🇭🇺"
+  },
+
+  en:{
+    name:"English",
+    flag:"🇬🇧"
+  },
+
+  pl:{
+    name:"Polski",
+    flag:"🇵🇱"
+  },
+
+  it:{
+    name:"Italiano",
+    flag:"🇮🇹"
+  },
+
+  hr:{
+    name:"Hrvatski",
+    flag:"🇭🇷"
+  }
+
+};
+
+
+/* =========================================
+   STATE
+
+   UI nikoli ne določa logike.
+========================================= */
+
+const state = {
+
+  person1:{
+    gender:"male",
+    language:"sl"
+  },
+
+  person2:{
+    gender:"female",
+    language:"hu"
+  },
+
+  running:false,
+
+  recording:false,
+
+  processing:false,
+
+  stream:null,
+
+  recorder:null,
+
+  chunks:[]
+
+};
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const setupScreen =
+  document.getElementById(
+    "setupScreen"
+  );
+
+
+const liveScreen =
+  document.getElementById(
+    "liveScreen"
+  );
+
+
+const person1Avatar =
+  document.getElementById(
+    "person1Avatar"
+  );
+
+
+const person2Avatar =
+  document.getElementById(
+    "person2Avatar"
+  );
+
+
+const language1 =
+  document.getElementById(
+    "language1"
+  );
+
+
+const language2 =
+  document.getElementById(
+    "language2"
+  );
+
+
+const swapLanguages =
+  document.getElementById(
+    "swapLanguages"
+  );
+
+
+const startButton =
+  document.getElementById(
+    "startButton"
+  );
+
+
+const nextButton =
+  document.getElementById(
+    "nextButton"
+  );
+
+
+const stopButton =
+  document.getElementById(
+    "stopButton"
+  );
+
+
+const orb =
+  document.getElementById(
+    "orb"
+  );
+
+
+const status =
+  document.getElementById(
+    "status"
+  );
+
+
+const route =
+  document.getElementById(
+    "route"
+  );
+
+
+const originalText =
+  document.getElementById(
+    "originalText"
+  );
+
+
+const translatedText =
+  document.getElementById(
+    "translatedText"
+  );
+
+
+const setupError =
+  document.getElementById(
+    "setupError"
+  );
+
+
+const liveError =
+  document.getElementById(
+    "liveError"
+  );
+
+
+/* =========================================
+   AVATAR
+========================================= */
+
+function toggleGender(person){
+
+  person.gender =
+    person.gender === "male"
+      ? "female"
+      : "male";
+
+
+  renderSetup();
+
+}
+
+
+function renderSetup(){
+
+  person1Avatar.textContent =
+    state.person1.gender === "male"
+      ? "👨"
+      : "👩";
+
+
+  person2Avatar.textContent =
+    state.person2.gender === "male"
+      ? "👨"
+      : "👩";
+
+}
+
+
+person1Avatar.addEventListener(
+  "click",
+  () => toggleGender(
+    state.person1
+  )
+);
+
+
+person2Avatar.addEventListener(
+  "click",
+  () => toggleGender(
+    state.person2
+  )
+);
+
+
+/* =========================================
+   LANGUAGES
+========================================= */
+
+language1.addEventListener(
+  "change",
+  () => {
+
+    state.person1.language =
+      language1.value;
+
+  }
+);
+
+
+language2.addEventListener(
+  "change",
+  () => {
+
+    state.person2.language =
+      language2.value;
+
+  }
+);
+
+
+/* =========================================
+   SWAP LANGUAGES
+========================================= */
+
+swapLanguages.addEventListener(
+  "click",
+  () => {
+
+    const old1 =
+      language1.value;
+
+
+    const old2 =
+      language2.value;
+
+
+    language1.value =
+      old2;
+
+
+    language2.value =
+      old1;
+
+
+    state.person1.language =
+      old2;
+
+
+    state.person2.language =
+      old1;
+
+  }
+);
+
+
+/* =========================================
+   ROUTE
+========================================= */
+
+function renderRoute(){
+
+  const source =
+    LANGUAGES[
+      state.person1.language
+    ];
+
+
+  const target =
+    LANGUAGES[
+      state.person2.language
+    ];
+
+
+  route.textContent =
+    source.flag +
+    "  " +
+    source.name +
+    "  →  " +
+    target.flag +
+    "  " +
+    target.name;
+
+}
+
+
+/* =========================================
+   UI STATE
+========================================= */
+
+function showRecording(){
+
+  orb.className =
+    "orb recording";
+
+
+  orb.textContent =
+    "🎙️";
+
+
+  status.textContent =
+    "Poslušam ...";
+
+
+  nextButton.disabled =
+    false;
+
+}
+
+
+function showProcessing(){
+
+  orb.className =
+    "orb processing";
+
+
+  orb.textContent =
+    "•••";
+
+
+  status.textContent =
+    "Prevajam ...";
+
+
+  nextButton.disabled =
+    true;
+
+}
+
+
+function showError(message){
+
+  orb.className =
+    "orb";
+
+
+  orb.textContent =
+    "!";
+
+
+  status.textContent =
+    "Napaka";
+
+
+  liveError.textContent =
+    message;
+
+
+  nextButton.disabled =
+    false;
+
+}
+
+
+/* =========================================
+   MICROPHONE
+========================================= */
+
+async function getMicrophone(){
+
+  if(
+    state.stream &&
+    state.stream
+      .getAudioTracks()
+      .some(
+        track =>
+          track.readyState === "live"
+      )
+  ){
+
+    return state.stream;
+
+  }
+
+
+  state.stream =
+    await navigator.mediaDevices
+      .getUserMedia({
+
+        audio:{
+
+          echoCancellation:true,
+
+          noiseSuppression:true,
+
+          autoGainControl:true
+
+        }
+
+      });
+
+
+  return state.stream;
+
+}
+
+
+/* =========================================
+   RECORDER FORMAT
+========================================= */
+
+function getRecorderOptions(){
+
+  const types = [
+
+    "audio/mp4",
+
+    "audio/webm;codecs=opus",
+
+    "audio/webm"
+
+  ];
+
+
+  for(
+    const mimeType of types
+  ){
+
+    if(
+      MediaRecorder
+        .isTypeSupported &&
+      MediaRecorder
+        .isTypeSupported(
+          mimeType
+        )
+    ){
+
+      return {
+        mimeType
+      };
+
+    }
+
+  }
+
+
+  return {};
+
+}
+
+
+/* =========================================
+   START RECORDING
+========================================= */
+
+async function startRecording(){
+
+  if(
+    !state.running ||
+    state.recording ||
+    state.processing
+  ){
+
+    return;
+
+  }
+
+
+  liveError.textContent = "";
+
+
+  try{
+
+    const stream =
+      await getMicrophone();
+
+
+    state.chunks = [];
+
+
+    state.recorder =
+      new MediaRecorder(
+
+        stream,
+
+        getRecorderOptions()
+
+      );
+
+
+    state.recorder
+      .ondataavailable =
+      event => {
+
+        if(
+          event.data &&
+          event.data.size > 0
+        ){
+
+          state.chunks.push(
+            event.data
+          );
+
+        }
+
+      };
+
+
+    state.recorder.start(
+      250
+    );
+
+
+    state.recording =
+      true;
+
+
+    showRecording();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+
+    showError(
+      "Mikrofon ni dosegljiv. Preveri dovoljenje za mikrofon."
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   STOP RECORDING
+========================================= */
+
+function stopRecording(){
+
+  return new Promise(
+
+    resolve => {
+
+
+      if(
+        !state.recorder ||
+        !state.recording
+      ){
+
+        resolve(null);
+
+        return;
+
+      }
+
+
+      const recorder =
+        state.recorder;
+
+
+      recorder.onstop =
+        () => {
+
+
+          const mimeType =
+            recorder.mimeType ||
+            "audio/webm";
+
+
+          const blob =
+            new Blob(
+
+              state.chunks,
+
+              {
+                type:mimeType
+              }
+
+            );
+
+
+          state.recording =
+            false;
+
+
+          state.recorder =
+            null;
+
+
+          state.chunks =
+            [];
+
+
+          resolve(blob);
+
+        };
+
+
+      try{
+
+        recorder.stop();
+
+      }
+      catch(error){
+
+        state.recording =
+          false;
+
+
+        state.recorder =
+          null;
+
+
+        resolve(null);
+
+      }
+
+    }
+
+  );
+
+}
+
+
+/* =========================================
+   GEMINI
+========================================= */
+
+async function sendToGemini(
+  audioBlob
+){
+
+  const mimeType =
+    audioBlob.type ||
+    "audio/webm";
+
+
+  const extension =
+    mimeType.includes(
+      "mp4"
+    )
+      ? "m4a"
+      : "webm";
+
+
+  const file =
+    new File(
+
+      [audioBlob],
+
+      "phone6." +
+      extension,
+
+      {
+        type:mimeType
+      }
+
+    );
+
+
+  const form =
+    new FormData();
+
+
+  form.append(
+    "audio",
+    file
+  );
+
+
+  form.append(
+    "language",
+    state.person1.language
+  );
+
+
+  form.append(
+    "source_language",
+    state.person1.language
+  );
+
+
+  form.append(
+    "target_language",
+    state.person2.language
+  );
+
+
+  const response =
+    await fetch(
+
+      GEMINI_URL,
+
+      {
+
+        method:"POST",
+
+        headers:{
+
+          apikey:
+            SUPABASE_KEY,
+
+          Authorization:
+            "Bearer " +
+            SUPABASE_KEY
+
+        },
+
+        body:form
+
+      }
+
+    );
+
+
+  const raw =
+    await response.text();
+
+
+  let data;
+
+
+  try{
+
+    data =
+      JSON.parse(raw);
+
+  }
+  catch(error){
+
+    throw new Error(
+      raw ||
+      "Strežnik ni vrnil JSON odgovora."
+    );
+
+  }
+
+
+  if(!response.ok){
+
+    throw new Error(
+
+      data.error ||
+      data.detail ||
+      data.message ||
+      (
+        "HTTP " +
+        response.status
+      )
+
+    );
+
+  }
+
+
+  return normalizeResult(
+    data
+  );
+
+}
+
+
+/* =========================================
+   NORMALIZE RESPONSE
+========================================= */
+
+function normalizeResult(
+  data
+){
+
+  const original =
+
+    data.text ||
+
+    data.transcript ||
+
+    data.transcription ||
+
+    data.original ||
+
+    data.original_text ||
+
+    data.source_text ||
+
+    data.result?.text ||
+
+    data.result?.transcript ||
+
+    data.data?.text ||
+
+    "";
+
+
+  const translated =
+
+    data.translated ||
+
+    data.translation ||
+
+    data.translated_text ||
+
+    data.target_text ||
+
+    data.result?.translated ||
+
+    data.result?.translation ||
+
+    data.data?.translated ||
+
+    data.data?.translation ||
+
+    "";
+
+
+  const cleanOriginal =
+    String(original).trim();
+
+
+  const cleanTranslated =
+    String(translated).trim();
+
+
+  if(
+    !cleanOriginal &&
+    !cleanTranslated
+  ){
+
+    throw new Error(
+      "Gemini ni vrnil besedila."
+    );
+
+  }
+
+
+  return {
+
+    original:
+      cleanOriginal ||
+      cleanTranslated,
+
+    translated:
+      cleanTranslated ||
+      cleanOriginal
+
+  };
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+startButton.addEventListener(
+  "click",
+  async () => {
+
+
+    setupError.textContent =
+      "";
+
+
+    state.person1.language =
+      language1.value;
+
+
+    state.person2.language =
+      language2.value;
+
+
+    if(
+      state.person1.language ===
+      state.person2.language
+    ){
+
+      setupError.textContent =
+        "Izberi dva različna jezika.";
+
+      return;
+
+    }
+
+
+    if(
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices
+        .getUserMedia
+    ){
+
+      setupError.textContent =
+        "Brskalnik ne podpira mikrofona.";
+
+      return;
+
+    }
+
+
+    if(
+      typeof MediaRecorder ===
+      "undefined"
+    ){
+
+      setupError.textContent =
+        "Brskalnik ne podpira snemanja zvoka.";
+
+      return;
+
+    }
+
+
+    state.running =
+      true;
+
+
+    state.processing =
+      false;
+
+
+    originalText.textContent =
+      "...";
+
+
+    translatedText.textContent =
+      "...";
+
+
+    setupScreen
+      .classList
+      .remove(
+        "active"
+      );
+
+
+    liveScreen
+      .classList
+      .add(
+        "active"
+      );
+
+
+    renderRoute();
+
+
+    await startRecording();
+
+  }
+
+);
+
+
+/* =========================================
+   ✓ NEXT
+
+   V0.1 SE TUKAJ USTAVI:
+   - ustavi snemanje
+   - pošlje Gemini
+   - prikaže rezultat
+
+   BREZ TTS
+   BREZ MENJAVE GOVORCA
+========================================= */
+
+nextButton.addEventListener(
+  "click",
+  async () => {
+
+
+    if(
+      !state.running ||
+      !state.recording ||
+      state.processing
+    ){
+
+      return;
+
+    }
+
+
+    state.processing =
+      true;
+
+
+    liveError.textContent =
+      "";
+
+
+    try{
+
+      const audioBlob =
+        await stopRecording();
+
+
+      if(
+        !audioBlob ||
+        audioBlob.size < 800
+      ){
+
+        throw new Error(
+          "Posnetek je prekratek."
+        );
+
+      }
+
+
+      showProcessing();
+
+
+      const result =
+        await sendToGemini(
+          audioBlob
+        );
+
+
+      originalText.textContent =
+        result.original;
+
+
+      translatedText.textContent =
+        result.translated;
+
+
+      state.processing =
+        false;
+
+
+      /*
+       * Namenoma ne nadaljujemo.
+       *
+       * Če pridemo do sem in vidimo
+       * oba pravilna teksta,
+       * je PHONE6 CORE V0.1 uspešen.
+       */
+
+
+      orb.className =
+        "orb";
+
+
+      orb.textContent =
+        "✓";
+
+
+      status.textContent =
+        "OK";
+
+
+      nextButton.disabled =
+        true;
+
+    }
+    catch(error){
+
+      console.error(error);
+
+
+      state.processing =
+        false;
+
+
+      showError(
+        error.message ||
+        "Prepoznavanje ni uspelo."
+      );
+
+
+      /*
+       * Po napaki ponovno omogočimo
+       * novo testno snemanje.
+       */
+
+      setTimeout(
+        () => {
+
+          if(state.running){
+
+            startRecording();
+
+          }
+
+        },
+        1200
+      );
+
+    }
+
+  }
+
+);
+
+
+/* =========================================
+   STOP
+========================================= */
+
+stopButton.addEventListener(
+  "click",
+  async () => {
+
+
+    state.running =
+      false;
+
+
+    state.processing =
+      false;
+
+
+    if(
+      state.recording
+    ){
+
+      await stopRecording();
+
+    }
+
+
+    if(state.stream){
+
+      state.stream
+        .getTracks()
+        .forEach(
+          track =>
+            track.stop()
+        );
+
+
+      state.stream =
+        null;
+
+    }
+
+
+    liveScreen
+      .classList
+      .remove(
+        "active"
+      );
+
+
+    setupScreen
+      .classList
+      .add(
+        "active"
+      );
+
+  }
+
+);
+
+
+/* =========================================
+   INIT
+========================================= */
+
+renderSetup();
+
+
+})();
+
+</script>
+
+</body>
+</html>
