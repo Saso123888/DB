@@ -1,51 +1,24 @@
 <!DOCTYPE html>
 <html lang="sl">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta
   name="viewport"
   content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
 >
-
 <title>Voice Pogovor</title>
 
 <meta name="theme-color" content="#061224">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Voice Pogovor">
 
-<meta
-  name="apple-mobile-web-app-capable"
-  content="yes"
->
-
-<meta
-  name="apple-mobile-web-app-status-bar-style"
-  content="black-translucent"
->
-
-<meta
-  name="apple-mobile-web-app-title"
-  content="Voice Pogovor"
->
-
-<link
-  rel="apple-touch-icon"
-  sizes="180x180"
-  href="apple-touch-icon.png"
->
-
-<link
-  rel="icon"
-  type="image/png"
-  href="apple-touch-icon.png"
->
-
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
 
 <style>
-
 *{
-  box-sizing:border-box;
+  box-sizing:border-box
 }
 
 :root{
@@ -53,13 +26,15 @@
   --line:#294a75;
   --text:#f7f9ff;
   --muted:#a8b4c8;
-  --yellow:#ffd54a;
+  --yellow:#ffd54a
 }
 
 html,
 body{
   margin:0;
   min-height:100%;
+  color:var(--text);
+  font-family:Arial,sans-serif;
 
   background:
     radial-gradient(
@@ -67,56 +42,43 @@ body{
       #0c2e58 0,
       #061224 42%,
       #030b17 100%
-    );
-
-  color:var(--text);
-
-  font-family:
-    Arial,
-    sans-serif;
+    )
 }
 
 body{
   padding:
     max(18px,env(safe-area-inset-top))
     18px
-    max(18px,env(safe-area-inset-bottom));
+    max(18px,env(safe-area-inset-bottom))
 }
 
 .app{
   max-width:520px;
-  margin:auto;
+  margin:auto
 }
 
 .hidden{
-  display:none!important;
+  display:none!important
 }
 
 
-/* ===========================
-   ZAČETNI ZASLON
-=========================== */
+/* ZAČETNI ZASLON */
 
 .brand{
-  text-align:center;
   margin:8px 0 28px;
+  text-align:center
 }
 
 .brand img{
   width:82px;
   height:82px;
-
-  border-radius:23px;
+  border-radius:23px
 }
-
 
 .card{
   margin-bottom:15px;
   padding:18px;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:22px;
 
   background:
@@ -126,82 +88,47 @@ body{
       #0a1930
     );
 
-  box-shadow:
-    0 16px 38px #0006;
+  box-shadow:0 16px 38px #0006
 }
-
 
 input,
 select{
   width:100%;
   height:57px;
-
-  padding:
-    0 15px;
-
+  padding:0 15px;
   border-radius:15px;
   outline:none;
-
   color:#fff;
-
-  font-size:18px;
+  font-size:18px
 }
-
 
 input{
-  margin-bottom:12px;
+  margin-bottom:12px
 }
-
 
 select{
-  border:
-    1px solid #5276a5;
-
-  background:
-    #0b1c34;
+  border:1px solid #5276a5;
+  background:#0b1c34
 }
-
-
-/* Oseba A */
 
 .nameA{
-  border:
-    1px solid #168cff;
-
-  background:
-    #08244a;
-
-  color:
-    #72bdff;
-
-  font-weight:900;
+  border:1px solid #168cff;
+  background:#08244a;
+  color:#72bdff;
+  font-weight:900
 }
-
-
-/* Oseba B */
 
 .nameB{
-  border:
-    1px solid #13d7b9;
-
-  background:
-    #073a35;
-
-  color:
-    #67efd9;
-
-  font-weight:900;
+  border:1px solid #13d7b9;
+  background:#073a35;
+  color:#67efd9;
+  font-weight:900
 }
-
-
-/* ZAČNI */
 
 .start{
   width:100%;
   height:68px;
-
   border:0;
-
   border-radius:18px;
 
   background:
@@ -212,278 +139,161 @@ select{
     );
 
   color:#fff;
-
   font-size:19px;
   font-weight:900;
-
-  box-shadow:
-    0 12px 30px #087df155;
+  box-shadow:0 12px 30px #087df155
 }
 
 
-/* ===========================
-   POGOVOR
-=========================== */
+/* POGOVOR */
 
 .top{
   display:flex;
-
-  justify-content:
-    space-between;
-
+  justify-content:space-between;
   align-items:center;
-
-  margin-bottom:24px;
+  margin-bottom:24px
 }
-
 
 .top img{
   width:44px;
   height:44px;
-
-  border-radius:13px;
+  border-radius:13px
 }
-
 
 .gear{
   border:0;
-
-  background:
-    transparent;
-
-  color:
-    #b7c6da;
-
-  font-size:25px;
+  background:transparent;
+  color:#b7c6da;
+  font-size:25px
 }
-
-
-/* ===========================
-   ZGORNJA GUMBA
-=========================== */
 
 .actions{
   display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
+  grid-template-columns:1fr 1fr;
   gap:12px;
-
-  margin-bottom:17px;
+  margin-bottom:17px
 }
-
 
 .next,
 .end{
   height:56px;
-
   border-radius:27px;
-
   font-size:15px;
-
-  font-weight:900;
+  font-weight:900
 }
-
-
-/* NAPREJ */
 
 .next{
-  border:0;
+  border:0
 }
-
-
-/* Oseba A govori */
 
 .next.a{
-  background:
-    linear-gradient(
-      90deg,
-      #078eff,
-      #0a7bee
-    );
-
-  color:#fff;
+  background:linear-gradient(90deg,#078eff,#0a7bee);
+  color:#fff
 }
-
-
-/* Oseba B govori */
 
 .next.b{
-  background:
-    linear-gradient(
-      90deg,
-      #18dfbd,
-      #10bda4
-    );
-
-  color:#042d28;
+  background:linear-gradient(90deg,#18dfbd,#10bda4);
+  color:#042d28
 }
 
-
-/* KONČAJ */
+.next:disabled{
+  opacity:.45
+}
 
 .end{
-  border:
-    1px solid #a63b4b;
-
-  background:
-    linear-gradient(
-      90deg,
-      #d62943,
-      #a71730
-    );
-
-  color:#fff;
+  border:1px solid #a63b4b;
+  background:linear-gradient(90deg,#d62943,#a71730);
+  color:#fff
 }
-
-
-/* ===========================
-   SMER PREVODA
-=========================== */
 
 .direction{
   text-align:center;
-
-  color:
-    #d4dbea;
-
-  font-size:14px;
+  color:#d4dbea;
+  font-size:14px
 }
-
-
-/* ===========================
-   GOVOREC
-=========================== */
 
 .speaker{
-  margin:
-    19px 0 0;
-
+  margin:19px 0 0;
   text-align:center;
-
   font-size:36px;
-
-  font-weight:900;
+  font-weight:900
 }
-
 
 .speakLabel{
   text-align:center;
-
-  color:
-    #bfcae0;
-
+  color:#bfcae0;
   font-size:20px;
-
-  font-weight:900;
+  font-weight:900
 }
 
 
-/* ===========================
-   MIKROFON
-=========================== */
+/* MIKROFON */
 
 .pulse{
   position:relative;
-
   display:grid;
-
   place-items:center;
-
   width:205px;
   height:205px;
-
-  margin:
-    14px auto 16px;
+  margin:14px auto 16px
 }
-
 
 .ring{
   position:absolute;
-
-  border:
-    2px solid #087fff66;
-
+  border:2px solid #087fff66;
   border-radius:50%;
-
-  animation:
-    ringPulse 1.6s infinite;
+  animation:ringPulse 1.6s infinite
 }
-
 
 .r1{
-  inset:0;
+  inset:0
 }
-
 
 .r2{
   inset:20px;
-
-  animation-delay:
-    .25s;
+  animation-delay:.25s
 }
-
 
 .r3{
   inset:39px;
-
-  animation-delay:
-    .5s;
+  animation-delay:.5s
 }
 
+.pulse.b .ring{
+  border-color:#13dfc566
+}
 
 @keyframes ringPulse{
-
   0%{
-    transform:
-      scale(.82);
-
-    opacity:.95;
+    transform:scale(.82);
+    opacity:.95
   }
 
   70%{
-    transform:
-      scale(1.05);
-
-    opacity:.12;
+    transform:scale(1.05);
+    opacity:.12
   }
 
   100%{
-    transform:
-      scale(1.05);
-
-    opacity:0;
+    transform:scale(1.05);
+    opacity:0
   }
-
 }
-
 
 .mic{
   position:relative;
-
   z-index:2;
-
   width:128px;
   height:128px;
-
   border:0;
-
   border-radius:50%;
-
   font-size:57px;
-
-  animation:
-    micBeat
-    1.1s
-    ease-in-out
-    infinite;
+  animation:micBeat 1.1s ease-in-out infinite
 }
 
-
-/* A = MODRA */
-
 .mic.a{
+  color:#fff;
+
   background:
     radial-gradient(
       circle at 35% 25%,
@@ -492,17 +302,14 @@ select{
       #0b58c4
     );
 
-  color:#fff;
-
   box-shadow:
     0 0 22px #078cff,
-    0 0 55px #078cff99;
+    0 0 55px #078cff99
 }
 
-
-/* B = ZELENA */
-
 .mic.b{
+  color:#032d29;
+
   background:
     radial-gradient(
       circle at 35% 25%,
@@ -511,357 +318,184 @@ select{
       #078a78
     );
 
-  color:#032d29;
-
   box-shadow:
     0 0 22px #13dfc5,
-    0 0 55px #13dfc599;
+    0 0 55px #13dfc599
 }
-
-
-/* Krogi osebe B */
-
-.pulse.b .ring{
-  border-color:
-    #13dfc566;
-}
-
 
 @keyframes micBeat{
-
-  0%,
-  100%{
-    transform:
-      scale(1);
+  0%,100%{
+    transform:scale(1)
   }
 
   50%{
-    transform:
-      scale(1.09);
+    transform:scale(1.09)
   }
-
 }
 
 
-/* ===========================
-   REZULTAT
-=========================== */
+/* REZULTAT */
 
 .result{
-  margin:
-    15px 0;
-
+  margin:15px 0;
   padding:15px;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:18px;
-
-  background:
-    #09192f;
+  background:#09192f
 }
-
 
 .resultTitle{
-  color:
-    #8697af;
-
+  color:#8697af;
   font-size:11px;
-
-  font-weight:900;
+  font-weight:900
 }
-
 
 .original{
   margin-top:7px;
-
-  color:
-    #cad4e3;
-
-  font-size:15px;
+  color:#cad4e3;
+  font-size:15px
 }
-
 
 .translated{
   margin-top:7px;
-
-  color:
-    var(--yellow);
-
+  color:var(--yellow);
   font-size:19px;
-
-  font-weight:900;
+  font-weight:900
 }
-
 
 .instruction{
+  margin:16px 0 8px;
   text-align:center;
-
-  color:
-    #aebbcf;
-
-  font-size:12px;
-
-  margin:
-    16px 0 8px;
+  color:#aebbcf;
+  font-size:12px
 }
-
 
 .notice{
   min-height:22px;
-
   text-align:center;
-
-  color:
-    #ffd36b;
-
-  font-size:13px;
+  color:#ffd36b;
+  font-size:13px
 }
-
 </style>
-
 </head>
-
 
 <body>
 
 <div class="app">
 
-
-<!-- ===========================
-     NASTAVITVE
-=========================== -->
-
 <section id="setup">
 
-
   <div class="brand">
-
-    <img
-      src="apple-touch-icon.png"
-      alt=""
-    >
-
+    <img src="apple-touch-icon.png" alt="">
   </div>
 
-
-  <!-- OSEBA A -->
-
   <div class="card">
-
     <input
       id="nameA"
       class="nameA"
       value="Oseba A"
     >
-
-    <select
-      id="langA"
-    ></select>
-
+    <select id="langA"></select>
   </div>
 
-
-  <!-- OSEBA B -->
-
   <div class="card">
-
     <input
       id="nameB"
       class="nameB"
       value="Oseba B"
     >
-
-    <select
-      id="langB"
-    ></select>
-
+    <select id="langB"></select>
   </div>
 
-
-  <button
-    id="start"
-    class="start"
-  >
+  <button id="start" class="start">
     ZAČNI POGOVOR
   </button>
-
 
 </section>
 
 
-<!-- ===========================
-     POGOVOR
-=========================== -->
-
-<section
-  id="talk"
-  class="hidden"
->
-
-
-  <!-- ikona + nastavitve -->
+<section id="talk" class="hidden">
 
   <div class="top">
+    <img src="apple-touch-icon.png" alt="">
 
-    <img
-      src="apple-touch-icon.png"
-      alt=""
-    >
-
-    <button
-      id="settings"
-      class="gear"
-    >
+    <button id="settings" class="gear">
       ⚙
     </button>
-
   </div>
-
-
-  <!-- zgornja gumba -->
 
   <div class="actions">
 
-
-    <button
-      id="next"
-      class="next a"
-    >
+    <button id="next" class="next a">
       NAPREJ
     </button>
 
-
-    <button
-      id="end"
-      class="end"
-    >
+    <button id="end" class="end">
       KONČAJ POGOVOR
     </button>
 
-
   </div>
 
+  <div id="direction" class="direction"></div>
 
-  <!-- jezika -->
-
-  <div
-    id="direction"
-    class="direction"
-  ></div>
-
-
-  <!-- oseba -->
-
-  <div
-    id="speaker"
-    class="speaker"
-  ></div>
-
+  <div id="speaker" class="speaker"></div>
 
   <div class="speakLabel">
     GOVORI
   </div>
 
-
-  <!-- mikrofon -->
-
-  <div
-    id="pulse"
-    class="pulse a"
-  >
+  <div id="pulse" class="pulse a">
 
     <div class="ring r1"></div>
-
     <div class="ring r2"></div>
-
     <div class="ring r3"></div>
 
-
-    <button
-      id="mic"
-      class="mic a"
-    >
+    <button id="mic" class="mic a">
       🎤
     </button>
 
-
   </div>
 
-
-  <!-- rezultat -->
-
-  <div
-    id="result"
-    class="result hidden"
-  >
+  <div id="result" class="result hidden">
 
     <div class="resultTitle">
       ZADNJI PREVOD
     </div>
 
+    <div id="original" class="original"></div>
 
-    <div
-      id="original"
-      class="original"
-    ></div>
-
-
-    <div
-      id="translated"
-      class="translated"
-    ></div>
-
+    <div id="translated" class="translated"></div>
 
   </div>
-
 
   <div class="instruction">
     Po zaznanem govoru 1,8 sekunde tišine samodejno zaključi poved.
   </div>
 
-
-  <div
-    id="notice"
-    class="notice"
-  ></div>
-
+  <div id="notice" class="notice"></div>
 
 </section>
-
 
 </div>
 
 
 <script>
 
-/* ===========================
-   SUPABASE
-=========================== */
+/* SUPABASE */
 
 const URL =
   "https://kdixpdxmdfdbxpbuljfe.supabase.co";
 
-
 const KEY =
   "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
 
-
 const HEADERS = {
-
-  apikey:
-    KEY,
-
-  Authorization:
-    "Bearer " + KEY
-
+  apikey:KEY,
+  Authorization:"Bearer " + KEY
 };
 
 
-/* ===========================
-   JEZIKI
-=========================== */
+/* JEZIKI */
 
 const LANGUAGES = {
 
@@ -945,14 +579,10 @@ const LANGUAGES = {
 
 const $ =
   id =>
-    document.getElementById(
-      id
-    );
+    document.getElementById(id);
 
 
-/* ===========================
-   NAPOLNI DROPDOWNE
-=========================== */
+/* DROPDOWN */
 
 Object.entries(
   LANGUAGES
@@ -960,26 +590,19 @@ Object.entries(
 .forEach(
   ([code,language]) => {
 
-
     $("langA").add(
-
       new Option(
         language.name,
         code
       )
-
     );
-
 
     $("langB").add(
-
       new Option(
         language.name,
         code
       )
-
     );
-
 
   }
 );
@@ -988,33 +611,47 @@ Object.entries(
 $("langA").value =
   "sl";
 
-
 $("langB").value =
   "en";
 
 
-/* ===========================
-   STATE
-=========================== */
+/* GLAVNO STANJE */
 
 let turn =
   0;
 
-
 let recorder =
   null;
-
 
 let mediaStream =
   null;
 
-
 let audioChunks =
   [];
 
-
 let busy =
   false;
+
+
+/*
+Vsak posnetek in vsaka obdelava
+dobita svojo enolično številko.
+*/
+
+let recordingId =
+  0;
+
+let activeRecordingId =
+  0;
+
+let processingId =
+  0;
+
+let lastPlayedId =
+  0;
+
+let sessionId =
+  0;
 
 
 /* VAD */
@@ -1022,62 +659,46 @@ let busy =
 let audioContext =
   null;
 
-
 let analyser =
   null;
-
 
 let monitorFrame =
   null;
 
-
 let speechDetected =
   false;
-
 
 let speechMilliseconds =
   0;
 
-
 let lastVoiceTime =
   0;
 
-
 let lastFrameTime =
   0;
-
 
 let recordingStarted =
   0;
 
 
-/* ===========================
-   OSEBI
-=========================== */
+/* OSEBI */
 
 function personName(
   person
 ){
 
-  if(
-    person === 0
-  ){
+  if(person === 0){
 
     return (
-      $("nameA")
-        .value
-        .trim()
+      $("nameA").value.trim()
       ||
       "Oseba A"
     );
 
   }
 
-
   return (
-    $("nameB")
-      .value
-      .trim()
+    $("nameB").value.trim()
     ||
     "Oseba B"
   );
@@ -1098,9 +719,7 @@ function personLanguage(
 }
 
 
-/* ===========================
-   RENDER
-=========================== */
+/* RENDER */
 
 function render(){
 
@@ -1109,14 +728,12 @@ function render(){
       turn
     );
 
-
   const target =
     personLanguage(
       turn === 0
         ? 1
         : 0
     );
-
 
   const listener =
     personName(
@@ -1125,27 +742,19 @@ function render(){
         : 0
     );
 
-
   $("speaker").textContent =
     personName(
       turn
     );
-
 
   $("direction").textContent =
     LANGUAGES[source].name +
     " → " +
     LANGUAGES[target].name;
 
-
   $("next").textContent =
     "NAPREJ → " +
     listener;
-
-
-  /*
-  BARVE
-  */
 
   $("next").className =
     "next " +
@@ -1155,7 +764,6 @@ function render(){
         : "b"
     );
 
-
   $("mic").className =
     "mic " +
     (
@@ -1163,7 +771,6 @@ function render(){
         ? "a"
         : "b"
     );
-
 
   $("pulse").className =
     "pulse " +
@@ -1173,15 +780,12 @@ function render(){
         : "b"
     );
 
-
   startRecording();
 
 }
 
 
-/* ===========================
-   TTS UNLOCK
-=========================== */
+/* TTS ODKLEP */
 
 function unlockTTS(){
 
@@ -1189,27 +793,22 @@ function unlockTTS(){
 
     speechSynthesis.cancel();
 
-
     const utterance =
       new SpeechSynthesisUtterance(
         " "
       );
-
 
     utterance.lang =
       LANGUAGES[
         personLanguage(0)
       ].tts;
 
-
     utterance.volume =
       0.01;
-
 
     speechSynthesis.speak(
       utterance
     );
-
 
     setTimeout(
       () =>
@@ -1221,7 +820,7 @@ function unlockTTS(){
   catch(error){
 
     console.log(
-      "TTS unlock",
+      "TTS unlock:",
       error
     );
 
@@ -1230,11 +829,25 @@ function unlockTTS(){
 }
 
 
-/* ===========================
-   ZAČNI
-=========================== */
+/* ZAČNI POGOVOR */
 
 function startConversation(){
+
+  /*
+  Nova seja razveljavi vse
+  stare zakasnjene dogodke.
+  */
+
+  sessionId++;
+
+  processingId =
+    0;
+
+  lastPlayedId =
+    0;
+
+  activeRecordingId =
+    0;
 
   $("setup")
     .classList
@@ -1242,49 +855,29 @@ function startConversation(){
       "hidden"
     );
 
-
   $("talk")
     .classList
     .remove(
       "hidden"
     );
 
-
   turn =
     0;
 
-
-  /*
-  Klik ZAČNI pomaga
-  odkleniti TTS v iOS.
-  */
-
   unlockTTS();
-
 
   render();
 
 }
 
 
-/* ===========================
-   START RECORDING
-=========================== */
+/* ZAČNI SNEMANJE */
 
 async function startRecording(){
 
   if(
-    busy
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    recorder &&
-    recorder.state ===
+    busy ||
+    recorder?.state ===
       "recording"
   ){
 
@@ -1293,9 +886,57 @@ async function startRecording(){
   }
 
 
+  const mySession =
+    sessionId;
+
+  const myRecordingId =
+    ++recordingId;
+
+  activeRecordingId =
+    myRecordingId;
+
+
+  /*
+  Najprej odstranimo vse ostanke
+  prejšnjega snemanja.
+  */
+
+  stopVoiceDetection();
+
+
+  if(
+    mediaStream
+  ){
+
+    mediaStream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
+      );
+
+  }
+
+
+  mediaStream =
+    null;
+
+  recorder =
+    null;
+
+  audioChunks =
+    [];
+
+  speechDetected =
+    false;
+
+  speechMilliseconds =
+    0;
+
+
   try{
 
-    mediaStream =
+    const newStream =
       await navigator
         .mediaDevices
         .getUserMedia({
@@ -1304,12 +945,34 @@ async function startRecording(){
 
 
     /*
-    Nova oseba =
-    nov buffer.
+    Če se je med čakanjem
+    začela druga seja ali
+    drug posnetek, ta stream
+    takoj zavržemo.
     */
 
-    audioChunks =
-      [];
+    if(
+      mySession !==
+        sessionId
+      ||
+      myRecordingId !==
+        activeRecordingId
+    ){
+
+      newStream
+        .getTracks()
+        .forEach(
+          track =>
+            track.stop()
+        );
+
+      return;
+
+    }
+
+
+    mediaStream =
+      newStream;
 
 
     let options =
@@ -1344,22 +1007,43 @@ async function startRecording(){
     }
 
 
-    recorder =
+    const newRecorder =
       new MediaRecorder(
         mediaStream,
         options
       );
 
 
-    recorder.ondataavailable =
+    recorder =
+      newRecorder;
+
+
+    /*
+    Lokalni buffer pripada samo
+    temu konkretnemu recorderju.
+    */
+
+    const localChunks =
+      [];
+
+
+    newRecorder.ondataavailable =
       event => {
 
         if(
-          event.data &&
           event.data.size
+          &&
+          mySession ===
+            sessionId
+          &&
+          myRecordingId ===
+            activeRecordingId
+          &&
+          recorder ===
+            newRecorder
         ){
 
-          audioChunks.push(
+          localChunks.push(
             event.data
           );
 
@@ -1368,11 +1052,22 @@ async function startRecording(){
       };
 
 
-    recorder.start();
+    newRecorder.start();
+
+
+    /*
+    Globalna referenca kaže samo
+    na buffer aktivnega posnetka.
+    */
+
+    audioChunks =
+      localChunks;
 
 
     startVoiceDetection(
-      mediaStream
+      mediaStream,
+      myRecordingId,
+      mySession
     );
 
 
@@ -1382,21 +1077,72 @@ async function startRecording(){
   }
   catch(error){
 
-    $("notice").textContent =
-      "Napaka mikrofona: " +
-      error.message;
+    if(
+      mySession ===
+        sessionId
+      &&
+      myRecordingId ===
+        activeRecordingId
+    ){
+
+      $("notice").textContent =
+        "Napaka mikrofona: " +
+        error.message;
+
+    }
 
   }
 
 }
 
 
-/* ===========================
-   VOICE ACTIVITY DETECTION
-=========================== */
+/* STOP VAD */
+
+function stopVoiceDetection(){
+
+  if(
+    monitorFrame
+  ){
+
+    cancelAnimationFrame(
+      monitorFrame
+    );
+
+  }
+
+
+  monitorFrame =
+    null;
+
+
+  if(
+    audioContext
+  ){
+
+    audioContext
+      .close()
+      .catch(
+        () => {}
+      );
+
+  }
+
+
+  audioContext =
+    null;
+
+  analyser =
+    null;
+
+}
+
+
+/* VOICE ACTIVITY DETECTION */
 
 function startVoiceDetection(
-  stream
+  stream,
+  myRecordingId,
+  mySession
 ){
 
   stopVoiceDetection();
@@ -1407,9 +1153,7 @@ function startVoiceDetection(
     window.webkitAudioContext;
 
 
-  if(
-    !AudioCtx
-  ){
+  if(!AudioCtx){
 
     return;
 
@@ -1452,33 +1196,21 @@ function startVoiceDetection(
     );
 
 
-  /*
-  Še ni bilo govora.
-  */
-
   speechDetected =
     false;
-
 
   speechMilliseconds =
     0;
 
-
   lastVoiceTime =
     0;
-
 
   recordingStarted =
     Date.now();
 
-
   lastFrameTime =
     performance.now();
 
-
-  /*
-  RMS prag.
-  */
 
   const speechThreshold =
     0.018;
@@ -1486,8 +1218,20 @@ function startVoiceDetection(
 
   function monitor(){
 
+    /*
+    Stari monitor nima dovoljenja
+    upravljati novega snemanja.
+    */
+
     if(
-      !recorder ||
+      mySession !==
+        sessionId
+      ||
+      myRecordingId !==
+        activeRecordingId
+      ||
+      !recorder
+      ||
       recorder.state !==
         "recording"
     ){
@@ -1512,14 +1256,13 @@ function startVoiceDetection(
       of data
     ){
 
-      const normalized =
+      const sample =
         (value - 128) /
         128;
 
-
       sum +=
-        normalized *
-        normalized;
+        sample *
+        sample;
 
     }
 
@@ -1547,10 +1290,6 @@ function startVoiceDetection(
       now;
 
 
-    /*
-    DEJANSKI GOVOR
-    */
-
     if(
       rms >=
       speechThreshold
@@ -1559,10 +1298,8 @@ function startVoiceDetection(
       speechDetected =
         true;
 
-
       speechMilliseconds +=
         frameDuration;
-
 
       lastVoiceTime =
         Date.now();
@@ -1571,17 +1308,16 @@ function startVoiceDetection(
 
 
     /*
-    Govor je bil zaznan
-    in imamo vsaj
-    450 ms dejanskega govora.
-
-    Nato čakamo 1,8 s tišine.
+    Najmanj 450 ms govora
+    in nato 1,8 sekunde tišine.
     */
 
     if(
-      speechDetected &&
+      speechDetected
+      &&
       speechMilliseconds >=
-        450 &&
+        450
+      &&
       Date.now() -
         lastVoiceTime >=
         1800
@@ -1590,9 +1326,10 @@ function startVoiceDetection(
       $("notice").textContent =
         "Prevajam ...";
 
-
-      nextTurn();
-
+      nextTurn(
+        myRecordingId,
+        mySession
+      );
 
       return;
 
@@ -1600,21 +1337,23 @@ function startVoiceDetection(
 
 
     /*
-    Če 30 sekund nihče
-    sploh ne začne govoriti,
-    NE pošiljaj Whisperju.
-    Samo obnovi snemanje.
+    Če ni nobenega govora
+    30 sekund, resetiraj snemanje,
+    ne pošiljaj Whisperju.
     */
 
     if(
-      !speechDetected &&
+      !speechDetected
+      &&
       Date.now() -
         recordingStarted >=
         30000
     ){
 
-      restartIdleRecording();
-
+      restartIdleRecording(
+        myRecordingId,
+        mySession
+      );
 
       return;
 
@@ -1622,20 +1361,22 @@ function startVoiceDetection(
 
 
     /*
-    Varnost:
-    največ 90 sekund
-    ene povedi.
+    Največ 90 sekund
+    na eno poved.
     */
 
     if(
-      speechDetected &&
+      speechDetected
+      &&
       Date.now() -
         recordingStarted >=
         90000
     ){
 
-      nextTurn();
-
+      nextTurn(
+        myRecordingId,
+        mySession
+      );
 
       return;
 
@@ -1655,58 +1396,97 @@ function startVoiceDetection(
 }
 
 
-/* ===========================
-   STOP VAD
-=========================== */
+/* STOP SNEMANJA */
 
-function stopVoiceDetection(){
+function stopRecording(
+  expectedRecordingId =
+    activeRecordingId,
+  expectedSession =
+    sessionId
+){
 
-  if(
-    monitorFrame
-  ){
-
-    cancelAnimationFrame(
-      monitorFrame
-    );
-
-  }
+  return new Promise(
+    resolve => {
 
 
-  monitorFrame =
-    null;
+      stopVoiceDetection();
 
 
-  if(
-    audioContext
-  ){
-
-    audioContext
-      .close()
-      .catch(
-        () => {}
-      );
-
-  }
+      const currentRecorder =
+        recorder;
 
 
-  audioContext =
-    null;
+      const currentStream =
+        mediaStream;
 
 
-  analyser =
-    null;
+      if(
+        !currentRecorder
+        ||
+        currentRecorder.state !==
+          "recording"
+        ||
+        expectedSession !==
+          sessionId
+        ||
+        expectedRecordingId !==
+          activeRecordingId
+      ){
+
+        currentStream
+          ?.getTracks()
+          .forEach(
+            track =>
+              track.stop()
+          );
+
+        resolve();
+
+        return;
+
+      }
+
+
+      currentRecorder.onstop =
+        () => {
+
+          resolve();
+
+        };
+
+
+      currentRecorder.stop();
+
+
+      currentStream
+        ?.getTracks()
+        .forEach(
+          track =>
+            track.stop()
+        );
+
+
+    }
+  );
 
 }
 
 
-/* ===========================
-   IDLE RESTART
-=========================== */
+/* IDLE RESET */
 
-async function restartIdleRecording(){
+async function restartIdleRecording(
+  myRecordingId,
+  mySession
+){
 
   if(
     busy
+    ||
+    mySession !==
+      sessionId
+    ||
+    myRecordingId !==
+      activeRecordingId
   ){
 
     return;
@@ -1714,16 +1494,27 @@ async function restartIdleRecording(){
   }
 
 
-  await stopRecording();
+  await stopRecording(
+    myRecordingId,
+    mySession
+  );
+
+
+  if(
+    mySession !==
+      sessionId
+  ){
+
+    return;
+
+  }
 
 
   audioChunks =
     [];
 
-
   recorder =
     null;
-
 
   mediaStream =
     null;
@@ -1738,68 +1529,12 @@ async function restartIdleRecording(){
 }
 
 
-/* ===========================
-   STOP RECORDING
-=========================== */
+/* PREVOD */
 
-function stopRecording(){
-
-  return new Promise(
-    resolve => {
-
-
-      if(
-        !recorder ||
-        recorder.state !==
-          "recording"
-      ){
-
-        resolve();
-
-        return;
-
-      }
-
-
-      stopVoiceDetection();
-
-
-      recorder.onstop =
-        () => {
-
-          resolve();
-
-        };
-
-
-      recorder.stop();
-
-
-      if(
-        mediaStream
-      ){
-
-        mediaStream
-          .getTracks()
-          .forEach(
-            track =>
-              track.stop()
-          );
-
-      }
-
-
-    }
-  );
-
-}
-
-
-/* ===========================
-   TRANSLATE
-=========================== */
-
-async function translateAudio(){
+async function translateAudio(
+  frozenChunks,
+  frozenRecorder
+){
 
   const source =
     personLanguage(
@@ -1816,7 +1551,9 @@ async function translateAudio(){
 
 
   const mime =
-    recorder?.mimeType ||
+    frozenRecorder
+      ?.mimeType
+    ||
     "audio/webm";
 
 
@@ -1830,7 +1567,7 @@ async function translateAudio(){
 
   const blob =
     new Blob(
-      audioChunks,
+      frozenChunks,
       {
         type:mime
       }
@@ -1891,8 +1628,7 @@ async function translateAudio(){
 
       {
 
-        method:
-          "POST",
+        method:"POST",
 
         headers:
           HEADERS,
@@ -1947,9 +1683,7 @@ async function translateAudio(){
 }
 
 
-/* ===========================
-   HALUCINATION FILTER
-=========================== */
+/* WHISPER HALUCINACIJE */
 
 function isLikelyHallucination(
   text
@@ -2023,9 +1757,7 @@ function isLikelyHallucination(
 }
 
 
-/* ===========================
-   FIND VOICE
-=========================== */
+/* NAJDI TTS GLAS */
 
 function findVoice(
   languageCode
@@ -2075,13 +1807,13 @@ function findVoice(
 }
 
 
-/* ===========================
-   PREDVAJAJ PREVOD
-=========================== */
+/* PREDVAJANJE SAMO ENKRAT */
 
-function speak(
+function speakOnce(
   text,
-  languageCode
+  languageCode,
+  playId,
+  playSession
 ){
 
   return new Promise(
@@ -2090,6 +1822,15 @@ function speak(
 
       if(
         !text
+        ||
+        playSession !==
+          sessionId
+        ||
+        playId !==
+          processingId
+        ||
+        lastPlayedId ===
+          playId
       ){
 
         resolve(
@@ -2099,6 +1840,16 @@ function speak(
         return;
 
       }
+
+
+      /*
+      ID takoj označimo kot predvajan.
+      Tako dva dogodka ne moreta
+      sprožiti istega govora.
+      */
+
+      lastPlayedId =
+        playId;
 
 
       speechSynthesis
@@ -2190,6 +1941,29 @@ function speak(
         );
 
 
+        /*
+        Če se je seja ali obdelava
+        vmes spremenila, se star
+        rezultat ignorira.
+        */
+
+        if(
+          playSession !==
+            sessionId
+          ||
+          playId !==
+            processingId
+        ){
+
+          resolve(
+            false
+          );
+
+          return;
+
+        }
+
+
         resolve(
           success
         );
@@ -2231,14 +2005,43 @@ function speak(
 }
 
 
-/* ===========================
-   NAPREJ
-=========================== */
+/* NAPREJ */
 
-async function nextTurn(){
+async function nextTurn(
+
+  requestedRecordingId =
+    activeRecordingId,
+
+  requestedSession =
+    sessionId
+
+){
+
+  /*
+  Dvojni klik ali dvojni VAD
+  se zavrne.
+  */
 
   if(
     busy
+  ){
+
+    return;
+
+  }
+
+
+  /*
+  Star monitor ne sme zaključiti
+  novega posnetka.
+  */
+
+  if(
+    requestedSession !==
+      sessionId
+    ||
+    requestedRecordingId !==
+      activeRecordingId
   ){
 
     return;
@@ -2258,22 +2061,64 @@ async function nextTurn(){
     turn;
 
 
+  /*
+  Nova obdelava dobi svoj ID.
+  */
+
+  const myProcessingId =
+    ++processingId;
+
+
+  /*
+  Zamrznemo samo trenutno
+  izmenjavo.
+  */
+
+  const frozenChunks =
+    audioChunks.slice();
+
+
+  const frozenRecorder =
+    recorder;
+
+
+  const frozenSpeechDetected =
+    speechDetected;
+
+
+  const frozenSpeechMilliseconds =
+    speechMilliseconds;
+
+
   try{
 
 
     /*
-    Če dejanskega govora
-    ni bilo dovolj,
-    NI klica Whisper.
+    Če ni dovolj govora,
+    ne pošiljaj Whisperju.
     */
 
     if(
-      !speechDetected ||
-      speechMilliseconds <
+      !frozenSpeechDetected
+      ||
+      frozenSpeechMilliseconds <
         450
     ){
 
-      await stopRecording();
+      await stopRecording(
+        requestedRecordingId,
+        requestedSession
+      );
+
+
+      if(
+        requestedSession !==
+          sessionId
+      ){
+
+        return;
+
+      }
 
 
       audioChunks =
@@ -2305,10 +2150,31 @@ async function nextTurn(){
 
 
     /*
-    Konec snemanja.
+    Ustavi samo pravi recorder.
     */
 
-    await stopRecording();
+    await stopRecording(
+      requestedRecordingId,
+      requestedSession
+    );
+
+
+    /*
+    Če je vmes nastala druga
+    seja ali obdelava, prekini.
+    */
+
+    if(
+      requestedSession !==
+        sessionId
+      ||
+      myProcessingId !==
+        processingId
+    ){
+
+      return;
+
+    }
 
 
     $("notice").textContent =
@@ -2316,18 +2182,29 @@ async function nextTurn(){
 
 
     /*
-    Whisper + prevod.
+    Prevedi iz zamrznjenega
+    bufferja, ne iz globalnega.
     */
 
     const data =
-      await translateAudio();
+      await translateAudio(
+        frozenChunks,
+        frozenRecorder
+      );
 
 
-    /*
-    Sekundarna zaščita
-    pred tipičnimi
-    Whisper halucinacijami.
-    */
+    if(
+      requestedSession !==
+        sessionId
+      ||
+      myProcessingId !==
+        processingId
+    ){
+
+      return;
+
+    }
+
 
     if(
       isLikelyHallucination(
@@ -2341,10 +2218,6 @@ async function nextTurn(){
 
     }
 
-
-    /*
-    Prikaži rezultat.
-    */
 
     $("original").textContent =
       data.text ||
@@ -2363,10 +2236,6 @@ async function nextTurn(){
       );
 
 
-    /*
-    Jezik poslušalca.
-    */
-
     const listenerLanguage =
       personLanguage(
         spokenTurn === 0
@@ -2380,17 +2249,42 @@ async function nextTurn(){
 
 
     /*
-    TTS
+    Predvajaj samo enkrat.
     */
 
-    await speak(
+    await speakOnce(
+
       data.translated,
-      listenerLanguage
+
+      listenerLanguage,
+
+      myProcessingId,
+
+      requestedSession
+
     );
 
 
     /*
-    Zamenjaj osebo.
+    Ponovno preveri,
+    ali rezultat še velja.
+    */
+
+    if(
+      requestedSession !==
+        sessionId
+      ||
+      myProcessingId !==
+        processingId
+    ){
+
+      return;
+
+    }
+
+
+    /*
+    Zamenjava govorca.
     */
 
     turn =
@@ -2400,38 +2294,8 @@ async function nextTurn(){
 
 
     /*
-    Zelo pomembno:
-    busy sprostimo PRED
-    novim startRecording().
-    */
-
-    busy =
-      false;
-
-
-    $("notice").textContent =
-      "";
-
-
-    /*
-    Za novo osebo
-    naredi nov audio buffer.
-    */
-
-    render();
-
-
-  }
-  catch(error){
-
-
-    $("notice").textContent =
-      "Napaka: " +
-      error.message;
-
-
-    /*
-    Starega zvoka ne uporabljaj.
+    Popolno uničenje starega
+    posnetka pred novo osebo.
     */
 
     audioChunks =
@@ -2446,80 +2310,188 @@ async function nextTurn(){
       null;
 
 
+    speechDetected =
+      false;
+
+
+    speechMilliseconds =
+      0;
+
+
     busy =
       false;
 
 
+    $("notice").textContent =
+      "";
+
+
     /*
-    Ista oseba lahko
-    ponovno pove stavek.
+    Nova oseba dobi nov recorder,
+    nov ID in nov buffer.
     */
 
-    await startRecording();
+    render();
+
+
+  }
+  catch(error){
+
+
+    /*
+    Napako prikažemo samo,
+    če še vedno pripada
+    trenutni seji.
+    */
+
+    if(
+      requestedSession ===
+        sessionId
+      &&
+      myProcessingId ===
+        processingId
+    ){
+
+      $("notice").textContent =
+        "Napaka: " +
+        error.message;
+
+
+      /*
+      Nikoli ne recikliraj
+      starega posnetka.
+      */
+
+      audioChunks =
+        [];
+
+
+      recorder =
+        null;
+
+
+      mediaStream =
+        null;
+
+
+      speechDetected =
+        false;
+
+
+      speechMilliseconds =
+        0;
+
+
+      busy =
+        false;
+
+
+      /*
+      Ista oseba lahko
+      ponovi poved.
+      */
+
+      await startRecording();
+
+    }
 
   }
   finally{
 
-    busy =
-      false;
+    if(
+      requestedSession ===
+        sessionId
+    ){
+
+      busy =
+        false;
 
 
-    $("next").disabled =
-      false;
+      $("next").disabled =
+        false;
+
+    }
 
   }
 
 }
 
 
-/* ===========================
-   POPOLN RESET
-=========================== */
+/* POPOLN RESET */
 
 async function clearConversation(){
 
   /*
-  VAD stop
+  Takoj razveljavi vse
+  stare async dogodke.
   */
+
+  sessionId++;
+
+  processingId++;
+
+  activeRecordingId =
+    ++recordingId;
+
+  lastPlayedId =
+    0;
+
 
   stopVoiceDetection();
 
 
   /*
-  Snemanje stop
-  */
-
-  await stopRecording();
-
-
-  /*
-  TTS stop
+  Ustavi TTS takoj.
   */
 
   speechSynthesis
     .cancel();
 
 
-  /*
-  Mikrofon stop
-  */
+  const oldRecorder =
+    recorder;
+
+
+  const oldStream =
+    mediaStream;
+
 
   if(
-    mediaStream
+    oldRecorder &&
+    oldRecorder.state ===
+      "recording"
   ){
 
-    mediaStream
-      .getTracks()
-      .forEach(
-        track =>
-          track.stop()
+    oldRecorder.onstop =
+      null;
+
+
+    try{
+
+      oldRecorder.stop();
+
+    }
+    catch(error){
+
+      console.log(
+        error
       );
+
+    }
 
   }
 
 
+  oldStream
+    ?.getTracks()
+    .forEach(
+      track =>
+        track.stop()
+    );
+
+
   /*
-  Audio izbriši
+  Pobriši vse prehodne podatke.
   */
 
   audioChunks =
@@ -2533,10 +2505,6 @@ async function clearConversation(){
   mediaStream =
     null;
 
-
-  /*
-  VAD reset
-  */
 
   speechDetected =
     false;
@@ -2554,9 +2522,13 @@ async function clearConversation(){
     0;
 
 
-  /*
-  Tekst izbriši
-  */
+  busy =
+    false;
+
+
+  turn =
+    0;
+
 
   $("original").textContent =
     "";
@@ -2577,21 +2549,9 @@ async function clearConversation(){
     "";
 
 
-  /*
-  Stanje
-  */
-
-  busy =
+  $("next").disabled =
     false;
 
-
-  turn =
-    0;
-
-
-  /*
-  Nazaj na začetni ekran
-  */
 
   $("talk")
     .classList
@@ -2609,41 +2569,30 @@ async function clearConversation(){
 }
 
 
-/* ===========================
-   EVENTS
-=========================== */
+/* EVENTS */
 
 $("start").onclick =
   () => {
-
-
-    /*
-    Shrani nastavitve.
-    */
 
     localStorage.setItem(
       "phone4NameA",
       personName(0)
     );
 
-
     localStorage.setItem(
       "phone4NameB",
       personName(1)
     );
-
 
     localStorage.setItem(
       "phone4LangA",
       personLanguage(0)
     );
 
-
     localStorage.setItem(
       "phone4LangB",
       personLanguage(1)
     );
-
 
     startConversation();
 
@@ -2651,59 +2600,45 @@ $("start").onclick =
 
 
 $("next").onclick =
-  nextTurn;
+  () =>
+    nextTurn(
+      activeRecordingId,
+      sessionId
+    );
 
-
-/*
-Klik na mikrofon
-ima isto funkcijo
-kot NAPREJ.
-*/
 
 $("mic").onclick =
-  nextTurn;
+  () =>
+    nextTurn(
+      activeRecordingId,
+      sessionId
+    );
 
-
-/*
-KONČAJ:
-popoln reset pogovora.
-*/
 
 $("end").onclick =
   clearConversation;
 
 
-/*
-Zobnik:
-tudi konča trenutno
-sejo in gre v nastavitve.
-*/
-
 $("settings").onclick =
   clearConversation;
 
 
-/* ===========================
-   RESTORE SETTINGS
-=========================== */
+/* OBNOVI NASTAVITVE */
 
 const savedNameA =
   localStorage.getItem(
     "phone4NameA"
   );
 
-
 const savedNameB =
   localStorage.getItem(
     "phone4NameB"
   );
 
-
 const savedLangA =
   localStorage.getItem(
     "phone4LangA"
   );
-
 
 const savedLangB =
   localStorage.getItem(
@@ -2711,25 +2646,15 @@ const savedLangB =
   );
 
 
-if(
-  savedNameA
-){
-
+if(savedNameA){
   $("nameA").value =
     savedNameA;
-
 }
 
-
-if(
-  savedNameB
-){
-
+if(savedNameB){
   $("nameB").value =
     savedNameB;
-
 }
-
 
 if(
   savedLangA &&
@@ -2737,12 +2662,9 @@ if(
     savedLangA
   ]
 ){
-
   $("langA").value =
     savedLangA;
-
 }
-
 
 if(
   savedLangB &&
@@ -2750,20 +2672,27 @@ if(
     savedLangB
   ]
 ){
-
   $("langB").value =
     savedLangB;
-
 }
 
 
-/* ===========================
-   CLEANUP
-=========================== */
+/* CLEANUP */
 
 window.addEventListener(
   "beforeunload",
   () => {
+
+    /*
+    Razveljavi dogodke.
+    */
+
+    sessionId++;
+
+    processingId++;
+
+    activeRecordingId =
+      ++recordingId;
 
 
     stopVoiceDetection();
@@ -2773,19 +2702,12 @@ window.addEventListener(
       .cancel();
 
 
-    if(
-      mediaStream
-    ){
-
-      mediaStream
-        .getTracks()
-        .forEach(
-          track =>
-            track.stop()
-        );
-
-    }
-
+    mediaStream
+      ?.getTracks()
+      .forEach(
+        track =>
+          track.stop()
+      );
 
   }
 );
@@ -2793,5 +2715,4 @@ window.addEventListener(
 </script>
 
 </body>
-
 </html>
