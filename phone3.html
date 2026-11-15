@@ -1,0 +1,3308 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+<meta name="theme-color" content="#071120">
+<title>Voice Conversation</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --bg:#071120;
+  --card:#111e32;
+  --card2:#172842;
+  --line:#2a4062;
+  --text:#f5f8ff;
+  --muted:#91a0b8;
+  --blue:#3285ff;
+  --green:#22c875;
+  --red:#ff5368;
+  --yellow:#ffd84d;
+  --cyan:#29d7c5
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif
+}
+
+body{padding:17px}
+
+.app{
+  max-width:620px;
+  margin:auto
+}
+
+.hidden{
+  display:none!important
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:7px 2px 20px
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-1px
+}
+
+.logo span{
+  color:var(--blue)
+}
+
+.connection{
+  padding:8px 11px;
+  border-radius:18px;
+  background:#16243a;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:bold
+}
+
+.card{
+  padding:17px;
+  margin-bottom:15px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:linear-gradient(145deg,var(--card2),var(--card));
+  box-shadow:0 12px 30px #0004
+}
+
+.title{
+  margin-bottom:11px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:1px
+}
+
+select{
+  width:100%;
+  min-height:55px;
+  padding:0 14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  outline:none;
+  background:#091524;
+  color:white;
+  font-size:17px
+}
+
+select:focus{
+  border-color:var(--blue)
+}
+
+button{
+  touch-action:manipulation
+}
+
+button:disabled{
+  opacity:.38
+}
+
+.primary{
+  width:100%;
+  min-height:58px;
+  margin-top:12px;
+  border:0;
+  border-radius:15px;
+  background:var(--blue);
+  color:white;
+  font-size:17px;
+  font-weight:900
+}
+
+.secondary{
+  width:100%;
+  min-height:54px;
+  margin-top:10px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#1b2e49;
+  color:white;
+  font-size:16px;
+  font-weight:bold
+}
+
+.code{
+  margin:9px 0;
+  text-align:center;
+  color:var(--yellow);
+  font-size:48px;
+  font-weight:900;
+  letter-spacing:9px
+}
+
+.hint{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5
+}
+
+.notice{
+  min-height:24px;
+  margin:13px 0;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.4
+}
+
+.nameField{
+  width:100%;
+  min-height:52px;
+  margin-top:10px;
+  padding:0 14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  outline:none;
+  background:#091524;
+  color:white;
+  font-size:16px
+}
+
+.pair{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:9px
+}
+
+.person{
+  min-width:0;
+  padding:12px 8px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#0a1626;
+  text-align:center
+}
+
+.personName{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:.7px
+}
+
+.personLanguage{
+  margin-top:6px;
+  font-size:14px;
+  font-weight:bold;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+
+.swap{
+  color:var(--cyan);
+  font-size:22px
+}
+
+.turn{
+  margin-bottom:15px;
+  padding:13px;
+  border-radius:16px;
+  text-align:center;
+  font-size:14px;
+  font-weight:900
+}
+
+.turnMine{
+  border:1px solid #246348;
+  background:#123d30;
+  color:#60e9a5
+}
+
+.turnOther{
+  border:1px solid #284b75;
+  background:#172a45;
+  color:#8abaff
+}
+
+.turnBusy{
+  border:1px solid #716028;
+  background:#453b16;
+  color:#ffe181
+}
+
+.turnClosed{
+  border:1px solid #74404a;
+  background:#421e26;
+  color:#ff9aa6
+}
+
+.mic{
+  display:block;
+  width:172px;
+  height:172px;
+  margin:18px auto 13px;
+  border:0;
+  border-radius:50%;
+  background:linear-gradient(145deg,#3590ff,#1462d2);
+  color:white;
+  font-size:62px;
+  box-shadow:
+    0 0 0 13px #1e70e52b,
+    0 18px 45px #0007
+}
+
+.mic.recording{
+  background:linear-gradient(145deg,#ff6374,#c9273d);
+  box-shadow:
+    0 0 0 13px #ff536829,
+    0 18px 45px #0007
+}
+
+.mic:disabled{
+  box-shadow:none
+}
+
+.micLabel{
+  text-align:center;
+  font-size:19px;
+  font-weight:900
+}
+
+.micHelp{
+  min-height:21px;
+  margin-top:7px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px
+}
+
+.last{
+  padding:14px;
+  margin-top:14px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#091524
+}
+
+.lastTitle{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:1px
+}
+
+.original{
+  margin-top:9px;
+  color:#cbd5e4;
+  font-size:16px;
+  line-height:1.4
+}
+
+.translation{
+  margin-top:8px;
+  color:var(--yellow);
+  font-size:20px;
+  line-height:1.4;
+  font-weight:bold
+}
+
+.speak{
+  width:100%;
+  min-height:49px;
+  margin-top:12px;
+  border:1px solid #725b12;
+  border-radius:13px;
+  background:#4c3b08;
+  color:#ffe58c;
+  font-weight:bold
+}
+
+.historyHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:11px
+}
+
+.historyHeader span{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:1px
+}
+
+.clearButton{
+  border:0;
+  background:transparent;
+  color:#ff8290;
+  font-size:13px;
+  font-weight:bold
+}
+
+.message{
+  padding:13px;
+  margin-bottom:10px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#091524
+}
+
+.message.mine{
+  border-left:4px solid var(--blue)
+}
+
+.message.other{
+  border-left:4px solid var(--cyan)
+}
+
+.messageMeta{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:bold
+}
+
+.messageOriginal{
+  margin-top:7px;
+  color:#c4cede;
+  font-size:14px;
+  line-height:1.4
+}
+
+.messageTranslation{
+  margin-top:5px;
+  color:var(--yellow);
+  font-size:17px;
+  line-height:1.4;
+  font-weight:bold
+}
+
+.empty{
+  padding:24px 10px;
+  text-align:center;
+  color:#657791;
+  font-size:14px
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:12px
+}
+
+.action{
+  min-height:53px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#152945;
+  color:white;
+  font-weight:bold
+}
+
+.leave{
+  border-color:#6a5730;
+  background:#342a17;
+  color:#ffd77d
+}
+
+.endCall{
+  grid-column:1 / -1;
+  min-height:58px;
+  margin-top:2px;
+  border:1px solid #853c49;
+  border-radius:15px;
+  background:#5a202b;
+  color:#ffd7dc;
+  font-size:16px;
+  font-weight:900
+}
+
+.fullIcon{
+  text-align:center;
+  font-size:65px;
+  margin:8px 0 15px
+}
+
+.fullTitle{
+  text-align:center;
+  color:#ff9aa6;
+  font-size:22px;
+  font-weight:900
+}
+
+.fullText{
+  margin-top:10px;
+  text-align:center;
+  color:var(--muted);
+  line-height:1.5
+}
+
+.footer{
+  padding:16px 0 8px;
+  text-align:center;
+  color:#53657e;
+  font-size:11px
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+
+    <div class="logo">
+      VOICE<span>CONVERSATION</span>
+    </div>
+
+    <div id="connection" class="connection">
+      ● NI POVEZANO
+    </div>
+
+  </div>
+
+
+  <!-- ZAČETNI ZASLON -->
+
+  <div id="setupScreen">
+
+    <div class="card">
+
+      <div class="title">
+        MOJE IME
+      </div>
+
+      <input
+        id="deviceName"
+        class="nameField"
+        maxlength="30"
+        placeholder="Na primer Sašo"
+      >
+
+      <div class="title" style="margin-top:16px">
+        MOJ JEZIK
+      </div>
+
+      <select id="language">
+        <option value="sl">🇸🇮 Slovenščina</option>
+        <option value="hu">🇭🇺 Magyar</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="tl">🇵🇭 Filipino</option>
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="hr">🇭🇷 Hrvatski</option>
+      </select>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="title">
+        POGOVORNA SOBA
+      </div>
+
+      <div class="code">
+        1234
+      </div>
+
+      <div class="hint">
+        Za prototip vsi uporabljajo isto kodo.
+        V sobi sta lahko največ dve napravi.
+      </div>
+
+      <button id="createRoom" class="primary">
+        USTVARI NOV POGOVOR
+      </button>
+
+      <button id="joinRoom" class="secondary">
+        PRIDRUŽI SE SOBI 1234
+      </button>
+
+    </div>
+
+    <div id="setupNotice" class="notice"></div>
+
+  </div>
+
+
+  <!-- ČAKANJE -->
+
+  <div id="waitingScreen" class="hidden">
+
+    <div class="card">
+
+      <div class="title">
+        SOBA
+      </div>
+
+      <div class="code">
+        1234
+      </div>
+
+      <div class="hint">
+        Čakam, da se poveže druga oseba.
+        Drugi telefon naj odpre isti phone3.html
+        in klikne »Pridruži se sobi 1234«.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="turn turnBusy">
+        ⏳ ČAKAM NA DRUGO OSEBO
+      </div>
+
+      <button id="cancelWaiting" class="secondary">
+        🚪 ZAPUSTI ČAKANJE
+      </button>
+
+      <button id="endWaiting" class="endCall">
+        📞 PREKINI IN ZAPRI SOBO
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- POLNA SOBA -->
+
+  <div id="fullScreen" class="hidden">
+
+    <div class="card">
+
+      <div class="fullIcon">
+        🔒
+      </div>
+
+      <div class="fullTitle">
+        POGOVOR JE POLN
+      </div>
+
+      <div class="fullText">
+        V sobi 1234 sta že povezani dve različni napravi.
+        Počakaj, da ena oseba zapusti pogovor ali ga prekine.
+      </div>
+
+      <button id="backFromFull" class="secondary">
+        NAZAJ
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ZAPRT POGOVOR -->
+
+  <div id="closedScreen" class="hidden">
+
+    <div class="card">
+
+      <div class="fullIcon">
+        📞
+      </div>
+
+      <div class="fullTitle">
+        POGOVOR JE BIL PREKINJEN
+      </div>
+
+      <div class="fullText">
+        Druga oseba je zaključila pogovor.
+        Oba telefona sta bila odjavljena iz sobe 1234.
+      </div>
+
+      <button id="backFromClosed" class="primary">
+        NA ZAČETEK
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- POGOVOR -->
+
+  <div id="conversationScreen" class="hidden">
+
+    <div class="card">
+
+      <div class="pair">
+
+        <div class="person">
+
+          <div class="personName">
+            JAZ
+          </div>
+
+          <div id="myNameDisplay" class="personLanguage">
+            -
+          </div>
+
+          <div id="myLanguage" class="personLanguage">
+            -
+          </div>
+
+        </div>
+
+        <div class="swap">
+          ⇄
+        </div>
+
+        <div class="person">
+
+          <div class="personName">
+            DRUGA OSEBA
+          </div>
+
+          <div id="otherNameDisplay" class="personLanguage">
+            -
+          </div>
+
+          <div id="otherLanguage" class="personLanguage">
+            -
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="hint" style="margin-top:12px">
+        SOBA 1234 • NAJVEČ 2 TELEFONA
+      </div>
+
+    </div>
+
+
+    <div id="turnStatus" class="turn turnOther">
+      PRIPRAVLJAM POGOVOR ...
+    </div>
+
+
+    <div class="card">
+
+      <button id="microphone" class="mic" disabled>
+        🎤
+      </button>
+
+      <div id="micLabel" class="micLabel">
+        POČAKAJ
+      </div>
+
+      <div id="micHelp" class="micHelp">
+        Povezujem telefona ...
+      </div>
+
+
+      <div id="lastResult" class="last hidden">
+
+        <div class="lastTitle">
+          ZADNJI PREVOD
+        </div>
+
+        <div id="lastOriginal" class="original"></div>
+
+        <div id="lastTranslation" class="translation"></div>
+
+        <button id="repeatTranslation" class="speak">
+          🔊 PONOVI PREVOD
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="historyHeader">
+
+        <span>
+          ZGODOVINA POGOVORA
+        </span>
+
+        <button
+          id="clearConversation"
+          class="clearButton"
+        >
+          POČISTI
+        </button>
+
+      </div>
+
+      <div id="history">
+
+        <div class="empty">
+          Pogovor se še ni začel.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button id="forceTurn" class="action">
+        ⇄ PREDAJ BESEDO
+      </button>
+
+      <button id="leaveRoom" class="action leave">
+        🚪 ZAPUSTI
+      </button>
+
+      <button id="endCall" class="endCall">
+        📞 PREKINI POGOVOR
+      </button>
+
+    </div>
+
+
+    <div id="conversationNotice" class="notice"></div>
+
+    <div class="footer">
+      SOBA 1234 • DVA TELEFONA
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+const URL =
+  "https://kdixpdxmdfdbxpbuljfe.supabase.co";
+
+const KEY =
+  "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
+
+const ROOM =
+  "1234";
+
+
+const HEADERS = {
+  "apikey": KEY,
+  "Authorization": "Bearer " + KEY
+};
+
+
+const JSON_HEADERS = {
+  ...HEADERS,
+  "Content-Type": "application/json"
+};
+
+
+const LANGUAGES = {
+
+  sl: {
+    name: "🇸🇮 Slovenščina",
+    tts: "sl-SI"
+  },
+
+  hu: {
+    name: "🇭🇺 Magyar",
+    tts: "hu-HU"
+  },
+
+  en: {
+    name: "🇬🇧 English",
+    tts: "en-US"
+  },
+
+  tl: {
+    name: "🇵🇭 Filipino",
+    tts: "fil-PH"
+  },
+
+  it: {
+    name: "🇮🇹 Italiano",
+    tts: "it-IT"
+  },
+
+  hr: {
+    name: "🇭🇷 Hrvatski",
+    tts: "hr-HR"
+  }
+
+};
+
+
+const $ = id =>
+  document.getElementById(id);
+
+
+let roomCode = ROOM;
+
+let deviceId =
+  getDeviceId();
+
+let deviceName = "";
+
+let myLanguage = "sl";
+
+let otherDevice = null;
+
+let otherLanguage = null;
+
+let otherName = "";
+
+let mediaRecorder = null;
+
+let mediaStream = null;
+
+let audioChunks = [];
+
+let pollingTimer = null;
+
+let busy = false;
+
+let lastMessageId = 0;
+
+let lastSpokenId = 0;
+
+let currentTranslation = "";
+
+let roomWasConnected = false;
+
+
+function getDeviceId() {
+
+  let id =
+    localStorage.getItem(
+      "voiceConversationDevice"
+    );
+
+
+  if (!id) {
+
+    id =
+      "dev_" +
+      crypto.randomUUID();
+
+    localStorage.setItem(
+      "voiceConversationDevice",
+      id
+    );
+
+  }
+
+
+  return id;
+}
+
+
+function showOnly(screenId) {
+
+  [
+    "setupScreen",
+    "waitingScreen",
+    "fullScreen",
+    "closedScreen",
+    "conversationScreen"
+  ]
+  .forEach(id => {
+
+    $(id).classList.toggle(
+      "hidden",
+      id !== screenId
+    );
+
+  });
+
+}
+
+
+function setNotice(
+  id,
+  text,
+  color
+) {
+
+  $(id).innerText =
+    text || "";
+
+  $(id).style.color =
+    color || "#91a0b8";
+
+}
+
+
+async function api(
+  path,
+  options = {}
+) {
+
+  const response =
+    await fetch(
+
+      URL + "/rest/v1/" + path,
+
+      {
+
+        ...options,
+
+        headers: {
+
+          ...HEADERS,
+
+          ...(options.headers || {})
+
+        },
+
+        cache: "no-store"
+
+      }
+
+    );
+
+
+  const raw =
+    await response.text();
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "HTTP " +
+      response.status +
+      " " +
+      raw
+    );
+
+  }
+
+
+  if (!raw) {
+    return null;
+  }
+
+
+  try {
+
+    return JSON.parse(raw);
+
+  } catch {
+
+    return raw;
+
+  }
+
+}
+
+
+function readSettings() {
+
+  myLanguage =
+    $("language").value;
+
+
+  deviceName =
+    $("deviceName")
+      .value
+      .trim();
+
+
+  if (!deviceName) {
+
+    deviceName =
+      "Telefon";
+
+  }
+
+
+  localStorage.setItem(
+    "voiceConversationName",
+    deviceName
+  );
+
+
+  localStorage.setItem(
+    "voiceConversationLanguage",
+    myLanguage
+  );
+
+}
+
+
+function restoreSettings() {
+
+  const savedName =
+    localStorage.getItem(
+      "voiceConversationName"
+    );
+
+
+  const savedLanguage =
+    localStorage.getItem(
+      "voiceConversationLanguage"
+    );
+
+
+  if (savedName) {
+
+    $("deviceName").value =
+      savedName;
+
+  }
+
+
+  if (
+    savedLanguage &&
+    LANGUAGES[savedLanguage]
+  ) {
+
+    $("language").value =
+      savedLanguage;
+
+  }
+
+}
+
+
+async function getRoom() {
+
+  const rows =
+    await api(
+
+      "conversation_rooms" +
+      "?room_code=eq." +
+      ROOM +
+      "&select=*"
+
+    );
+
+
+  return rows?.[0] || null;
+
+}
+
+
+async function getDevices() {
+
+  return await api(
+
+    "conversation_devices" +
+    "?room_code=eq." +
+    ROOM +
+    "&select=*" +
+    "&order=joined_at.asc"
+
+  );
+
+}
+
+
+async function getMessages() {
+
+  return await api(
+
+    "conversation_messages" +
+    "?room_code=eq." +
+    ROOM +
+    "&select=*" +
+    "&order=id.asc" +
+    "&limit=50"
+
+  );
+
+}
+
+
+async function saveDevice() {
+
+  await api(
+
+    "conversation_devices" +
+    "?on_conflict=room_code,device_id",
+
+    {
+
+      method: "POST",
+
+      headers: {
+
+        ...JSON_HEADERS,
+
+        "Prefer":
+          "resolution=merge-duplicates,return=minimal"
+
+      },
+
+      body: JSON.stringify({
+
+        room_code:
+          ROOM,
+
+        device_id:
+          deviceId,
+
+        device_name:
+          deviceName,
+
+        language:
+          myLanguage,
+
+        joined_at:
+          new Date().toISOString()
+
+      })
+
+    }
+
+  );
+
+}
+
+
+async function createRoom() {
+
+  readSettings();
+
+
+  $("createRoom").disabled =
+    true;
+
+
+  setNotice(
+    "setupNotice",
+    "Pripravljam sobo 1234 ...",
+    "#ffd84d"
+  );
+
+
+  try {
+
+    const currentRoom =
+      await getRoom();
+
+
+    const devices =
+      await getDevices();
+
+
+    const otherDevices =
+      devices.filter(
+        item =>
+          item.device_id !== deviceId
+      );
+
+
+    if (
+      currentRoom &&
+      currentRoom.status !== "closed" &&
+      otherDevices.length > 0
+    ) {
+
+      throw new Error(
+        "Soba 1234 je že v uporabi."
+      );
+
+    }
+
+
+    await api(
+
+      "conversation_messages" +
+      "?room_code=eq." +
+      ROOM,
+
+      {
+        method: "DELETE"
+      }
+
+    );
+
+
+    await api(
+
+      "conversation_devices" +
+      "?room_code=eq." +
+      ROOM,
+
+      {
+        method: "DELETE"
+      }
+
+    );
+
+
+    if (currentRoom) {
+
+      await api(
+
+        "conversation_rooms" +
+        "?room_code=eq." +
+        ROOM,
+
+        {
+
+          method: "PATCH",
+
+          headers: {
+
+            ...JSON_HEADERS,
+
+            "Prefer":
+              "return=minimal"
+
+          },
+
+          body: JSON.stringify({
+
+            status:
+              "waiting",
+
+            active_device:
+              deviceId,
+
+            updated_at:
+              new Date().toISOString()
+
+          })
+
+        }
+
+      );
+
+    } else {
+
+      await api(
+
+        "conversation_rooms",
+
+        {
+
+          method: "POST",
+
+          headers: {
+
+            ...JSON_HEADERS,
+
+            "Prefer":
+              "return=minimal"
+
+          },
+
+          body: JSON.stringify({
+
+            room_code:
+              ROOM,
+
+            status:
+              "waiting",
+
+            active_device:
+              deviceId,
+
+            updated_at:
+              new Date().toISOString()
+
+          })
+
+        }
+
+      );
+
+    }
+
+
+    await saveDevice();
+
+
+    roomWasConnected =
+      false;
+
+
+    $("connection").innerText =
+      "● ČAKAM";
+
+    $("connection").style.color =
+      "#ffd84d";
+
+
+    showOnly(
+      "waitingScreen"
+    );
+
+
+    startPolling();
+
+
+  } catch (error) {
+
+    setNotice(
+      "setupNotice",
+      "NAPAKA: " +
+      error.message,
+      "#ff5368"
+    );
+
+  }
+
+
+  $("createRoom").disabled =
+    false;
+
+}
+
+
+async function joinRoom() {
+
+  readSettings();
+
+
+  $("joinRoom").disabled =
+    true;
+
+
+  setNotice(
+    "setupNotice",
+    "Povezujem s sobo 1234 ...",
+    "#ffd84d"
+  );
+
+
+  try {
+
+    const room =
+      await getRoom();
+
+
+    if (
+      !room ||
+      room.status === "closed"
+    ) {
+
+      throw new Error(
+        "Soba 1234 trenutno ni odprta."
+      );
+
+    }
+
+
+    const devices =
+      await getDevices();
+
+
+    const alreadyJoined =
+      devices.some(
+        item =>
+          item.device_id === deviceId
+      );
+
+
+    if (
+      !alreadyJoined &&
+      devices.length >= 2
+    ) {
+
+      showOnly(
+        "fullScreen"
+      );
+
+      $("connection").innerText =
+        "● SOBA POLNA";
+
+      $("connection").style.color =
+        "#ff5368";
+
+      return;
+
+    }
+
+
+    await saveDevice();
+
+
+    const updatedDevices =
+      await getDevices();
+
+
+    if (
+      updatedDevices.length > 2
+    ) {
+
+      await removeMyDevice();
+
+      showOnly(
+        "fullScreen"
+      );
+
+      return;
+
+    }
+
+
+    let activeDevice =
+      room.active_device;
+
+
+    if (
+      !activeDevice ||
+      !updatedDevices.some(
+        item =>
+          item.device_id === activeDevice
+      )
+    ) {
+
+      activeDevice =
+        updatedDevices[0].device_id;
+
+    }
+
+
+    await updateRoom({
+
+      status:
+        updatedDevices.length === 2
+          ? "ready"
+          : "waiting",
+
+      active_device:
+        activeDevice
+
+    });
+
+
+    roomWasConnected =
+      updatedDevices.length === 2;
+
+
+    if (roomWasConnected) {
+
+      openConversation();
+
+    } else {
+
+      showOnly(
+        "waitingScreen"
+      );
+
+    }
+
+
+    startPolling();
+
+
+  } catch (error) {
+
+    setNotice(
+      "setupNotice",
+      "NAPAKA: " +
+      error.message,
+      "#ff5368"
+    );
+
+  }
+
+
+  $("joinRoom").disabled =
+    false;
+
+}
+
+
+async function updateRoom(
+  values
+) {
+
+  await api(
+
+    "conversation_rooms" +
+    "?room_code=eq." +
+    ROOM,
+
+    {
+
+      method: "PATCH",
+
+      headers: {
+
+        ...JSON_HEADERS,
+
+        "Prefer":
+          "return=minimal"
+
+      },
+
+      body: JSON.stringify({
+
+        ...values,
+
+        updated_at:
+          new Date().toISOString()
+
+      })
+
+    }
+
+  );
+
+}
+
+
+function openConversation() {
+
+  showOnly(
+    "conversationScreen"
+  );
+
+
+  $("connection").innerText =
+    "● POVEZANO";
+
+  $("connection").style.color =
+    "#22c875";
+
+
+  $("myNameDisplay").innerText =
+    deviceName;
+
+
+  $("myLanguage").innerText =
+    LANGUAGES[myLanguage]
+      ?.name ||
+    myLanguage;
+
+}
+
+
+function startPolling() {
+
+  if (pollingTimer) {
+
+    clearInterval(
+      pollingTimer
+    );
+
+  }
+
+
+  poll();
+
+
+  pollingTimer =
+    setInterval(
+      poll,
+      700
+    );
+
+}
+
+
+async function poll() {
+
+  try {
+
+    const [
+      room,
+      devices,
+      messages
+    ] =
+      await Promise.all([
+
+        getRoom(),
+
+        getDevices(),
+
+        getMessages()
+
+      ]);
+
+
+    if (!room) {
+
+      showClosed(
+        "Soba 1234 ne obstaja več."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      room.status === "closed"
+    ) {
+
+      showClosed(
+        "Pogovor je bil prekinjen."
+      );
+
+      return;
+
+    }
+
+
+    const me =
+      devices.find(
+        item =>
+          item.device_id === deviceId
+      );
+
+
+    if (!me) {
+
+      if (roomWasConnected) {
+
+        showClosed(
+          "Tvoja naprava ni več v pogovoru."
+        );
+
+      }
+
+      return;
+
+    }
+
+
+    const others =
+      devices.filter(
+        item =>
+          item.device_id !== deviceId
+      );
+
+
+    if (
+      others.length > 1
+    ) {
+
+      showOnly(
+        "fullScreen"
+      );
+
+      return;
+
+    }
+
+
+    const other =
+      others[0];
+
+
+    if (!other) {
+
+      otherDevice =
+        null;
+
+      otherLanguage =
+        null;
+
+      otherName =
+        "";
+
+
+      if (roomWasConnected) {
+
+        $("connection").innerText =
+          "● DRUGA OSEBA JE ODŠLA";
+
+        $("connection").style.color =
+          "#ffd84d";
+
+
+        showOnly(
+          "waitingScreen"
+        );
+
+      }
+
+
+      return;
+
+    }
+
+
+    otherDevice =
+      other.device_id;
+
+
+    otherLanguage =
+      other.language;
+
+
+    otherName =
+      other.device_name ||
+      "Druga oseba";
+
+
+    roomWasConnected =
+      true;
+
+
+    if (
+      $("conversationScreen")
+        .classList
+        .contains("hidden")
+    ) {
+
+      openConversation();
+
+    }
+
+
+    $("otherNameDisplay").innerText =
+      otherName;
+
+
+    $("otherLanguage").innerText =
+      LANGUAGES[otherLanguage]
+        ?.name ||
+      otherLanguage;
+
+
+    renderHistory(
+      messages
+    );
+
+
+    updateTurn(
+      room,
+      other
+    );
+
+
+    const incoming =
+      messages
+
+        .filter(
+          message =>
+            message.sender_device !==
+            deviceId
+        )
+
+        .sort(
+          (a,b) =>
+            b.id - a.id
+        )[0];
+
+
+    if (
+      incoming &&
+      incoming.id >
+      lastMessageId
+    ) {
+
+      lastMessageId =
+        incoming.id;
+
+
+      currentTranslation =
+        incoming.translated_text ||
+        "";
+
+
+      $("lastOriginal").innerText =
+        incoming.original_text ||
+        "";
+
+
+      $("lastTranslation").innerText =
+        incoming.translated_text ||
+        "";
+
+
+      $("lastResult")
+        .classList
+        .remove("hidden");
+
+    }
+
+
+    if (
+      incoming &&
+      incoming.id >
+      lastSpokenId &&
+      room.status === "speaking" &&
+      room.active_device === deviceId
+    ) {
+
+      lastSpokenId =
+        incoming.id;
+
+
+      speakIncoming(
+        incoming
+      );
+
+    }
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    $("connection").innerText =
+      "● NAPAKA POVEZAVE";
+
+
+    $("connection").style.color =
+      "#ff5368";
+
+  }
+
+}
+
+
+function updateTurn(
+  room,
+  other
+) {
+
+  const mine =
+    room.active_device ===
+    deviceId;
+
+
+  $("microphone").disabled =
+    !mine ||
+    room.status !== "ready" ||
+    !other ||
+    busy;
+
+
+  if (!other) {
+
+    $("turnStatus").className =
+      "turn turnBusy";
+
+
+    $("turnStatus").innerText =
+      "ČAKAM NA DRUGO OSEBO";
+
+
+    $("micLabel").innerText =
+      "POČAKAJ";
+
+
+    $("micHelp").innerText =
+      "Druga oseba še ni povezana.";
+
+
+    return;
+
+  }
+
+
+  if (
+    room.status === "recording"
+  ) {
+
+    $("turnStatus").className =
+      "turn turnBusy";
+
+
+    if (mine) {
+
+      $("turnStatus").innerText =
+        "SNEMAŠ";
+
+
+      $("micLabel").innerText =
+        "GOVORI";
+
+
+      $("micHelp").innerText =
+        "Ko končaš, ponovno pritisni mikrofon.";
+
+    } else {
+
+      $("turnStatus").innerText =
+        "DRUGA OSEBA GOVORI";
+
+
+      $("micLabel").innerText =
+        "MIKROFON JE ZAKLENJEN";
+
+
+      $("micHelp").innerText =
+        "Počakaj na prevod.";
+
+    }
+
+
+    return;
+
+  }
+
+
+  if (
+    room.status ===
+    "translating"
+  ) {
+
+    $("turnStatus").className =
+      "turn turnBusy";
+
+
+    $("turnStatus").innerText =
+      "PREPOZNAVAM IN PREVAJAM";
+
+
+    $("micLabel").innerText =
+      "POČAKAJ";
+
+
+    $("micHelp").innerText =
+      "AI pripravlja prevod.";
+
+
+    return;
+
+  }
+
+
+  if (
+    room.status === "speaking"
+  ) {
+
+    $("turnStatus").className =
+      "turn turnBusy";
+
+
+    $("turnStatus").innerText =
+      mine
+        ? "PREDVAJAM PREVOD"
+        : "DRUGA OSEBA POSLUŠA PREVOD";
+
+
+    $("micLabel").innerText =
+      "POČAKAJ";
+
+
+    $("micHelp").innerText =
+      "Mikrofona sta začasno zaklenjena.";
+
+
+    return;
+
+  }
+
+
+  if (mine) {
+
+    $("turnStatus").className =
+      "turn turnMine";
+
+
+    $("turnStatus").innerText =
+      "NA VRSTI SI TI";
+
+
+    $("micLabel").innerText =
+      "ZAČNI GOVORITI";
+
+
+    $("micHelp").innerText =
+      "Pritisni mikrofon, govori in ga ponovno pritisni.";
+
+  } else {
+
+    $("turnStatus").className =
+      "turn turnOther";
+
+
+    $("turnStatus").innerText =
+      "NA VRSTI JE DRUGA OSEBA";
+
+
+    $("micLabel").innerText =
+      "POČAKAJ";
+
+
+    $("micHelp").innerText =
+      "Mikrofon je trenutno zaklenjen.";
+
+  }
+
+}
+
+
+async function microphoneClick() {
+
+  if (busy) {
+    return;
+  }
+
+
+  if (
+    mediaRecorder &&
+    mediaRecorder.state ===
+    "recording"
+  ) {
+
+    stopRecording();
+
+  } else {
+
+    await startRecording();
+
+  }
+
+}
+
+
+async function startRecording() {
+
+  if (
+    !otherDevice ||
+    !otherLanguage
+  ) {
+
+    return;
+
+  }
+
+
+  busy =
+    true;
+
+
+  try {
+
+    const room =
+      await getRoom();
+
+
+    if (
+      !room ||
+      room.status !== "ready" ||
+      room.active_device !== deviceId
+    ) {
+
+      throw new Error(
+        "Trenutno nisi na vrsti."
+      );
+
+    }
+
+
+    mediaStream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+          audio: true
+        });
+
+
+    audioChunks =
+      [];
+
+
+    let options =
+      {};
+
+
+    if (
+      MediaRecorder
+        .isTypeSupported(
+          "audio/mp4"
+        )
+    ) {
+
+      options = {
+        mimeType:
+          "audio/mp4"
+      };
+
+    } else if (
+      MediaRecorder
+        .isTypeSupported(
+          "audio/webm"
+        )
+    ) {
+
+      options = {
+        mimeType:
+          "audio/webm"
+      };
+
+    }
+
+
+    mediaRecorder =
+      new MediaRecorder(
+        mediaStream,
+        options
+      );
+
+
+    mediaRecorder
+      .ondataavailable =
+        event => {
+
+          if (
+            event.data.size
+          ) {
+
+            audioChunks.push(
+              event.data
+            );
+
+          }
+
+        };
+
+
+    mediaRecorder.onstop =
+      translateRecording;
+
+
+    await updateRoom({
+
+      status:
+        "recording",
+
+      active_device:
+        deviceId
+
+    });
+
+
+    mediaRecorder.start();
+
+
+    $("microphone")
+      .classList
+      .add("recording");
+
+
+    $("microphone").innerText =
+      "■";
+
+
+    $("micLabel").innerText =
+      "SNEMAM";
+
+
+    $("micHelp").innerText =
+      "Ponovno pritisni za konec.";
+
+
+  } catch (error) {
+
+    setNotice(
+      "conversationNotice",
+      "NAPAKA: " +
+      error.message,
+      "#ff5368"
+    );
+
+
+    await setRoomReady(
+      deviceId
+    );
+
+  }
+
+
+  busy =
+    false;
+
+}
+
+
+function stopRecording() {
+
+  if (
+    !mediaRecorder ||
+    mediaRecorder.state !==
+    "recording"
+  ) {
+
+    return;
+
+  }
+
+
+  busy =
+    true;
+
+
+  mediaRecorder.stop();
+
+
+  if (mediaStream) {
+
+    mediaStream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
+      );
+
+  }
+
+
+  $("microphone")
+    .classList
+    .remove("recording");
+
+
+  $("microphone").innerText =
+    "🎤";
+
+
+  $("micLabel").innerText =
+    "PREVAJAM";
+
+
+  $("micHelp").innerText =
+    "Počakaj trenutek.";
+
+}
+
+
+async function translateRecording() {
+
+  try {
+
+    await updateRoom({
+
+      status:
+        "translating",
+
+      active_device:
+        deviceId
+
+    });
+
+
+    const mime =
+      mediaRecorder.mimeType ||
+      "audio/webm";
+
+
+    const extension =
+      mime.includes("mp4")
+        ? "m4a"
+        : "webm";
+
+
+    const blob =
+      new Blob(
+        audioChunks,
+        {
+          type:
+            mime
+        }
+      );
+
+
+    const file =
+      new File(
+        [blob],
+        "voice." +
+        extension,
+        {
+          type:
+            mime
+        }
+      );
+
+
+    const form =
+      new FormData();
+
+
+    form.append(
+      "audio",
+      file
+    );
+
+
+    form.append(
+      "language",
+      myLanguage
+    );
+
+
+    form.append(
+      "target_language",
+      otherLanguage
+    );
+
+
+    const response =
+      await fetch(
+
+        URL +
+        "/functions/v1/" +
+        "voice-transcribe",
+
+        {
+
+          method:
+            "POST",
+
+          headers:
+            HEADERS,
+
+          body:
+            form
+
+        }
+
+      );
+
+
+    const raw =
+      await response.text();
+
+
+    let data;
+
+
+    try {
+
+      data =
+        JSON.parse(raw);
+
+    } catch {
+
+      throw new Error(
+        "Neveljaven odgovor prevajalnika."
+      );
+
+    }
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.detail ||
+        data.error ||
+        raw
+      );
+
+    }
+
+
+    const original =
+      String(
+        data.text || ""
+      ).trim();
+
+
+    const translated =
+      String(
+        data.translated || ""
+      ).trim();
+
+
+    if (
+      !original ||
+      !translated
+    ) {
+
+      throw new Error(
+        "Prevod je prazen."
+      );
+
+    }
+
+
+    const inserted =
+      await api(
+
+        "conversation_messages",
+
+        {
+
+          method:
+            "POST",
+
+          headers: {
+
+            ...JSON_HEADERS,
+
+            "Prefer":
+              "return=representation"
+
+          },
+
+          body:
+            JSON.stringify({
+
+              room_code:
+                ROOM,
+
+              sender_device:
+                deviceId,
+
+              source_language:
+                myLanguage,
+
+              target_language:
+                otherLanguage,
+
+              original_text:
+                original,
+
+              translated_text:
+                translated
+
+            })
+
+        }
+
+      );
+
+
+    if (
+      inserted?.[0]
+    ) {
+
+      lastMessageId =
+        Math.max(
+          lastMessageId,
+          inserted[0].id
+        );
+
+    }
+
+
+    $("lastOriginal").innerText =
+      original;
+
+
+    $("lastTranslation").innerText =
+      translated;
+
+
+    $("lastResult")
+      .classList
+      .remove("hidden");
+
+
+    await updateRoom({
+
+      status:
+        "speaking",
+
+      active_device:
+        otherDevice
+
+    });
+
+
+    setNotice(
+      "conversationNotice",
+      "✓ PREVOD POSLAN DRUGI OSEBI",
+      "#22c875"
+    );
+
+
+  } catch (error) {
+
+    setNotice(
+      "conversationNotice",
+      "NAPAKA: " +
+      error.message,
+      "#ff5368"
+    );
+
+
+    await setRoomReady(
+      deviceId
+    );
+
+  }
+
+
+  busy =
+    false;
+
+
+  $("microphone")
+    .classList
+    .remove("recording");
+
+
+  $("microphone").innerText =
+    "🎤";
+
+}
+
+
+function speakIncoming(
+  message
+) {
+
+  const text =
+    String(
+      message.translated_text ||
+      ""
+    ).trim();
+
+
+  if (!text) {
+
+    setRoomReady(
+      deviceId
+    );
+
+    return;
+
+  }
+
+
+  speechSynthesis.cancel();
+
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+
+  utterance.lang =
+    LANGUAGES[myLanguage]
+      ?.tts ||
+    "en-US";
+
+
+  utterance.rate =
+    0.92;
+
+
+  utterance.pitch =
+    1;
+
+
+  utterance.volume =
+    1;
+
+
+  utterance.onend =
+    () => {
+
+      setRoomReady(
+        deviceId
+      );
+
+    };
+
+
+  utterance.onerror =
+    () => {
+
+      setRoomReady(
+        deviceId
+      );
+
+    };
+
+
+  speechSynthesis.speak(
+    utterance
+  );
+
+}
+
+
+async function setRoomReady(
+  activeDevice
+) {
+
+  try {
+
+    await updateRoom({
+
+      status:
+        "ready",
+
+      active_device:
+        activeDevice
+
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+}
+
+
+function renderHistory(
+  messages
+) {
+
+  if (!messages.length) {
+
+    $("history").innerHTML =
+      '<div class="empty">' +
+      'Pogovor se še ni začel.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  $("history").innerHTML =
+    messages
+
+      .slice(-10)
+
+      .reverse()
+
+      .map(message => {
+
+        const mine =
+          message.sender_device ===
+          deviceId;
+
+
+        const source =
+          LANGUAGES[
+            message.source_language
+          ]?.name ||
+          message.source_language;
+
+
+        const target =
+          LANGUAGES[
+            message.target_language
+          ]?.name ||
+          message.target_language;
+
+
+        const time =
+          new Date(
+            message.created_at
+          )
+          .toLocaleTimeString(
+            [],
+            {
+              hour:
+                "2-digit",
+
+              minute:
+                "2-digit"
+            }
+          );
+
+
+        return `
+
+          <div class="message ${mine ? "mine" : "other"}">
+
+            <div class="messageMeta">
+
+              <span>
+                ${mine ? "JAZ" : "DRUGA OSEBA"}
+                • ${source} → ${target}
+              </span>
+
+              <span>
+                ${time}
+              </span>
+
+            </div>
+
+            <div class="messageOriginal">
+              ${escapeHtml(
+                message.original_text ||
+                ""
+              )}
+            </div>
+
+            <div class="messageTranslation">
+              ${escapeHtml(
+                message.translated_text ||
+                ""
+              )}
+            </div>
+
+          </div>
+
+        `;
+
+      })
+
+      .join("");
+
+}
+
+
+function escapeHtml(
+  value
+) {
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+async function forceTurn() {
+
+  if (!otherDevice) {
+    return;
+  }
+
+
+  try {
+
+    const room =
+      await getRoom();
+
+
+    if (
+      !room ||
+      room.status !== "ready"
+    ) {
+
+      setNotice(
+        "conversationNotice",
+        "Besede med snemanjem, prevajanjem ali predvajanjem ni mogoče predati.",
+        "#ffd84d"
+      );
+
+      return;
+
+    }
+
+
+    const next =
+      room.active_device === deviceId
+        ? otherDevice
+        : deviceId;
+
+
+    await setRoomReady(
+      next
+    );
+
+
+  } catch (error) {
+
+    setNotice(
+      "conversationNotice",
+      "NAPAKA: " +
+      error.message,
+      "#ff5368"
+    );
+
+  }
+
+}
+
+
+async function clearConversation() {
+
+  if (
+    !confirm(
+      "Izbrišem zgodovino pogovora za oba telefona?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await api(
+
+      "conversation_messages" +
+      "?room_code=eq." +
+      ROOM,
+
+      {
+        method:
+          "DELETE"
+      }
+
+    );
+
+
+    $("history").innerHTML =
+      '<div class="empty">' +
+      'Pogovor se še ni začel.' +
+      '</div>';
+
+
+    $("lastResult")
+      .classList
+      .add("hidden");
+
+
+    currentTranslation =
+      "";
+
+
+    lastMessageId =
+      0;
+
+
+    lastSpokenId =
+      0;
+
+
+  } catch (error) {
+
+    setNotice(
+      "conversationNotice",
+      "Brisanje ni uspelo: " +
+      error.message,
+      "#ff5368"
+    );
+
+  }
+
+}
+
+
+async function removeMyDevice() {
+
+  await api(
+
+    "conversation_devices" +
+    "?room_code=eq." +
+    ROOM +
+    "&device_id=eq." +
+    encodeURIComponent(
+      deviceId
+    ),
+
+    {
+      method:
+        "DELETE"
+    }
+
+  );
+
+}
+
+
+async function leaveRoom() {
+
+  if (
+    !confirm(
+      "Želiš zapustiti pogovor? Druga oseba bo ostala v sobi."
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  stopLocalAudio();
+
+
+  try {
+
+    await removeMyDevice();
+
+
+    const remaining =
+      await getDevices();
+
+
+    if (
+      remaining.length
+    ) {
+
+      await updateRoom({
+
+        status:
+          "waiting",
+
+        active_device:
+          remaining[0].device_id
+
+      });
+
+    } else {
+
+      await updateRoom({
+
+        status:
+          "closed",
+
+        active_device:
+          null
+
+      });
+
+    }
+
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+
+  resetLocal();
+
+}
+
+
+async function endConversation() {
+
+  if (
+    !confirm(
+      "Končam pogovor za oba telefona?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  stopLocalAudio();
+
+
+  try {
+
+    await updateRoom({
+
+      status:
+        "closed",
+
+      active_device:
+        null
+
+    });
+
+
+    await api(
+
+      "conversation_devices" +
+      "?room_code=eq." +
+      ROOM,
+
+      {
+        method:
+          "DELETE"
+      }
+
+    );
+
+
+  } catch (error) {
+
+    setNotice(
+      "conversationNotice",
+      "NAPAKA PRI PREKINITVI: " +
+      error.message,
+      "#ff5368"
+    );
+
+    return;
+
+  }
+
+
+  showClosed(
+    "Pogovor je bil prekinjen."
+  );
+
+}
+
+
+function stopLocalAudio() {
+
+  speechSynthesis.cancel();
+
+
+  if (
+    mediaRecorder &&
+    mediaRecorder.state ===
+    "recording"
+  ) {
+
+    mediaRecorder.onstop =
+      null;
+
+
+    mediaRecorder.stop();
+
+  }
+
+
+  if (mediaStream) {
+
+    mediaStream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
+      );
+
+  }
+
+
+  mediaRecorder =
+    null;
+
+
+  mediaStream =
+    null;
+
+
+  busy =
+    false;
+
+}
+
+
+function showClosed(
+  text
+) {
+
+  stopLocalAudio();
+
+
+  if (pollingTimer) {
+
+    clearInterval(
+      pollingTimer
+    );
+
+  }
+
+
+  pollingTimer =
+    null;
+
+
+  $("connection").innerText =
+    "● POGOVOR KONČAN";
+
+
+  $("connection").style.color =
+    "#ff5368";
+
+
+  showOnly(
+    "closedScreen"
+  );
+
+
+  if (text) {
+
+    $("closedScreen")
+      .querySelector(
+        ".fullText"
+      )
+      .innerText =
+        text;
+
+  }
+
+}
+
+
+function resetLocal() {
+
+  stopLocalAudio();
+
+
+  if (pollingTimer) {
+
+    clearInterval(
+      pollingTimer
+    );
+
+  }
+
+
+  pollingTimer =
+    null;
+
+
+  otherDevice =
+    null;
+
+
+  otherLanguage =
+    null;
+
+
+  otherName =
+    "";
+
+
+  lastMessageId =
+    0;
+
+
+  lastSpokenId =
+    0;
+
+
+  currentTranslation =
+    "";
+
+
+  roomWasConnected =
+    false;
+
+
+  $("connection").innerText =
+    "● NI POVEZANO";
+
+
+  $("connection").style.color =
+    "#91a0b8";
+
+
+  setNotice(
+    "setupNotice",
+    "",
+    ""
+  );
+
+
+  showOnly(
+    "setupScreen"
+  );
+
+}
+
+
+$("createRoom").onclick =
+  createRoom;
+
+
+$("joinRoom").onclick =
+  joinRoom;
+
+
+$("microphone").onclick =
+  microphoneClick;
+
+
+$("forceTurn").onclick =
+  forceTurn;
+
+
+$("clearConversation").onclick =
+  clearConversation;
+
+
+$("leaveRoom").onclick =
+  leaveRoom;
+
+
+$("endCall").onclick =
+  endConversation;
+
+
+$("cancelWaiting").onclick =
+  leaveRoom;
+
+
+$("endWaiting").onclick =
+  endConversation;
+
+
+$("backFromFull").onclick =
+  resetLocal;
+
+
+$("backFromClosed").onclick =
+  resetLocal;
+
+
+$("repeatTranslation").onclick =
+  () => {
+
+    if (!currentTranslation) {
+      return;
+    }
+
+
+    speechSynthesis.cancel();
+
+
+    const utterance =
+      new SpeechSynthesisUtterance(
+        currentTranslation
+      );
+
+
+    utterance.lang =
+      LANGUAGES[myLanguage]
+        ?.tts ||
+      "en-US";
+
+
+    utterance.rate =
+      0.92;
+
+
+    speechSynthesis.speak(
+      utterance
+    );
+
+  };
+
+
+window.addEventListener(
+
+  "beforeunload",
+
+  () => {
+
+    speechSynthesis.cancel();
+
+  }
+
+);
+
+
+restoreSettings();
+</script>
+
+</body>
+</html>
