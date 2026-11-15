@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Sašo &amp; AI friends</title>
+<meta name="theme-color" content="#061224">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sašo & AI friends">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<style>
+*{box-sizing:border-box}:root{--bg:#061224;--line:#294a75;--text:#f7f9ff;--muted:#a8b4c8;--yellow:#ffd54a}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 10%,#0c2e58 0,#061224 42%,#030b17 100%);color:var(--text);font-family:Arial,sans-serif}body{padding:max(18px,env(safe-area-inset-top)) 18px max(18px,env(safe-area-inset-bottom))}.app{max-width:520px;margin:auto}.hidden{display:none!important}.brand{text-align:center;margin:8px 0 28px}.brand img{width:82px;height:82px;border-radius:23px}.card{margin-bottom:15px;padding:18px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#102a4c,#0a1930);box-shadow:0 16px 38px #0006}input,select{width:100%;height:57px;padding:0 15px;border-radius:15px;outline:none;color:#fff;font-size:18px}input{margin-bottom:12px}select{border:1px solid #5276a5;background:#0b1c34}.nameA{border:1px solid #168cff;background:#08244a;color:#72bdff;font-weight:900}.nameB{border:1px solid #13d7b9;background:#073a35;color:#67efd9;font-weight:900}.aiBox{margin-bottom:15px;padding:15px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#102a4c,#0a1930)}.aiTitle{text-align:center;color:#aebbd0;font-size:12px;font-weight:900;margin-bottom:11px}.aiChoices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.aiButton{height:52px;border:1px solid #385984;border-radius:15px;background:#0b1c34;color:#b7c4d7;font-size:15px;font-weight:900}.aiButton.selected.gemini{border-color:#9b63ff;background:linear-gradient(90deg,#6e45c9,#a34ee8);color:#fff}.aiButton.selected.groq{border-color:#ff9f38;background:linear-gradient(90deg,#d66b15,#ef9835);color:#fff}.start{width:100%;height:68px;border:0;border-radius:18px;background:linear-gradient(90deg,#087df1,#079efe);color:#fff;font-size:19px;font-weight:900;box-shadow:0 12px 30px #087df155}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.top img{width:44px;height:44px;border-radius:13px}.gear{border:0;background:transparent;color:#b7c6da;font-size:25px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:17px}.next,.end{height:56px;border-radius:27px;font-size:15px;font-weight:900}.next{border:0}.next.a{background:linear-gradient(90deg,#078eff,#0a7bee);color:#fff}.next.b{background:linear-gradient(90deg,#18dfbd,#10bda4);color:#042d28}.end{border:1px solid #a63b4b;background:linear-gradient(90deg,#d62943,#a71730);color:#fff}.direction{text-align:center;color:#d4dbea;font-size:14px}.speaker{margin:19px 0 0;text-align:center;font-size:36px;font-weight:900}.speakLabel{text-align:center;color:#bfcae0;font-size:20px;font-weight:900}.pulse{position:relative;display:grid;place-items:center;width:205px;height:205px;margin:14px auto 16px}.ring{position:absolute;border:2px solid #087fff66;border-radius:50%;animation:ringPulse 1.6s infinite}.r1{inset:0}.r2{inset:20px;animation-delay:.25s}.r3{inset:39px;animation-delay:.5s}@keyframes ringPulse{0%{transform:scale(.82);opacity:.95}70%{transform:scale(1.05);opacity:.12}100%{transform:scale(1.05);opacity:0}}.mic{position:relative;z-index:2;width:128px;height:128px;border:0;border-radius:50%;font-size:57px;animation:micBeat 1.1s ease-in-out infinite}.mic.a{background:radial-gradient(circle at 35% 25%,#43c8ff,#0784ff 50%,#0b58c4);color:#fff;box-shadow:0 0 22px #078cff,0 0 55px #078cff99}.mic.b{background:radial-gradient(circle at 35% 25%,#5cf3de,#13d7b9 50%,#078a78);color:#032d29;box-shadow:0 0 22px #13dfc5,0 0 55px #13dfc599}.pulse.b .ring{border-color:#13dfc566}@keyframes micBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}.result{margin:15px 0;padding:15px;border:1px solid var(--line);border-radius:18px;background:#09192f}.resultTitle{color:#8697af;font-size:11px;font-weight:900}.original{margin-top:7px;color:#cad4e3;font-size:15px}.translated{margin-top:7px;color:var(--yellow);font-size:19px;font-weight:900}.instruction{text-align:center;color:#aebbcf;font-size:12px;margin:16px 0 8px}.notice{min-height:22px;text-align:center;color:#ffd36b;font-size:13px}
+
+.stateIcon{position:relative;z-index:2;width:128px;height:128px;border:0;border-radius:50%;display:grid;place-items:center;font-size:58px}.stateIcon.processing{background:radial-gradient(circle at 35% 25%,#fff3b0,#f6c744 55%,#a76d00);box-shadow:0 0 24px #ffd54a,0 0 56px #ffd54a66;animation:none}.stateIcon.playing{background:radial-gradient(circle at 35% 25%,#d7c7ff,#8d62ea 55%,#503098);box-shadow:0 0 24px #9b63ff,0 0 56px #9b63ff66;animation:none}.pulse.paused .ring{animation:none;opacity:.16}.speakLabel.processing{color:#ffd54a}.speakLabel.playing{color:#cdb2ff}.aiBox{margin-top:16px;box-shadow:none;background:#08172b;border-color:#213a5c}.aiTitle{display:none}.aiButton{height:44px;font-size:13px}.appName{margin-top:10px;text-align:center;color:#d7e1f1;font-size:18px;font-weight:900}
+</style>
+</head>
+<body><div class="app">
+<section id="setup">
+  <div class="brand"><img src="apple-touch-icon.png" alt=""><div class="appName">Sašo &amp; AI friends</div></div>
+  <div class="card"><input id="nameA" class="nameA" value="Oseba A"><select id="langA"></select></div>
+  <div class="card"><input id="nameB" class="nameB" value="Oseba B"><select id="langB"></select></div>
+  <button id="start" class="start">ZAČNI POGOVOR</button><div class="aiBox"><div class="aiTitle"></div><div class="aiChoices"><button id="aiGemini" class="aiButton gemini" type="button">✦ GEMINI</button><button id="aiGroq" class="aiButton groq" type="button">⚡ WHISPER</button></div></div>
+</section>
+<section id="talk" class="hidden">
+  <div class="top"><img src="apple-touch-icon.png" alt=""><button id="settings" class="gear">⚙</button></div>
+  <div class="actions"><button id="next" class="next a">NAPREJ</button><button id="end" class="end">KONČAJ POGOVOR</button></div>
+  <div id="direction" class="direction"></div><div id="speaker" class="speaker"></div><div id="stateLabel" class="speakLabel">GOVORI</div>
+  <div id="pulse" class="pulse a"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><button id="mic" class="mic a">🎤</button></div>
+  <div id="result" class="result hidden"><div class="resultTitle">ZADNJI PREVOD</div><div id="original" class="original"></div><div id="translated" class="translated"></div></div>
+  <div class="instruction">Ko končaš govoriti, pritisni NAPREJ.</div><div id="notice" class="notice"></div>
+</section>
+</div>
+<script>
+const URL="https://kdixpdxmdfdbxpbuljfe.supabase.co",KEY="sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8",H={apikey:KEY,Authorization:"Bearer "+KEY};
+const L={sl:{n:"🇸🇮 Slovenščina",tts:"sl-SI"},hu:{n:"🇭🇺 Magyar",tts:"hu-HU"},en:{n:"🇬🇧 English",tts:"en-US"},tl:{n:"🇵🇭 Filipino",tts:"fil-PH"},it:{n:"🇮🇹 Italiano",tts:"it-IT"},hr:{n:"🇭🇷 Hrvatski",tts:"hr-HR"},sq:{n:"🇦🇱 Shqip",tts:"sq-AL"},de:{n:"🇩🇪 Deutsch",tts:"de-DE"},es:{n:"🇪🇸 Español",tts:"es-ES"},ru:{n:"🇷🇺 Русский",tts:"ru-RU"},uk:{n:"🇺🇦 Українська",tts:"uk-UA"},bg:{n:"🇧🇬 Български",tts:"bg-BG"},pl:{n:"🇵🇱 Polski",tts:"pl-PL"},cs:{n:"🇨🇿 Čeština",tts:"cs-CZ"},sk:{n:"🇸🇰 Slovenčina",tts:"sk-SK"}};
+const $=id=>document.getElementById(id);Object.entries(L).forEach(([c,v])=>{langA.add(new Option(v.n,c));langB.add(new Option(v.n,c))});langA.value="sl";langB.value="en";
+let turn=0,rec=null,stream=null,chunks=[],busy=false,ctx=null,analyser=null,frame=null,speechDetected=false,speechMs=0,lastVoiceAt=0,lastFrameAt=0,recordingAt=0,recordingId=0,activeRecordingId=0,processingId=0,lastPlayedId=0,sessionId=0,inactivityTimer=null,lastActivityAt=Date.now(),selectedAI=localStorage.getItem("phone4AI")||"gemini";
+function renderAI(){aiGemini.classList.toggle("selected",selectedAI==="gemini");aiGroq.classList.toggle("selected",selectedAI==="groq")}
+function chooseAI(ai){selectedAI=ai;localStorage.setItem("phone4AI",ai);renderAI()}
+const personName=i=>(i?nameB.value:nameA.value).trim()||(i?"Oseba B":"Oseba A"),personLang=i=>i?langB.value:langA.value;
+function setUIState(state){
+  const isA=turn===0;
+  pulse.classList.toggle("paused",state!=="listening");
+  next.disabled=state!=="listening";
+  if(state==="listening"){
+    stateLabel.textContent="GOVORI";
+    stateLabel.className="speakLabel";
+    mic.textContent="🎤";
+    mic.className="mic "+(isA?"a":"b");
+  }else if(state==="processing"){
+    stateLabel.textContent="BODI TIHO";
+    stateLabel.className="speakLabel processing";
+    mic.textContent="🤫";
+    mic.className="stateIcon processing";
+  }else{
+    stateLabel.textContent="POSLUŠAJ";
+    stateLabel.className="speakLabel playing";
+    mic.textContent="🔊";
+    mic.className="stateIcon playing";
+  }
+}
+function render(){const source=personLang(turn),target=personLang(turn?0:1),nextName=personName(turn?0:1);speaker.textContent=personName(turn);direction.textContent=L[source].n+" → "+L[target].n;next.textContent="NAPREJ → "+nextName;next.className="next "+(turn?"b":"a");mic.className="mic "+(turn?"b":"a");pulse.className="pulse "+(turn?"b":"a");startRecording()}
+function unlockTTS(){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(" ");u.lang=L[personLang(0)].tts;u.volume=.01;speechSynthesis.speak(u);setTimeout(()=>speechSynthesis.resume(),80)}catch{}}
+function showTalk(){markActivity();sessionId++;processingId=0;lastPlayedId=0;activeRecordingId=0;setup.classList.add("hidden");talk.classList.remove("hidden");turn=0;unlockTTS();render()}
+function markActivity(){
+  lastActivityAt=Date.now();
+  resetInactivityTimer();
+}
+
+function resetInactivityTimer(){
+  if(inactivityTimer)clearTimeout(inactivityTimer);
+  inactivityTimer=setTimeout(()=>{
+    if(!talk.classList.contains("hidden")){
+      notice.textContent="Pogovor je bil po 2 minutah neaktivnosti izbrisan.";
+      clearAndExit(true);
+    }
+  },120000);
+}
+
+async function startRecording(){
+  if(busy||rec?.state==="recording")return;
+
+  const mySession=sessionId;
+  const myRecordingId=++recordingId;
+  activeRecordingId=myRecordingId;
+
+  /* Vedno uniči ostanke prejšnjega snemanja. */
+  stopVAD();
+  if(stream)stream.getTracks().forEach(t=>t.stop());
+  stream=null;
+  rec=null;
+  chunks=[];
+  speechDetected=false;
+  speechMs=0;
+
+  try{
+    const newStream=await navigator.mediaDevices.getUserMedia({audio:true});
+
+    if(mySession!==sessionId||myRecordingId!==activeRecordingId){
+      newStream.getTracks().forEach(t=>t.stop());
+      return;
+    }
+
+    stream=newStream;
+    let o={};
+    if(MediaRecorder.isTypeSupported("audio/mp4"))o={mimeType:"audio/mp4"};
+    else if(MediaRecorder.isTypeSupported("audio/webm"))o={mimeType:"audio/webm"};
+
+    const newRecorder=new MediaRecorder(stream,o);
+    rec=newRecorder;
+    const localChunks=[];
+
+    newRecorder.ondataavailable=e=>{
+      if(
+        e.data.size&&
+        mySession===sessionId&&
+        myRecordingId===activeRecordingId&&
+        rec===newRecorder
+      )localChunks.push(e.data);
+    };
+
+    newRecorder.start();
+    chunks=localChunks;
+    startVAD(stream,myRecordingId,mySession);
+    notice.textContent="";
+  }catch(e){
+    if(mySession===sessionId&&myRecordingId===activeRecordingId){
+      notice.textContent="Napaka mikrofona: "+e.message;
+    }
+  }
+}
+function stopVAD(){if(frame)cancelAnimationFrame(frame);frame=null;if(ctx)ctx.close().catch(()=>{});ctx=null;analyser=null}
+function startVAD(s,myRecordingId,mySession){
+  /*
+  Samodejno zaključevanje po tišini je izklopljeno.
+  Snemanje se konča izključno z gumbom NAPREJ ali mikrofonom.
+  */
+  stopVAD();
+  speechDetected=true;
+  speechMs=1000;
+  resetInactivityTimer();
+}
+
+async function restartIdle(myRecordingId,mySession){
+  if(busy||mySession!==sessionId||myRecordingId!==activeRecordingId)return;
+  await stopRecording(myRecordingId,mySession);
+  if(mySession!==sessionId)return;
+  chunks=[];rec=null;stream=null;
+  notice.textContent="Čakam na govor ...";
+  await startRecording();
+}
+function stopRecording(expectedId=activeRecordingId,expectedSession=sessionId){
+  return new Promise(resolve=>{
+    stopVAD();
+    const currentRecorder=rec;
+    const currentStream=stream;
+    if(!currentRecorder||currentRecorder.state!=="recording"||expectedSession!==sessionId||expectedId!==activeRecordingId){
+      currentStream?.getTracks().forEach(t=>t.stop());
+      resolve();return;
+    }
+    currentRecorder.onstop=()=>resolve();
+    currentRecorder.stop();
+    currentStream?.getTracks().forEach(t=>t.stop());
+  });
+}
+async function translate(){const source=personLang(turn),target=personLang(turn?0:1),mime=rec?.mimeType||"audio/webm",ext=mime.includes("mp4")?"m4a":"webm",blob=new Blob(chunks,{type:mime});if(blob.size<500)throw Error("Posnetek je prekratek.");const file=new File([blob],"voice."+ext,{type:mime}),form=new FormData();form.append("audio",file);form.append("language",source);form.append("target_language",target);const endpoint=selectedAI==="gemini"?"voice-transcribe-gemini":"voice-transcribe";const response=await fetch(URL+"/functions/v1/"+endpoint,{method:"POST",headers:H,body:form}),raw=await response.text();let data;try{data=JSON.parse(raw)}catch{throw Error("Neveljaven odgovor prevajalnika.")}if(!response.ok)throw Error(data.detail||data.error||raw);return data}
+function hallucination(text){const n=String(text||"").toLowerCase().replace(/[.!?,;:\-–—"'()]/g," ").replace(/\s+/g," ").trim(),bad=["thanks for watching","thank you for watching","thank you for listening","please subscribe","subscribe to our channel","subtitles by","hvala za ogled","hvala ker ste gledali","hvala ker poslušate","hvala ker poslušate naš kanal","hvala za poslušanje","vala što ste gledali","danke fürs zuschauen","gracias por ver"];return bad.some(x=>n===x||n.startsWith(x+" "))}
+function voice(code){const target=L[code].tts.toLowerCase(),base=target.split("-")[0],vs=speechSynthesis.getVoices();return vs.find(v=>v.lang.toLowerCase()===target)||vs.find(v=>v.lang.toLowerCase().startsWith(base))}
+function speak(text,code,playId,playSession){return new Promise(resolve=>{if(!text){resolve(false);return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text),v=voice(code);u.lang=L[code].tts;if(v)u.voice=v;u.rate=.92;let done=false,t=setTimeout(()=>finish(false),Math.max(7000,text.length*170));function finish(ok){if(done)return;if(playSession!==sessionId||playId!==processingId){done=true;resolve(false);return}done=true;clearTimeout(t);resolve(ok)}u.onend=()=>finish(true);u.onerror=()=>finish(false);speechSynthesis.speak(u);setTimeout(()=>speechSynthesis.resume(),100)})}
+async function nextTurn(requestedRecordingId=activeRecordingId,requestedSession=sessionId){
+  markActivity();
+  if(busy)return;
+  if(requestedSession!==sessionId||requestedRecordingId!==activeRecordingId)return;
+
+  busy=true;
+  next.disabled=true;
+  const spoken=turn;
+  const myProcessingId=++processingId;
+  const frozenChunks=chunks.slice();
+  const frozenRecorder=rec;
+  const frozenSpeechDetected=speechDetected;
+  const frozenSpeechMs=speechMs;
+
+  try{
+    if(!frozenSpeechDetected||frozenSpeechMs<450){
+      await stopRecording(requestedRecordingId,requestedSession);
+      if(requestedSession!==sessionId)return;
+      chunks=[];rec=null;stream=null;
+      notice.textContent="Govor ni bil zaznan. Poskusi ponovno.";
+      busy=false;
+      setUIState("listening");
+      await startRecording();
+      return;
+    }
+
+    await stopRecording(requestedRecordingId,requestedSession);
+    if(requestedSession!==sessionId||myProcessingId!==processingId)return;
+
+    /* Prevajanje uporablja zamrznjen posnetek te izmenjave, ne globalnega novega bufferja. */
+    const savedChunks=chunks;
+    const savedRecorder=rec;
+    chunks=frozenChunks;
+    rec=frozenRecorder;
+    const d=await translate();
+    chunks=savedChunks;
+    rec=savedRecorder;
+
+    if(requestedSession!==sessionId||myProcessingId!==processingId)return;
+    if(hallucination(d.text))throw Error("Nezanesljiv prepis. Poved ponovi bolj jasno.");
+
+    original.textContent=d.text;
+    translated.textContent=d.translated;
+    result.classList.remove("hidden");
+    notice.textContent="Predvajam prevod ...";
+
+    /* Vsaka izmenjava se lahko predvaja samo enkrat. */
+    if(lastPlayedId!==myProcessingId){
+      lastPlayedId=myProcessingId;
+      await speak(d.translated,personLang(spoken?0:1),myProcessingId,requestedSession);
+    }
+
+    if(requestedSession!==sessionId||myProcessingId!==processingId)return;
+
+    turn=spoken?0:1;
+    chunks=[];rec=null;stream=null;
+    speechDetected=false;speechMs=0;
+    busy=false;
+    notice.textContent="";
+    render();
+  }catch(e){
+    if(requestedSession===sessionId&&myProcessingId===processingId){
+      notice.textContent="Napaka: "+e.message;
+      chunks=[];rec=null;stream=null;
+      speechDetected=false;speechMs=0;
+      busy=false;
+      await startRecording();
+    }
+  }finally{
+    if(requestedSession===sessionId){
+      busy=false;
+      next.disabled=false;
+    }
+  }
+}
+async function clearAndExit(fromInactivity=false){if(inactivityTimer)clearTimeout(inactivityTimer);inactivityTimer=null;sessionId++;processingId++;activeRecordingId=++recordingId;lastPlayedId=0;stopVAD();await stopRecording();speechSynthesis.cancel();stream?.getTracks().forEach(t=>t.stop());chunks=[];rec=null;stream=null;busy=false;speechDetected=false;speechMs=0;original.textContent="";translated.textContent="";result.classList.add("hidden");notice.textContent="";turn=0;talk.classList.add("hidden");setup.classList.remove("hidden")}
+async function settingsBack(){await clearAndExit()}
+aiGemini.onclick=()=>chooseAI("gemini");aiGroq.onclick=()=>chooseAI("groq");start.onclick=()=>{localStorage.setItem("phone4NameA",personName(0));localStorage.setItem("phone4NameB",personName(1));localStorage.setItem("phone4LangA",personLang(0));localStorage.setItem("phone4LangB",personLang(1));showTalk()};next.onclick=nextTurn;mic.onclick=nextTurn;end.onclick=clearAndExit;settings.onclick=settingsBack;
+const a=localStorage.getItem("phone4NameA"),b=localStorage.getItem("phone4NameB"),la=localStorage.getItem("phone4LangA"),lb=localStorage.getItem("phone4LangB");if(a)nameA.value=a;if(b)nameB.value=b;if(L[la])langA.value=la;if(L[lb])langB.value=lb;
+renderAI();
+window.addEventListener("beforeunload",()=>{stopVAD();speechSynthesis.cancel();stream?.getTracks().forEach(t=>t.stop())});
+</script>
+</body>
+</html>
