@@ -2,8 +2,7 @@
 <html lang="sl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 
 <title>Voice Pogovor</title>
 
@@ -16,7 +15,9 @@ content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box
+}
 
 :root{
   --bg:#061224;
@@ -26,9 +27,8 @@ content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
   --muted:#a8b4c8;
   --blue:#078cff;
   --cyan:#13dfc5;
-  --red:#ff485d;
-  --yellow:#ffd54a;
-  --green:#30df92
+  --red:#d62943;
+  --yellow:#ffd54a
 }
 
 html,body{
@@ -54,8 +54,7 @@ body{
 
 .app{
   max-width:520px;
-  margin:auto;
-  min-height:calc(100vh - 36px)
+  margin:auto
 }
 
 .hidden{
@@ -63,35 +62,34 @@ body{
 }
 
 
-/* IKONA */
+/* =====================
+   ZAČETNI ZASLON
+===================== */
 
 .brand{
   text-align:center;
-  margin:8px 0 25px
+  margin:8px 0 28px
 }
 
 .brand img{
   width:82px;
   height:82px;
-  border-radius:23px;
   display:block;
-  margin:auto
+  margin:auto;
+  border-radius:23px
 }
-
-
-/* NASTAVITVE */
 
 .card{
   margin-bottom:15px;
   padding:18px;
+  border:1px solid var(--line);
+  border-radius:22px;
   background:
     linear-gradient(
       145deg,
       #102a4c,
       #0a1930
     );
-  border:1px solid var(--line);
-  border-radius:22px;
   box-shadow:0 16px 38px #0006
 }
 
@@ -115,9 +113,6 @@ select{
   background:#0b1c34
 }
 
-
-/* OSEBA A */
-
 .nameAInput{
   border:1px solid #168cff;
   background:#08244a;
@@ -125,28 +120,12 @@ select{
   font-weight:900
 }
 
-.nameAInput:focus{
-  border-color:#55b0ff;
-  box-shadow:0 0 0 2px #168cff33
-}
-
-
-/* OSEBA B */
-
 .nameBInput{
   border:1px solid #13d7b9;
   background:#073a35;
   color:#67efd9;
   font-weight:900
 }
-
-.nameBInput:focus{
-  border-color:#55ead3;
-  box-shadow:0 0 0 2px #13d7b933
-}
-
-
-/* ZAČNI */
 
 .start{
   width:100%;
@@ -167,17 +146,15 @@ select{
 }
 
 
-/* POGOVOR HEADER */
+/* =====================
+   POGOVOR
+===================== */
 
 .top{
   display:flex;
+  justify-content:space-between;
   align-items:center;
-  justify-content:flex-end;
   margin-bottom:24px
-}
-
-.miniBrand{
-  margin-right:auto
 }
 
 .miniBrand img{
@@ -194,28 +171,30 @@ select{
 }
 
 
-/* OSEBI */
+/* =====================
+   ZGORNJA GUMBA
+===================== */
 
 .people{
   display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
+  grid-template-columns:1fr 1fr;
   gap:12px;
   margin-bottom:17px
 }
 
-.pill{
-  height:53px;
-  border:1px solid #284b78;
-  border-radius:25px;
-  background:#0d203c;
-  color:#b8c7db;
-  font-size:17px;
+.topNext,
+.topEnd{
+  height:56px;
+  border-radius:27px;
+  font-size:16px;
   font-weight:900
 }
 
-.pill.active{
-  border:0;
+.topNext{
+  border:0
+}
+
+.topNext.speakerA{
   background:
     linear-gradient(
       90deg,
@@ -225,20 +204,31 @@ select{
   color:#fff
 }
 
-#pillB.active{
+.topNext.speakerB{
   background:
     linear-gradient(
       90deg,
-      #14d9bc,
-      #10bca7
+      #18dfbd,
+      #10bda4
     );
-  color:#042d29
+  color:#042d28
 }
 
-.arrow{
-  color:#cbd6e6;
-  font-size:28px
+.topEnd{
+  border:1px solid #a63b4b;
+  background:
+    linear-gradient(
+      90deg,
+      #d62943,
+      #a71730
+    );
+  color:#fff
 }
+
+
+/* =====================
+   SMER PREVODA
+===================== */
 
 .direction{
   text-align:center;
@@ -247,7 +237,9 @@ select{
 }
 
 
-/* AKTIVNI GOVOREC */
+/* =====================
+   GOVOREC
+===================== */
 
 .speaker{
   margin:20px 0 0;
@@ -266,7 +258,9 @@ select{
 }
 
 
-/* MIKROFON */
+/* =====================
+   MIKROFON
+===================== */
 
 .pulse{
   position:relative;
@@ -284,7 +278,9 @@ select{
   animation:pulse 1.6s infinite
 }
 
-.r1{inset:0}
+.r1{
+  inset:0
+}
 
 .r2{
   inset:20px;
@@ -356,17 +352,22 @@ select{
   height:11px;
   margin-right:8px;
   border-radius:50%;
-  background:var(--red);
-  box-shadow:0 0 12px var(--red);
+  background:#ff485d;
+  box-shadow:0 0 12px #ff485d;
   animation:blink 1s infinite
 }
 
 @keyframes blink{
-  50%{opacity:.25}
+
+  50%{
+    opacity:.25
+  }
 }
 
 
-/* ZADNJI PREVOD */
+/* =====================
+   REZULTAT
+===================== */
 
 .result{
   margin:15px 0;
@@ -395,41 +396,11 @@ select{
   font-weight:900
 }
 
-
-/* NAPREJ */
-
 .instruction{
-  margin:20px 0 11px;
+  margin:20px 0 9px;
   text-align:center;
-  color:#c2ccda
-}
-
-.next{
-  width:100%;
-  height:70px;
-  border:0;
-  border-radius:21px;
-  background:
-    linear-gradient(
-      90deg,
-      #14e5c6,
-      #18d6bb
-    );
-  color:#062d2a;
-  font-size:20px;
-  font-weight:900;
-  box-shadow:0 12px 30px #10d7bd44
-}
-
-.next:disabled{
-  opacity:.45
-}
-
-.small{
-  margin:12px;
-  text-align:center;
-  color:#aeb9c9;
-  font-size:12px
+  color:#c2ccda;
+  font-size:13px
 }
 
 .notice{
@@ -437,33 +408,6 @@ select{
   margin-top:9px;
   text-align:center;
   color:#ffd36b
-}
-
-
-/* KONČAJ */
-
-.bottom{
-  margin-top:25px;
-  padding-top:19px;
-  border-top:1px solid #29405d;
-  text-align:center
-}
-
-.endText{
-  width:100%;
-  min-height:58px;
-  border:1px solid #a63b4b;
-  border-radius:17px;
-  background:
-    linear-gradient(
-      90deg,
-      #d62943,
-      #a71730
-    );
-  color:#fff;
-  font-size:17px;
-  font-weight:900;
-  box-shadow:0 10px 28px #a7173044
 }
 </style>
 </head>
@@ -474,7 +418,9 @@ select{
 <div class="app">
 
 
-<!-- ZAČETNI ZASLON -->
+<!-- =====================
+     NASTAVITVE
+===================== -->
 
 <section id="setup">
 
@@ -528,7 +474,9 @@ select{
 </section>
 
 
-<!-- POGOVOR -->
+<!-- =====================
+     POGOVOR
+===================== -->
 
 <section
   id="talk"
@@ -559,34 +507,39 @@ select{
   </div>
 
 
+  <!-- ZGORNJA GUMBA -->
+
   <div class="people">
 
     <button
-      id="pillA"
+      id="next"
       type="button"
-      class="pill active"
-    ></button>
-
-
-    <div class="arrow">
-      ⇄
-    </div>
+      class="topNext speakerA"
+    >
+      NAPREJ
+    </button>
 
 
     <button
-      id="pillB"
+      id="end"
       type="button"
-      class="pill"
-    ></button>
+      class="topEnd"
+    >
+      KONČAJ POGOVOR
+    </button>
 
   </div>
 
+
+  <!-- SMER -->
 
   <div
     id="direction"
     class="direction"
   ></div>
 
+
+  <!-- KDO GOVORI -->
 
   <div
     id="speaker"
@@ -598,6 +551,8 @@ select{
     GOVORI
   </div>
 
+
+  <!-- MIKROFON -->
 
   <div class="pulse">
 
@@ -628,6 +583,8 @@ select{
   </div>
 
 
+  <!-- ZADNJI PREVOD -->
+
   <div
     id="result"
     class="result hidden"
@@ -651,21 +608,7 @@ select{
 
 
   <div class="instruction">
-    Ko končaš, pritisni NAPREJ.
-  </div>
-
-
-  <button
-    id="next"
-    type="button"
-    class="next"
-  >
-    NAPREJ
-  </button>
-
-
-  <div class="small">
-    Prevedi, predvajaj in predaj besedo.
+    Govori. Po 10 sekundah tišine se snemanje samodejno ustavi.
   </div>
 
 
@@ -674,19 +617,6 @@ select{
     class="notice"
   ></div>
 
-
-  <div class="bottom">
-
-    <button
-      id="end"
-      type="button"
-      class="endText"
-    >
-      KONČAJ POGOVOR
-    </button>
-
-  </div>
-
 </section>
 
 </div>
@@ -694,11 +624,9 @@ select{
 
 <script>
 
-/*
-=========================================
-SUPABASE
-=========================================
-*/
+/* =====================
+   SUPABASE
+===================== */
 
 const URL =
   "https://kdixpdxmdfdbxpbuljfe.supabase.co";
@@ -707,16 +635,19 @@ const KEY =
   "sb_publishable_khd42rEJpa3-1uyVb01Jjg_7rBp-FT8";
 
 const HEADERS = {
-  "apikey":KEY,
-  "Authorization":"Bearer "+KEY
+
+  "apikey":
+    KEY,
+
+  "Authorization":
+    "Bearer " + KEY
+
 };
 
 
-/*
-=========================================
-JEZIKI
-=========================================
-*/
+/* =====================
+   JEZIKI
+===================== */
 
 const LANGUAGES = {
 
@@ -803,11 +734,9 @@ const $ =
     document.getElementById(id);
 
 
-/*
-=========================================
-DROPDOWN
-=========================================
-*/
+/* =====================
+   DROPDOWN
+===================== */
 
 Object.entries(
   LANGUAGES
@@ -842,11 +771,9 @@ $("langB").value =
   "en";
 
 
-/*
-=========================================
-STATE
-=========================================
-*/
+/* =====================
+   STATE
+===================== */
 
 let turn =
   0;
@@ -864,15 +791,30 @@ let busy =
   false;
 
 
-/*
-=========================================
-PERSON
-=========================================
-*/
+/* DETEKCIJA TIŠINE */
+
+let audioContext =
+  null;
+
+let analyser =
+  null;
+
+let monitorFrame =
+  null;
+
+let lastSoundAt =
+  0;
+
+
+/* =====================
+   OSEBI
+===================== */
 
 function personName(person){
 
-  if(person === 0){
+  if(
+    person === 0
+  ){
 
     return (
       $("nameA")
@@ -905,13 +847,11 @@ function personLanguage(person){
 }
 
 
-/*
-=========================================
-TTS - TIHI ODKLEP
-=========================================
-*/
+/* =====================
+   TTS ODKLEP
+===================== */
 
-function unlockVoiceInBackground(){
+function unlockVoice(){
 
   const code =
     personLanguage(
@@ -929,17 +869,11 @@ function unlockVoiceInBackground(){
 
 
   utterance.lang =
-    LANGUAGES[
-      code
-    ].tts;
+    LANGUAGES[code].tts;
 
 
   utterance.volume =
     0.01;
-
-
-  utterance.rate =
-    1;
 
 
   speechSynthesis.speak(
@@ -956,11 +890,9 @@ function unlockVoiceInBackground(){
 }
 
 
-/*
-=========================================
-START
-=========================================
-*/
+/* =====================
+   START POGOVORA
+===================== */
 
 function showTalk(){
 
@@ -979,11 +911,11 @@ function showTalk(){
 
 
   /*
-  ZAČNI POGOVOR je uporabniški tap.
-  Poskusimo TTS odkleniti v ozadju.
+  Neposredni uporabniški tap
+  pomaga odkleniti TTS na iOS.
   */
 
-  unlockVoiceInBackground();
+  unlockVoice();
 
 
   render();
@@ -991,11 +923,9 @@ function showTalk(){
 }
 
 
-/*
-=========================================
-RENDER
-=========================================
-*/
+/* =====================
+   RENDER
+===================== */
 
 function render(){
 
@@ -1007,34 +937,10 @@ function render(){
     personName(1);
 
 
-  $("pillA").textContent =
-    nameA;
-
-
-  $("pillB").textContent =
-    nameB;
-
-
   $("speaker").textContent =
     turn === 0
       ? nameA
       : nameB;
-
-
-  $("pillA")
-    .classList
-    .toggle(
-      "active",
-      turn === 0
-    );
-
-
-  $("pillB")
-    .classList
-    .toggle(
-      "active",
-      turn === 1
-    );
 
 
   const source =
@@ -1068,6 +974,29 @@ function render(){
     nextPerson;
 
 
+  /*
+  BARVA ZGORNJEGA GUMBA
+
+  Oseba A = modra
+  Oseba B = zelena
+  */
+
+  $("next")
+    .classList
+    .toggle(
+      "speakerA",
+      turn === 0
+    );
+
+
+  $("next")
+    .classList
+    .toggle(
+      "speakerB",
+      turn === 1
+    );
+
+
   $("recordState").innerHTML =
     '<span class="dot"></span>' +
     "Snemanje poteka";
@@ -1078,11 +1007,9 @@ function render(){
 }
 
 
-/*
-=========================================
-START RECORDING
-=========================================
-*/
+/* =====================
+   START RECORDING
+===================== */
 
 async function startRecording(){
 
@@ -1174,6 +1101,15 @@ async function startRecording(){
     recorder.start();
 
 
+    /*
+    ZAČNI SPREMLJATI TIŠINO
+    */
+
+    startSilenceMonitor(
+      stream
+    );
+
+
     $("mic")
       .classList
       .add(
@@ -1205,11 +1141,218 @@ async function startRecording(){
 }
 
 
-/*
-=========================================
-STOP RECORDING
-=========================================
-*/
+/* =====================
+   TIŠINA 10 SEKUND
+===================== */
+
+function startSilenceMonitor(
+  activeStream
+){
+
+  stopSilenceMonitor();
+
+
+  const AudioCtx =
+    window.AudioContext ||
+    window.webkitAudioContext;
+
+
+  if(!AudioCtx){
+
+    return;
+
+  }
+
+
+  audioContext =
+    new AudioCtx();
+
+
+  const source =
+    audioContext
+      .createMediaStreamSource(
+        activeStream
+      );
+
+
+  analyser =
+    audioContext
+      .createAnalyser();
+
+
+  analyser.fftSize =
+    512;
+
+
+  source.connect(
+    analyser
+  );
+
+
+  const data =
+    new Uint8Array(
+      analyser.fftSize
+    );
+
+
+  /*
+  Od začetka snemanja štejemo tišino.
+  */
+
+  lastSoundAt =
+    Date.now();
+
+
+  /*
+  Prag zvoka.
+
+  Če je prostor preveč hrupen,
+  lahko kasneje povečamo to vrednost.
+  */
+
+  const threshold =
+    8;
+
+
+  function check(){
+
+    if(
+      !recorder ||
+      recorder.state !==
+        "recording"
+    ){
+
+      return;
+
+    }
+
+
+    analyser
+      .getByteTimeDomainData(
+        data
+      );
+
+
+    let sum =
+      0;
+
+
+    for(
+      const value
+      of data
+    ){
+
+      const sample =
+        value - 128;
+
+
+      sum +=
+        sample *
+        sample;
+
+    }
+
+
+    const rms =
+      Math.sqrt(
+        sum /
+        data.length
+      );
+
+
+    if(
+      rms >
+      threshold
+    ){
+
+      lastSoundAt =
+        Date.now();
+
+    }
+
+
+    /*
+    10 SEKUND TIŠINE
+    */
+
+    if(
+      Date.now() -
+      lastSoundAt >=
+      10000
+    ){
+
+      $("notice").textContent =
+        "10 sekund tišine. Nadaljujem ...";
+
+
+      nextTurn();
+
+
+      return;
+
+    }
+
+
+    monitorFrame =
+      requestAnimationFrame(
+        check
+      );
+
+  }
+
+
+  check();
+
+}
+
+
+/* =====================
+   STOP SILENCE MONITOR
+===================== */
+
+function stopSilenceMonitor(){
+
+  if(
+    monitorFrame
+  ){
+
+    cancelAnimationFrame(
+      monitorFrame
+    );
+
+  }
+
+
+  monitorFrame =
+    null;
+
+
+  if(
+    audioContext
+  ){
+
+    audioContext
+      .close()
+      .catch(
+        () => {}
+      );
+
+  }
+
+
+  audioContext =
+    null;
+
+
+  analyser =
+    null;
+
+}
+
+
+/* =====================
+   STOP RECORDING
+===================== */
 
 function stopRecording(){
 
@@ -1227,6 +1370,9 @@ function stopRecording(){
         return;
 
       }
+
+
+      stopSilenceMonitor();
 
 
       recorder.onstop =
@@ -1273,11 +1419,9 @@ function stopRecording(){
 }
 
 
-/*
-=========================================
-TRANSLATE
-=========================================
-*/
+/* =====================
+   PREVAJANJE
+===================== */
 
 async function translate(){
 
@@ -1301,7 +1445,9 @@ async function translate(){
 
 
   const extension =
-    mime.includes("mp4")
+    mime.includes(
+      "mp4"
+    )
       ? "m4a"
       : "webm";
 
@@ -1423,13 +1569,13 @@ async function translate(){
 }
 
 
-/*
-=========================================
-TTS VOICE
-=========================================
-*/
+/* =====================
+   TTS GLAS
+===================== */
 
-function findVoice(languageCode){
+function findVoice(
+  languageCode
+){
 
   const voices =
     speechSynthesis
@@ -1475,11 +1621,9 @@ function findVoice(languageCode){
 }
 
 
-/*
-=========================================
-SPEAK
-=========================================
-*/
+/* =====================
+   GOVOR
+===================== */
 
 function speak(
   text,
@@ -1498,7 +1642,8 @@ function speak(
       }
 
 
-      speechSynthesis.cancel();
+      speechSynthesis
+        .cancel();
 
 
       const utterance =
@@ -1555,7 +1700,8 @@ function speak(
 
           Math.max(
             7000,
-            text.length * 170
+            text.length *
+            170
           )
 
         );
@@ -1615,11 +1761,9 @@ function speak(
 }
 
 
-/*
-=========================================
-NAPREJ
-=========================================
-*/
+/* =====================
+   NAPREJ
+===================== */
 
 async function nextTurn(){
 
@@ -1643,7 +1787,7 @@ async function nextTurn(){
   try{
 
     /*
-    ZAPOMNIMO si, kdo je govoril.
+    ZAPOMNIMO TRENUTNEGA GOVORCA.
     */
 
     const spokenTurn =
@@ -1691,7 +1835,7 @@ async function nextTurn(){
 
 
     /*
-    ZAMENJAJ GOVORCA
+    MENJAVA GOVORCA
     */
 
     turn =
@@ -1701,10 +1845,7 @@ async function nextTurn(){
 
 
     /*
-    KLJUČNO:
-    busy sprostimo PRED render(),
-    da se za drugo osebo zažene
-    POPOLNOMA NOV POSNETEK.
+    SPROSTIMO BUSY PRED NOVIM SNEMANJEM.
     */
 
     busy =
@@ -1746,18 +1887,20 @@ async function nextTurn(){
 }
 
 
-/*
-=========================================
-SETTINGS
-=========================================
-*/
+/* =====================
+   NASTAVITVE
+===================== */
 
 async function openSettings(){
+
+  stopSilenceMonitor();
+
 
   await stopRecording();
 
 
-  speechSynthesis.cancel();
+  speechSynthesis
+    .cancel();
 
 
   $("talk")
@@ -1776,18 +1919,20 @@ async function openSettings(){
 }
 
 
-/*
-=========================================
-END
-=========================================
-*/
+/* =====================
+   KONČAJ
+===================== */
 
 async function endConversation(){
+
+  stopSilenceMonitor();
+
 
   await stopRecording();
 
 
-  speechSynthesis.cancel();
+  speechSynthesis
+    .cancel();
 
 
   $("talk")
@@ -1811,17 +1956,19 @@ async function endConversation(){
     );
 
 
+  $("notice").textContent =
+    "";
+
+
   turn =
     0;
 
 }
 
 
-/*
-=========================================
-EVENTS
-=========================================
-*/
+/* =====================
+   EVENTS
+===================== */
 
 $("start").onclick =
   showTalk;
@@ -1840,8 +1987,7 @@ $("end").onclick =
 
 
 /*
-Ročni klik na mikrofon:
-STOP / START.
+ROČNI MIKROFON
 */
 
 $("mic").onclick =
@@ -1853,7 +1999,7 @@ $("mic").onclick =
         "recording"
     ){
 
-      await stopRecording();
+      await nextTurn();
 
     }
     else{
@@ -1865,48 +2011,45 @@ $("mic").onclick =
   };
 
 
-/*
-=========================================
-SAVE SETTINGS
-=========================================
-*/
+/* =====================
+   SAVE
+===================== */
 
-$("start").addEventListener(
-  "click",
-  () => {
+$("start")
+  .addEventListener(
+    "click",
+    () => {
 
-    localStorage.setItem(
-      "phone4NameA",
-      personName(0)
-    );
-
-
-    localStorage.setItem(
-      "phone4NameB",
-      personName(1)
-    );
+      localStorage.setItem(
+        "phone4NameA",
+        personName(0)
+      );
 
 
-    localStorage.setItem(
-      "phone4LangA",
-      personLanguage(0)
-    );
+      localStorage.setItem(
+        "phone4NameB",
+        personName(1)
+      );
 
 
-    localStorage.setItem(
-      "phone4LangB",
-      personLanguage(1)
-    );
-
-  }
-);
+      localStorage.setItem(
+        "phone4LangA",
+        personLanguage(0)
+      );
 
 
-/*
-=========================================
-RESTORE SETTINGS
-=========================================
-*/
+      localStorage.setItem(
+        "phone4LangB",
+        personLanguage(1)
+      );
+
+    }
+  );
+
+
+/* =====================
+   RESTORE
+===================== */
 
 const savedA =
   localStorage.getItem(
@@ -1974,17 +2117,19 @@ if(
 }
 
 
-/*
-=========================================
-CLEANUP
-=========================================
-*/
+/* =====================
+   CLEANUP
+===================== */
 
 window.addEventListener(
   "beforeunload",
   () => {
 
-    speechSynthesis.cancel();
+    stopSilenceMonitor();
+
+
+    speechSynthesis
+      .cancel();
 
 
     if(stream){
